@@ -1,0 +1,324 @@
+<odoo>
+    <record id="equipment_stage_view_tree_inherit" model="ir.ui.view">
+        <field name="name">maintenance.stage.form.inherit</field>
+        <field name="model">maintenance.stage</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_stage_view_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="stage_type"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="hr_equipment_view_form_inherit" model="ir.ui.view">
+        <field name="name">maintenance.equipment.form.inherit</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,validated,scrap"/>
+                    <button name="action_generate_qr_code"
+                            string="Validate"
+                            type="object"
+                            class="oe_highlight"
+                            invisible="state != 'draft'"/>
+                    <button name="open_scrap_wizard"
+                            type="object"
+                            string="Mark as Scrapped"
+                            class="btn-danger"
+                            groups="stock.group_stock_manager"
+                            invisible="asset_lifecycle_status == 'scrap' or state != 'validated'"/>
+                </header>
+            </xpath>
+            <xpath expr="//form//div[@class='oe_title']//field[@name='name']" position="attributes">
+                <attribute name="readonly">state != 'draft'</attribute>
+            </xpath>
+            <field name="category_id" position="attributes">
+                <attribute name="required">1</attribute>
+                <attribute name="readonly">state != 'draft'</attribute>
+            </field>
+            <xpath expr="//form//group//field[@name='company_id']" position="attributes">
+                <attribute name="readonly">state != 'draft'</attribute>
+            </xpath>
+            <xpath expr="//form//group//field[@name='equipment_assign_to']" position="attributes">
+                <attribute name="readonly">state != 'draft'</attribute>
+            </xpath>
+            <xpath expr="//field[@name='equipment_assign_to']" position="after">
+                <field name="sap_fa_code" string="SPA FA Code" readonly="state == 'validated'"/>
+                <field name="product_id" readonly="state == 'validated'" required="1"/>
+                <field name="lot_id" readonly="state == 'validated'" required="1" options="{'no_create': True}"
+                       invisible="not product_id" domain="[('product_id', '=', product_id)]"/>
+                <field name="product_cost" readonly="state == 'validated'"/>
+                <field name="room_id" readonly="1"/>
+                <field name="project_id" readonly="1"/>
+                <field name="sync_lot_to_tag" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='employee_id']" position="after">
+                <field name="employee_barcode" readonly="1"/>
+                <field name="external_contact_id" readonly="1"/>
+                <field name="is_expensive"/>
+                <field name="warranty" placeholder="DD/MM/YY/1234/DD/MM/YY"/>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="seq_number" readonly="1"/>
+                <field name="qr_proccessed" invisible="1"/>
+                <field name="qr_code" widget="image" readonly="1"/>
+            </xpath>
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="accounting_asset_id" readonly="state != 'draft'"/>
+            </xpath>
+            <xpath expr="//field[@name='location']" position="after">
+                <field name="serial_no" readonly="state == 'validated'" invisible="1"/>
+                <field name="asset_tag_id" required="1"
+                       groups="maintenance.group_equipment_manager" readonly="state != 'draft' or asset_tag_readonly == True"/>
+
+                <field name="asset_tag_readonly" invisible="1"/>
+
+
+                <field name="asset_type" readonly="state != 'draft'"/>
+                <field name="asset_lifecycle_status" readonly="state != 'draft'"/>
+                <field name="maintenance_schedule" readonly="state != 'draft'"/>
+                <field name="condition" readonly="state != 'draft'"/>
+                <field name="inspection_status" readonly="state != 'draft'"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Units Allocation">
+                    <field name="unit_ids" widget="one2many_list" mode="tree,form">
+                        <tree editable="bottom">
+                            <field name="unit_name"/>
+                            <field name="asset_tag_id"/>
+                            <field name="serial_no"/>
+                            <field name="condition"/>
+                            <field name="allocated"/>
+                            <field name="price_unit"/>
+                        </tree>
+                    </field>
+                </page>
+                <xpath expr="//page[@name='product_information']/group/group[2]" position="inside">
+                    <field name="item_code"/>
+                    <field name="item_name"/>
+                    <field name="frgn_name"/>
+                    <field name="product_id"/>
+                    <field name="sub_category"/>
+                    <field name="equipment_type"/>
+                    <field name="job_title"/>
+                    <field name="expected_mtbf"/>
+                    <field name="recurring_type"/>
+                    <field name="employee_id"/>
+                    <field name="proj_code"/>
+                    <field name="proj_name"/>
+                    <field name="location"/>
+                    <field name="stock_location"/>
+                </xpath>
+                <page string="SAP / Warehouse">
+                    <group>
+                        <field name="u_cln"/>
+                        <field name="u_crdcode"/>
+                        <field name="u_bs"/>
+                        <field name="u_bsc"/>
+                        <field name="dflt_wh"/>
+                        <field name="exit_wh"/>
+                        <field name="location_code"/>
+                        <field name="stock_movement"/>
+                    </group>
+                </page>
+<!--                <page string="Procurement">-->
+<!--                    <group>-->
+<!--                        <field name="supplier_contact"/>-->
+<!--                        <field name="payment_terms"/>-->
+<!--                        <field name="delivery_terms"/>-->
+<!--                        <field name="disposal_method"/>-->
+<!--                    </group>-->
+<!--                </page>-->
+                <page string="Notes / Image">
+                    <group>
+                        <field name="item_notes"/>
+                        <field name="picture_name" widget="image"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_scrapped_equipment_tree" model="ir.ui.view">
+        <field name="name">maintenance.equipment.scrap.tree</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="arch" type="xml">
+            <tree string="Scrapped Equipment">
+                <field name="name"/>
+                <field name="asset_tag_id"/>
+                <field name="asset_lifecycle_status"/>
+                <field name="project_id"/>
+                <field name="location"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_scrapped_equipment" model="ir.actions.act_window">
+        <field name="name">Scrapped Assets</field>
+        <field name="res_model">maintenance.equipment</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('asset_lifecycle_status','=','scrap')]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <menuitem id="menu_scrapped_equipment"
+              name="Scrapped Assets"
+              parent="menu_m_allocation"
+              action="action_scrapped_equipment"
+              sequence="3"/>
+
+    <record id="hr_equipment_view_search_inherit" model="ir.ui.view">
+        <field name="name">maintenance.equipment.search.inherit</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <field name="asset_tag_id" groupby="1"/>
+                <field name="employee_barcode" groupby="1"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="account_asset_asset_form_inherit" model="ir.ui.view">
+        <field name="name">asset.asset.form.inherit</field>
+        <field name="model">account.asset.asset</field>
+        <field name="inherit_id" ref="om_account_asset.view_account_asset_asset_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="product_id" readonly="state != 'draft'"/>
+                <field name="asset_tag_id" required="1" readonly="state != 'draft'"/>
+                <field name="lot_id" readonly="state != 'draft'"/>
+            </xpath>
+        </field>
+    </record>
+     <record id="view_employee_form_religion_inherit" model="ir.ui.view">
+        <field name="name">hr.employee.form.religion.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <field name="coach_id" position="after">
+                <field name="religion"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="equipment_request_view_form_inherit" model="ir.ui.view">
+        <field name="name">maintenance.request.form.inherit</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form"/>
+        <field name="arch" type="xml">
+            <field name="description" position="replace"/>
+            <xpath expr="//field[@name='stage_id']" position="attributes">
+                <attribute name="readonly">1</attribute>
+                <attribute name="options"></attribute>
+            </xpath>
+            <xpath expr="//field[@name='maintenance_type']" position="after">
+                <field name="request_stage_type" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='equipment_id']" position="after">
+                <field name="product_id" domain="[('equipment', '=', True)]"/>
+            </xpath>
+            <button name="archive_equipment_request" position="before">
+                <button name="action_submit" type="object" string="Submit" class="oe_highlight"
+                        invisible="request_stage_type != 'new' or archive == True"/>
+                <button name="action_approval" type="object" string="Approval" class="oe_highlight"
+                        invisible="request_stage_type != 'wait' or archive == True"/>
+                <button name="action_confim" type="object" string="Confirm" class="oe_highlight"
+                        invisible="request_stage_type != 'approval' or archive == True"/>
+                <button name="action_in_progress" type="object" string="Process" class="oe_highlight"
+                        invisible="request_stage_type != 'in_progress' or archive == True"/>
+                <button name="action_create_invoice" type="object" string="Create Invoice" class="oe_highlight"
+                        invisible="request_stage_type != 'repaired'"/>
+            </button>
+            <xpath expr="//sheet/div[1]" position="before">
+                <div class="oe_button_box" name="button_box">
+                    <button class="oe_stat_button" name="open_task" type="object" icon="fa-tasks"
+                            invisible="task_count == 0">
+                        <field string="Job Orders" name="task_count" widget="statinfo"/>
+                    </button>
+                    <button name="action_request_moves" type="object" string="Pickings" class="oe_stat_button"
+                            icon="fa-exchange" invisible="request_stage_type == 'new'"/>
+                    <button class="oe_stat_button" name="open_invoices" type="object" icon="fa-usd"
+                            invisible="invoice_count == 0">
+                        <field string="Invoices" name="invoice_count" widget="statinfo"/>
+                    </button>
+                </div>
+            </xpath>
+            <button name="archive_equipment_request" position="attributes">
+                <attribute name="modifiers">
+                    {"invisible": [["request_stage_type", "not in", ["new", "in_progress"]]]}
+                </attribute>
+            </button>
+            <xpath expr="//sheet" position="inside">
+                <notebook>
+                    <page string="Components">
+                        <field name="line_ids" mode="tree,form">
+                            <tree editable="bottom">
+                                <field name="product_id" required="1"/>
+                                <field name="product_uom_category_id" invisible="1"/>
+                                <field name="quantity"/>
+                                <field name="product_uom_id" options="{'no_create': True}"/>
+                                <field name="price_unit"/>
+                                <field name="tax_ids" widget="many2many_tags"/>
+                                <field name="price_tax"/>
+                                <field name="price_subtotal"/>
+                            </tree>
+                        </field>
+                        <group class="oe_subtotal_footer oe_right">
+                            <field name="amount_total"/>
+                        </group>
+                    </page>
+                    <page string="Stock Movements">
+                        <field name="move_ids" readonly="1"/>
+                    </page>
+                    <page string="Job Details">
+                        <field name="task_ids" readonly="1"/>
+                    </page>
+                    <page string="Expense Details">
+                        <field name="invoice_ids" readonly="1"/>
+                    </page>
+                    <page string="Damage Details">
+                        <field name="damage_ids">
+                            <tree editable="bottom">
+                                <field name="date"/>
+                                <field name="description"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Checklist">
+                        <field name="checklist_ids">
+                            <tree editable="bottom">
+                                <field name="checklist_ids"/>
+                                <field name="description"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Other Information">
+                        <group>
+                            <field name="location_id" required="1"/>
+                            <field name="dest_location_id" required="1"/>
+                        </group>
+                        <field name="note" placeholder="Write a note or description"/>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+
+<!--    <-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+    <record id="view_stock_scrap_form_inherit_asset_tag" model="ir.ui.view">
+        <field name="name">stock.scrap.form.asset.tag</field>
+        <field name="model">stock.scrap</field>
+        <field name="inherit_id" ref="stock.stock_scrap_form_view"/>
+        <field name="arch" type="xml">
+            <!-- Add asset_tag_id after the product_id field -->
+            <xpath expr="//field[@name='product_id']" position="after">
+                <field name="asset_tag_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
+
+

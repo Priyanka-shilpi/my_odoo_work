@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="action_tools_asset_checklist" model="ir.actions.act_window">
+        <field name="name">Tools/Equipment Checklists</field>
+        <field name="res_model">tools.asset.checklist</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling">Manage and verify tool/equipment allocation checklists.</p>
+        </field>
+    </record>
+
+    <record id="view_tools_asset_checklist_tree" model="ir.ui.view">
+        <field name="name">tools.asset.checklist.tree</field>
+        <field name="model">tools.asset.checklist</field>
+        <field name="arch" type="xml">
+            <tree create="False">
+                <field name="employee_id"/>
+                <field name="project_id"/>
+                <field name="allocation_id"/>
+                <field name="verified_by"/>
+                <field name="verified_date"/>
+                <field name="status"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_tools_asset_checklist_form" model="ir.ui.view">
+        <field name="name">tools.asset.checklist.form</field>
+        <field name="model">tools.asset.checklist</field>
+        <field name="arch" type="xml">
+            <form string="Tool/Equipment Checklist" create="False">
+                <header>
+                    <field name="status" widget="statusbar" statusbar_visible="pending,verified,escalated,reset"/>
+                    <button name="action_verify" type="object" string="Verify" class="btn-primary"
+                            invisible="status != 'pending'"/>
+                    <button name="action_reset" type="object" string="Reset" class="btn-secondary"
+                            invisible="status != 'verified' and status != 'escalated'"/>
+                    <button name="print_checklist" string="Print Checklist" type="object" class="btn-secondary"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="True"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="checklist_type" readonly="1"/>
+                        <field name="employee_id" readonly="1"/>
+                        <field name="project_id" readonly="1"/>
+                        <field name="signed_document" filename="signed_filename"/>
+                        <field name="remarks" invisible="checklist_type == 'allocation'"/>
+                        <field name="verified_by" readonly="1"/>
+                        <field name="verified_date" readonly="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Checklist Lines">
+                            <field name="line_ids">
+                                <tree editable="bottom" create="False">
+                                    <field name="asset_id" domain="[('asset_lifecycle_status', '!=', 'scrap')]"/>
+                                    <field name="asset_tag_id"/>
+                                    <field name="serial_number"/>
+                                    <field name="description"/>
+                                    <field name="status"/>
+                                    <field name="remarks"/>
+                                    <field name="cost" readonly="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Acknowledgement">
+                            <group>
+                                <separator string="Employee Acknowledgement"/>
+                                <field name="employee_id"/>
+                                <field name="project_id"/>
+                                <field name="verified_date"/>
+                                <field name="signed_document" filename="signed_filename"/>
+                            </group>
+                            <group>
+                                <separator string="Manager / Supervisor"/>
+                                <field name="verified_by"/>
+                                <field name="verified_date"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+<!--    <menuitem id="menu_tools_asset_checklist_root"-->
+<!--              name="Tool/Equipment Checklists"-->
+<!--              parent="menu_tools_equipments_menu"-->
+<!--              action="action_tools_asset_checklist"/>-->
+
+</odoo>

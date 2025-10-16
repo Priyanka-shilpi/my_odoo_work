@@ -1,0 +1,23 @@
+{
+    'name': 'Garage Services',
+    'version': '1.0',
+    'summary': 'Vehicle Service & Spare Part Tracking',
+    'category': 'Fleet',
+    'author': 'Aswin/Sidmec',
+    'depends': ['base', 'fleet', 'product'],
+    'data': [
+        'security/ir.model.access.csv',
+        'security/groups.xml',
+        'reports/job_card_template.xml',
+        'reports/job_card_report.xml',
+        'data/ir_sequence_data.xml',
+        'views/garage_vehicle_service_views.xml',
+        'views/garage_consumable_usage_views.xml',
+        'views/spare_part_category_view.xml',
+        'views/job_card_views.xml',
+        'views/garage_menus.xml',
+    ],
+    'installable': True,
+    'application': True,
+    'license': 'LGPL-3',
+}

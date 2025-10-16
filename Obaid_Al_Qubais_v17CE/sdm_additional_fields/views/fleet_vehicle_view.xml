@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="fleet_vehicle_form_inherit_custom" model="ir.ui.view">
+        <field name="name">fleet.vehicle.form.inherit.custom</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+        <field name="arch" type="xml">
+
+            <!-- License Expiry before Tags -->
+            <xpath expr="//label[@for='tag_ids']" position="before">
+                <label for="license_expiry_date"/>
+                <field name="license_expiry_date" placeholder="e.g. 2025-12-31"/>
+                <br/>
+            </xpath>
+
+            <xpath expr="//notebook//page[@name='note']" position="after">
+                <page string="Additional Info" name="additional_info">
+                    <group name="registration_certificates" string="Registration Certificates">
+                        <separator string="Registration Certificate" colspan="2"/>
+                        <group col="2">
+                            <field name="registration_certificate_start" placeholder="e.g. 2025-12-31"/>
+                            <field name="registration_certificate_file" filename="Registration Certificate"/>
+                        </group>
+                        <group col="2">
+                            <field name="registration_certificate_expiry" placeholder="e.g. 2025-12-31"/>
+                        </group>
+
+                        <separator string="Third Party Certificate" colspan="2"/>
+                        <group col="2">
+                            <field name="third_party_certificate_file" filename="Third Party Certificate"/>
+                        </group>
+                        <group col="2">
+                            <field name="third_party_certificate_expiry" placeholder="e.g. 2025-12-31"/>
+                        </group>
+                    </group>
+                    <group name="ownership_details" string="Ownership Details">
+                        <field name="ownership_type_id"/>
+                    </group>
+                </page>
+            </xpath>
+            <xpath expr="//notebook//page[@name='additional_info']" position="after">
+                <page string="Other Certificates" name="other_certificates">
+                    <group string="Other Certificates">
+                        <separator string="Zone II Certificate" colspan="2"/>
+                        <group col="2">
+                            <field name="zone_ii_certificate_file" filename="Zone II Certificate"/>
+                        </group>
+                        <group col="2">
+                            <field name="zone_ii_certificate_expiry" placeholder="e.g. 2025-12-31"/>
+                        </group>
+
+                        <separator string="Spark Arrestor Certificate" colspan="2"/>
+                        <group col="2">
+                            <field name="spark_arrestor_certificate_file" filename="Spark Arrestor Certificate"/>
+                        </group>
+                        <group col="2">
+                            <field name="spark_arrestor_expiry" placeholder="e.g. 2025-12-31"/>
+                        </group>
+
+                        <separator string="Chalwyn Valve Certificate" colspan="2"/>
+                        <group col="2">
+                            <field name="chalwyn_valve_certificate_file" filename="Chalwyn Valve Certificate"/>
+                        </group>
+                        <group col="2">
+                            <field name="chalwyn_valve_expiry" placeholder="e.g. 2025-12-31"/>
+                        </group>
+
+                        <separator string="IVMS Certificate" colspan="2"/>
+                        <group col="2">
+                            <field name="ivms_certificate_file" filename="IVMS Certificate"/>
+                        </group>
+                    </group>
+
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

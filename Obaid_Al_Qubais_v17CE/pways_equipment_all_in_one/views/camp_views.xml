@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Camp Views -->
+    <record id="view_camp_camp_form" model="ir.ui.view">
+        <field name="name">camp.camp.form</field>
+        <field name="model">camp.camp</field>
+        <field name="arch" type="xml">
+            <form string="Camp">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="location"/>
+                    </group>
+                    <notebook>
+                        <page string="Blocks">
+                            <field name="block_ids">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                    <field name="caravan_count"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_camp_camp_tree" model="ir.ui.view">
+        <field name="name">camp.camp.tree</field>
+        <field name="model">camp.camp</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="location"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Block Views -->
+    <record id="view_camp_block_form" model="ir.ui.view">
+        <field name="name">camp.block.form</field>
+        <field name="model">camp.block</field>
+        <field name="arch" type="xml">
+            <form string="Block">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="camp_id"/>
+                        <field name="caravan_count"/>
+                    </group>
+                    <notebook>
+                        <page string="Rooms">
+                            <field name="room_ids">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                    <field name="capacity"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_camp_block_tree" model="ir.ui.view">
+        <field name="name">camp.block.tree</field>
+        <field name="model">camp.block</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="camp_id"/>
+                <field name="caravan_count"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Room Views -->
+    <record id="view_camp_room_form" model="ir.ui.view">
+        <field name="name">camp.room.form</field>
+        <field name="model">camp.room</field>
+        <field name="arch" type="xml">
+            <form string="Room">
+                <header>
+                    <field name="hide_done_button" invisible="1"/>
+                    <button name="action_button_done" string="Done" type="object" invisible="hide_done_button" class="oe_highlight"/>
+                    <field name="state" widget="statusbar" statusbar_visible="new,done"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="state" invisible="1"/>
+                        <field name="name"/>
+                        <field name="block_id"/>
+                        <field name="caravan_id"/>
+                        <field name="room_type_id"/>
+                        <field name="allocation_type" invisible="1"/>
+                        <field name="occupants_ids" widget="many2many_tags" invisible="allocation_type != 'internal'"/>
+                        <field name="guest_ids" widget="many2many_tags" invisible="allocation_type != 'external'"/>
+                        <field name="capacity" groups="base.group_system"/>
+                        <field name="vacant_slots" readonly="1"/>
+<!--                        <field name="current_occupant_id"/>-->
+                    </group>
+                    <group string="Assets">
+                        <field name="asset_ids" widget="many2many"
+                               context="{'default_room_id': active_id, 'tree_view_ref': 'pways_equipment_all_in_one.view_equipment_tree_for_camp_room'}">
+                            <tree editable="bottom" create="False">
+                                <field name="name" readonly="1"/>
+                                <field name="asset_tag_id" readonly="1"/>
+                                <field name="category_id" readonly="1"/>
+                                <field name="product_cost" readonly="1"/>
+                            </tree>
+                        </field>
+                        <field name="asset_tags_combined" readonly="1"/>
+                        <field name="asset_total_cost" readonly="1"/>
+                        <field name="room_type_cost" readonly="1"/>
+                        <field name="total_room_cost" readonly="1"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_camp_room_tree" model="ir.ui.view">
+        <field name="name">camp.room.tree</field>
+        <field name="model">camp.room</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="block_id"/>
+                <field name="caravan_id"/>
+                <field name="capacity"/>
+                <field name="occupied_count"/>
+                <field name="vacant_count"/>
+                <field name="is_full"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Caravan Views -->
+    <record id="view_camp_caravan_form" model="ir.ui.view">
+        <field name="name">camp.caravan.form</field>
+        <field name="model">camp.caravan</field>
+        <field name="arch" type="xml">
+            <form string="Caravan">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="block_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_camp_caravan_tree" model="ir.ui.view">
+        <field name="name">camp.caravan.tree</field>
+        <field name="model">camp.caravan</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="block_id"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_equipment_tree_for_camp_room" model="ir.ui.view">
+        <field name="name">maintenance.equipment.tree.camp.room</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="asset_tag_id"/>
+                <field name="category_id"/>
+            </tree>
+        </field>
+    </record>
+    <!--    <record id="view_form_camp_block" model="ir.ui.view">-->
+    <!--        <field name="name">camp.block.form</field>-->
+    <!--        <field name="model">camp.block</field>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <form>-->
+    <!--                <group>-->
+    <!--                    <field name="name"/>-->
+    <!--                    <field name="camp_id"/>-->
+    <!--                    <field name="caravan_count"/>-->
+    <!--                    <field name="room_ids"/>-->
+    <!--                </group>-->
+    <!--            </form>-->
+    <!--        </field>-->
+    <!--    </record>-->
+    <record id="view_camp_room_tree_dashboard" model="ir.ui.view">
+        <field name="name">camp.room.tree.dashboard</field>
+        <field name="model">camp.room</field>
+        <field name="arch" type="xml">
+            <tree string="Camp Room Dashboard">
+                <field name="name"/>
+                <field name="location"/>
+                <field name="capacity"/>
+                <field name="occupied_count"/>
+                <field name="vacant_count"/>
+                <field name="is_full"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_camp_room_dashboard" model="ir.actions.act_window">
+        <field name="name">Room Occupancy Dashboard</field>
+        <field name="res_model">camp.room</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_camp_dashboard_heading"
+              name="Dashboard"
+              parent="menu_camp_room_root"
+              sequence="5"/>
+
+    <menuitem id="menu_camp_dashboard"
+              name="Room Dashboard"
+              parent="menu_camp_dashboard_heading"
+              action="action_camp_room_dashboard"
+              sequence="1"/>
+
+    <record id="view_checklist_form" model="ir.ui.view">
+        <field name="name">camp.asset.checklist.form</field>
+        <field name="model">camp.asset.checklist</field>
+        <field name="arch" type="xml">
+            <form string="Asset Checklist" create="False">
+                <sheet>
+                    <header>
+                        <button name="action_verify" type="object" string="Verify Checklist" class="btn-primary"/>
+                    </header>
+                    <group>
+                        <field name="room_id"/>
+                        <field name="employee_id"/>
+                        <field name="status"/>
+                        <field name="signed_document" filename="signed_filename"/>
+                        <field name="verified_by"/>
+                        <field name="verified_date"/>
+                    </group>
+                    <notebook>
+                        <page string="Checklist Lines">
+                            <field name="line_ids">
+                                <tree editable="bottom">
+                                    <field name="asset_id"/>
+                                    <field name="status"/>
+                                    <field name="remarks"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_clearance_tree" model="ir.ui.view">
+        <field name="name">camp.clearance.request.tree</field>
+        <field name="model">camp.clearance.request</field>
+        <field name="arch" type="xml">
+            <tree string="Clearance Requests">
+                <field name="employee_id"/>
+                <field name="room_id"/>
+                <field name="clearance_date"/>
+                <field name="state"/>
+                <field name="total_deduction"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_clearance_form" model="ir.ui.view">
+        <field name="name">camp.clearance.request.form</field>
+        <field name="model">camp.clearance.request</field>
+        <field name="arch" type="xml">
+            <form string="Clearance Request">
+                <sheet>
+                    <header>
+                        <button name="action_process_clearance" type="object" string="Process Clearance"
+                                class="btn-primary"/>
+                    </header>
+                    <group>
+                        <field name="employee_id"/>
+                        <field name="room_id"/>
+                        <field name="checklist_id" invisible="1"/>
+                        <field name="clearance_date"/>
+                        <field name="state"/>
+                        <field name="total_deduction"/>
+                    </group>
+                    <notebook>
+                        <page string="Deductions">
+                            <field name="deduction_line_ids">
+                                <tree editable="bottom">
+                                    <field name="asset_id"/>
+                                    <field name="status"/>
+                                    <field name="amount"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="view_camp_procurement_request_tree" model="ir.ui.view">
+        <field name="name">camp.procurement.request.tree</field>
+        <field name="model">camp.procurement.request</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="room_id"/>
+                <field name="asset_id"/>
+                <field name="status"/>
+                <field name="note"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_camp_procurement_request_form" model="ir.ui.view">
+        <field name="name">camp.procurement.request.form</field>
+        <field name="model">camp.procurement.request</field>
+        <field name="arch" type="xml">
+            <form string="Procurement Request">
+                <sheet>
+                    <group>
+                        <field name="checklist_line_id" invisible="1"/>
+                        <field name="asset_id"/>
+                        <field name="status"/>
+                        <field name="note"/>
+                        <field name="room_id"/>
+                        <field name="checklist_id" invisible="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_camp_asset_tracker_tree" model="ir.ui.view">
+        <field name="name">camp.asset.tracker.tree</field>
+        <field name="model">camp.asset.tracker</field>
+        <field name="arch" type="xml">
+            <tree string="Asset Tracker">
+                <field name="date"/>
+                <field name="room_id"/>
+                <field name="asset_id"/>
+                <field name="employee_id"/>
+                <field name="status"/>
+                <field name="transferred_by"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_camp_asset_tracker_form" model="ir.ui.view">
+        <field name="name">camp.asset.tracker.form</field>
+        <field name="model">camp.asset.tracker</field>
+        <field name="arch" type="xml">
+            <form string="Asset Tracker">
+                <group>
+                    <field name="date"/>
+                    <field name="room_id"/>
+                    <field name="asset_id"/>
+                    <field name="employee_id"/>
+                    <field name="status"/>
+                    <field name="transferred_by"/>
+                    <field name="checklist_line_id"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_camp_room" model="ir.actions.act_window">
+        <field name="name">Camp Rooms</field>
+        <field name="res_model">camp.room</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="action_procurement_requests" model="ir.actions.act_window">
+        <field name="name">Procurement Requests</field>
+        <field name="res_model">camp.procurement.request</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_camp_asset_checklist" model="ir.actions.act_window">
+        <field name="name">Asset Checklists</field>
+        <field name="res_model">camp.asset.checklist</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="action_camp_block" model="ir.actions.act_window">
+        <field name="name">Camp Blocks</field>
+        <field name="res_model">camp.block</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_camp_clearance_request" model="ir.actions.act_window">
+        <field name="name">Clearance Requests</field>
+        <field name="res_model">camp.clearance.request</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="action_camp_asset_tracker" model="ir.actions.act_window">
+        <field name="name">Asset Tracker</field>
+        <field name="res_model">camp.asset.tracker</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'create': False, 'edit': False}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No asset transfers yet.
+            </p>
+        </field>
+    </record>
+    <record id="action_camp_camp" model="ir.actions.act_window">
+        <field name="name">Camps</field>
+        <field name="res_model">camp.camp</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a camp to get started.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_camp_block" model="ir.actions.act_window">
+        <field name="name">Blocks</field>
+        <field name="res_model">camp.block</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a block and assign it to a camp.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_camp_caravan" model="ir.actions.act_window">
+        <field name="name">Caravans</field>
+        <field name="res_model">camp.caravan</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Define caravans within a block.
+            </p>
+        </field>
+    </record>
+    <record id="action_camp_clearance_request" model="ir.actions.act_window">
+        <field name="name">Clearance Requests</field>
+        <field name="res_model">camp.clearance.request</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="menu_camp_aset_checklist"
+              name="Room Asset Checklists"
+              parent="menu_camp_room_root"/>
+
+    <menuitem id="menu_camp_asset_tracker"
+              name="Asset Tracker"
+              parent="menu_camp_aset_checklist"
+              action="action_camp_asset_tracker"/>
+
+    <menuitem id="menu_camp_room_root"
+              name="Camp Rooms"
+              parent="maintenance.menu_maintenance_title"/>
+
+    <!--    <menuitem id="menu_camp_room"-->
+    <!--              name="Camp Rooms"-->
+    <!--              parent="menu_camp_room_root"-->
+    <!--              action="action_camp_room"-->
+    <!--              sequence="10"/>-->
+
+    <menuitem id="menu_camp_asset_checklist"
+              name="Asset Checklists"
+              parent="menu_camp_aset_checklist"
+              action="action_camp_asset_checklist"
+              sequence="20"/>
+
+    <menuitem id="menu_camp_clearance_request"
+              name="Clearance Requests"
+              parent="menu_room_asset_allocation_root"
+              action="action_camp_clearance_request"
+              sequence="30"/>
+    <menuitem id="menu_camp_room_root"
+              name="Camp Rooms"
+              parent="maintenance.menu_maintenance_title"
+              sequence="10"/>
+
+    <menuitem id="menu_camp_room_root"
+              name="Camp Rooms"
+              parent="maintenance.menu_maintenance_title"
+              sequence="10"/>
+
+    <menuitem id="menu_camp_section"
+              name="Camps Configuration"
+              parent="menu_camp_room_root"
+              sequence="1"/>
+
+    <menuitem id="menu_camp_camp"
+              name="Camps"
+              parent="menu_camp_section"
+              action="action_camp_camp"
+              sequence="1"/>
+
+    <menuitem id="menu_camp_blocks"
+              name="Blocks"
+              parent="menu_camp_section"
+              action="action_camp_block"
+              sequence="2"/>
+
+    <menuitem id="menu_camp_room"
+              name="Camp Rooms"
+              parent="menu_camp_section"
+              action="action_camp_room"
+              sequence="3"/>
+
+    <menuitem id="menu_camp_caravan"
+              name="Caravans"
+              parent="menu_camp_section"
+              action="action_camp_caravan"
+              sequence="4"/>
+
+    <menuitem id="menu_procurement_root" name="Procurement" parent="menu_m_allocation"/>
+    <menuitem id="menu_procurement_requests" name="Requests" parent="menu_procurement_root"
+              action="action_procurement_requests"/>
+
+
+</odoo>

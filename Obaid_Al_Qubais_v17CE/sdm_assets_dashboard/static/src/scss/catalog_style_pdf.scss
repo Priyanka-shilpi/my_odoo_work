@@ -1,0 +1,58 @@
+/* --- Tile Container --- */
+.card {
+    border: none;
+    border-radius: 16px;
+    padding: 20px;
+    color: #fff;
+    text-align: center;
+    font-weight: 600;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* --- Hover Effect --- */
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.25);
+}
+
+/* --- Bright Solid Colors --- */
+.bg-primary {
+    background: linear-gradient(135deg, #007bff, #0056b3) !important;
+}
+
+.bg-warning {
+    background: linear-gradient(135deg, #ffb300, #ff8800) !important;
+}
+
+.bg-danger {
+    background: linear-gradient(135deg, #ff3d3d, #b30000) !important;
+}
+
+/* --- Text Styling --- */
+.card h3,
+.card p {
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.35);
+}
+
+/* --- Icon Styling --- */
+.card .icon {
+    font-size: 2.5rem;
+    margin-bottom: 8px;
+    display: block;
+}
+
+/* --- Section Titles --- */
+.dashboard-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+}
+
+/* --- Layout Spacing --- */
+.dashboard-row {
+    margin-bottom: 25px;
+}

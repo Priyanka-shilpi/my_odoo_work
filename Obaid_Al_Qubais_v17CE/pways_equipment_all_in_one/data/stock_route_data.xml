@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate='1'>
+        <record id="route_maintainance" model='stock.location.route'>
+            <field name="name">Maintainance</field>
+            <field name="company_id" ref='base.main_company'></field>
+            <field name="sequence">6</field>
+        </record>
+
+        <record id="rule_maintainance" model='stock.rule'>
+            <field name="name">Demand Generated From Maintainance</field>
+            <field name="company_id" ref='base.main_company'></field>
+            <field name="sequence">6</field>
+            <field name="active" eval="True"/>
+            <field name="propagate_cancel" eval="True"/>
+            <field name="procure_method">mts_else_mto</field>
+            <field name="action">pull</field>
+            <field name="auto">manual</field>
+            <field name="route_id" ref='route_maintainance'/>
+            <field name="location_src_id" ref='stock.stock_location_stock'/>
+            <field name="location_id" model='stock.location' 
+                eval="obj().env['stock.location'].search([
+                    ('location_id', '=', obj().env.ref('stock.stock_location_locations_virtual').id),
+                    ('usage', '=', 'production')], limit=1)"/>
+            <field name="picking_type_id" model='stock.picking.type' eval="obj().env['stock.picking.type'].search([('code', '=', 'internal')], limit=1)"/>
+        </record>
+    </data>
+</odoo>

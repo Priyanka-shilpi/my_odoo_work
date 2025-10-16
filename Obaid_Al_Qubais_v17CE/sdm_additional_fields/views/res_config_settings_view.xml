@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="fleet_res_config_settings_view_form_email" model="ir.ui.view">
+        <field name="name">fleet.res.config.settings.view.form.email</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="fleet.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <div class="app_settings_block" data-string="Fleet Alerts" string="Fleet Alerts">
+                    <h2>Fleet Expiry Alerts</h2>
+                    <block>
+                        <div class="text-muted content-group mt16">
+                            <setting>
+                                <label for="fleet_alert_email"/>
+                                <field name="fleet_alert_email"/>
+                                <div class="text-muted content-group mt16">
+                                    The email address where expiry alert notifications will be sent.
+                                </div>
+                            </setting>
+                        </div>
+                    </block>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

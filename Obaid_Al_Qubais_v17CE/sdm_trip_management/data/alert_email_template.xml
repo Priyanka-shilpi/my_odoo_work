@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="cron_check_vehicle_expiry_alerts" model="ir.cron">
+            <field name="name">Vehicle Expiry Alerts</field>
+            <field name="model_id" ref="fleet.model_fleet_vehicle"/>
+            <field name="state">code</field>
+            <field name="code">env['fleet.vehicle'].check_expiry_alerts()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="active">True</field>
+        </record>
+        <record id="email_template_vehicle_expiry_alert" model="mail.template">
+            <field name="name">Vehicle Expiry Alert</field>
+            <field name="model_id" ref="fleet.model_fleet_vehicle"/>
+            <field name="email_from">${(user.email or 'noreply@example.com')|safe}</field>
+            <field name="subject">[Alert] Vehicle {{ object.license_plate }}</field>
+            <field name="email_to">${object.driver_id.work_email or 'fleetmanager@example.com'}</field>
+            <field name="body_html" type="html">
+                <div>
+                    <p>Hello ${object.driver_id.name or 'Fleet Manager'},</p>
+                    <p>The vehicle <strong>${object.name or object.license_plate}</strong> has the following expiry
+                        information:
+                    </p>
+                    <ul>
+                        <li>
+                            <strong>Insurance:</strong>
+                            ${object.insurance_expiration_date or 'N/A'}
+                        </li>
+                        <li>
+                            <strong>License:</strong>
+                            ${object.license_expiration_date or 'N/A'}
+                        </li>
+                    </ul>
+                    <p>Please take action accordingly.</p>
+                </div>
+            </field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+    </data>
+</odoo>

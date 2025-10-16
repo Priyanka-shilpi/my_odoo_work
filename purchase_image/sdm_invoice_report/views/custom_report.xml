@@ -1,0 +1,30 @@
+<odoo>
+
+    <record id="paperformat_custom_invoice_report" model="report.paperformat">
+        <field name="name">Invoice Receipt</field>
+<!--        <field name="default" eval="False"/>-->
+        <field name="format">custom</field>
+        <field name="page_height">0</field>
+        <field name="page_width">236</field>
+        <field name="margin_top">2</field>
+        <field name="margin_bottom">2</field>
+        <field name="margin_left">2</field>
+        <field name="margin_right">2</field>
+        <field name="header_spacing">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <!-- Now the report can reference it -->
+    <record id="report_custom_invoice_pdf" model="ir.actions.report">
+        <field name="name">Invoice Receipt</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">sdm_invoice_report.invoice_custom_report_document</field>
+        <field name="report_file">sdm_invoice_report.invoice_custom_report_document</field>
+        <field name="print_report_name">(object.id)</field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="sdm_invoice_report.paperformat_custom_invoice_report"/>
+    </record>
+</odoo>

@@ -1,0 +1,119 @@
+<odoo>
+    <record id="view_driver_assignment_tree" model="ir.ui.view">
+        <field name="name">driver.assignment.tree</field>
+        <field name="model">driver.assignment</field>
+        <field name="arch" type="xml">
+            <tree string="Driver Assignments">
+                <field name="driver_id"/>
+                <field name="project_id"/>
+                <field name="vehicle_id"/>
+                <field name="assignment_start"/>
+                <field name="assignment_end"/>
+                <field name="status"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_driver_assignments_from_project" model="ir.actions.act_window">
+        <field name="name">Driver Assignments</field>
+        <field name="res_model">driver.assignment</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('project_id', '=', active_id)]</field>
+        <field name="context">{'default_project_id': active_id}</field>
+    </record>
+    <record id="fleet_vehicle_assignation_log_view_list_inherit" model="ir.ui.view">
+        <field name="name">fleet.vehicle.assignation.log.view.tree.inherit</field>
+        <field name="model">fleet.vehicle.assignation.log</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_assignation_log_view_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="inside">
+                <field name="project_id"/>
+                <!--                <field name="status"/>-->
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="view_driver_assignment_form" model="ir.ui.view">
+        <field name="name">driver.assignment.form</field>
+        <field name="model">driver.assignment</field>
+        <field name="arch" type="xml">
+            <form string="Driver Assignment">
+                <header>
+                    <field name="status" widget="statusbar"
+                           statusbar_visible="draft,running,completed"/>
+                    <button name="action_mark_active" type="object" string="Mark as Active"
+                            class="btn-primary" invisible="status != 'draft'"/>
+                    <button name="action_mark_completed" type="object" string="Mark as Completed"
+                            class="btn-primary" invisible="status != 'active'"/>
+                    <button name="action_reset_to_draft" type="object" string="Reset"
+                            class="btn-primary" invisible="status != 'completed'"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="driver_id"/>
+                        <field name="license_type" invisible="1"/>
+                        <field name="required_license_type" invisible="1"/>
+                        <field name="project_id"/>
+                        <field name="vehicle_id"
+                               domain="[('driver_id', '=', False), ('required_license_type', '=', license_type)]"/>
+                        <!--                        <field name="assignment_date"/>-->
+                        <field name="assignment_start"/>
+                        <field name="assignment_end"/>
+                        <field name="assignment_time" readonly="1"/>
+
+                    </group>
+                </sheet>
+
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_driver_assignment_search" model="ir.ui.view">
+        <field name="name">driver.assignment.search</field>
+        <field name="model">driver.assignment</field>
+        <field name="arch" type="xml">
+            <search string="Search Driver Assignments">
+                <field name="driver_id"/>
+                <field name="vehicle_id"/>
+                <field name="assignment_time"/>
+                <field name="status"/>
+                <field name="project_id"/>
+                <filter name="status_active" string="Active" domain="[('status', '=', 'active')]"/>
+                <filter name="status_completed" string="Completed" domain="[('status', '=', 'completed')]"/>
+                <group expand="1" string="Group By">
+                    <filter name="group_driver" string="Driver" context="{'group_by': 'driver_id'}"/>
+                    <filter name="group_vehicle" string="Vehicle" context="{'group_by': 'vehicle_id'}"/>
+                    <filter name="group_project_id" string="Project" context="{'group_by': 'project_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="view_project_form_inherit_driver_assignments" model="ir.ui.view">
+        <field name="name">project.project.form.driver.assignments</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='oe_button_box']" position="inside">
+                <button name="%(action_driver_assignments_from_project)d"
+                        type="action"
+                        class="oe_stat_button"
+                        icon="fa-user">
+                    <field name="driver_assignment_count" widget="statinfo" string="Driver Assignments"/>
+                </button>
+                <button name="action_view_fuel_entries"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-tint">
+                    <field name="fuel_entry_count" widget="statinfo" string="Fuel Entries"/>
+                </button>
+                <button class="oe_stat_button" type="object" name="action_view_trips" icon="fa-road">
+                    <field name="trip_count" widget="statinfo" string="Trips"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

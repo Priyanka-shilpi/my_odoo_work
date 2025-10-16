@@ -1,0 +1,148 @@
+<odoo>
+    <template id="invoice_custom_report_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+
+                    <!-- Company Info -->
+                    <h3 style="text-align:center; font-size:6px; ">Ethnic Zuri Clothing</h3>
+                    <p style="text-align:center; font-size:6px;">
+                        Kaloor Kadavanthra Road, Kochi Kerala 682020, India
+                        <br/>
+                        GSTIN 32AAIFE9208J1ZE
+                    </p>
+
+                    <h4 style="text-align:center;">TAX INVOICE</h4>
+
+                    <!-- Invoice Info -->
+                    <table style="width:100%; font-size:6px; margin-top:10px;">
+                        <tr>
+                            <td>
+                                <b>Bill To:</b>
+                                <t t-esc="o.partner_id.name"/>
+                            </td>
+                            <td style="text-align:right;">
+                                <b>Date:</b>
+                                <t t-esc="o.invoice_date"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Invoice #:</b>
+                                <t t-esc="o.name"/>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </table>
+
+                    <!-- Items Table -->
+                    <table style="width:100%; border-collapse:collapse; font-size:6px; margin-top:10px;">
+                        <thead>
+                            <tr style="border-top:0.5px solid black; border-bottom:0.5px solid black;">
+                                <th style="text-align:left;">#</th>
+                                <th style="text-align:left;">Item</th>
+                                <th style="text-align:right;">Qty</th>
+                                <th style="text-align:right;">Rate</th>
+                                <th style="text-align:right;">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="enumerate(o.invoice_line_ids, start=1)" t-as="line">
+                                <tr>
+                                    <td>
+                                        <t t-esc="line[0]"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="line[1].product_id.default_code"/>
+                                    </td>
+                                    <td style="text-align:right;">
+                                        <t t-esc="line[1].quantity"/>
+                                    </td>
+                                    <td style="text-align:right;">
+                                        <t t-esc="line[1].price_unit"/>
+                                    </td>
+                                    <td style="text-align:right;">
+                                        <t t-esc="line[1].price_subtotal"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+
+                    <!-- Totals -->
+                    <table style="width:100%; margin-top:10px; font-size:6px;">
+                        <tr>
+                            <td style="text-align:right;">Sub Total</td>
+                            <td style="text-align:right;">
+                                <t t-esc="o.amount_untaxed"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <t t-foreach="o.invoice_line_ids" t-as="line">
+                                <t t-foreach="line.tax_ids.compute_all(line.price_unit, line.move_id.currency_id, line.quantity, product=line.product_id, partner=line.move_id.partner_id)['taxes']"
+                                   t-as="t">
+                                    <tr>
+                                        <td style="text-align:right;">
+                                            <t t-esc="t['name']"/>
+                                        </td>
+                                        <td style="text-align:right;">
+                                            <t t-esc="t['amount']"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </t>
+                        </tr>
+
+
+                        <tr>
+                            <td style="text-align:right;">Rounding</td>
+                            <td style="text-align:right;">
+                                <t t-set="subtotal" t-value="o.amount_untaxed or 0.0"/>
+                                <t t-set="total_with_tax" t-value="subtotal + (cgst or 0.0) + (sgst or 0.0)"/>
+                                <t t-set="rounding" t-value="round(total_with_tax) - total_with_tax"/>
+                                <t t-esc="'%.2f' % rounding"/>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align:right;">Total</td>
+                            <td style="text-align:right;">
+                                <b>
+                                    <t t-esc="o.amount_total"/>
+                                </b>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <p style="margin-top:8px; font-size:6px;">
+                        Total In Words:
+                        <b>
+                            <t t-esc="o.currency_id.amount_to_text(o.amount_total)"/>
+                        </b>
+                    </p>
+                    <div style="margin-top:10px; font-size:6px; text-align:left;">
+                        <p>
+                            For any queries/suggestions please call us on
+                            <br/>
+                            <b>+91 81297 33313</b>
+                            <br/>
+                            or write to us at
+                            <b>care@ethniczuri.com</b>
+                        </p>
+                    </div>
+
+                    <div style="margin-top:7px; font-size:5px; text-align:left;">
+                        <p>
+                            Items can be exchanged within 7 days of purchase with the original bill,
+                            provided they are unused and in perfect condition.
+                            <b>No refunds.</b>
+                        </p>
+                    </div>
+
+                    <p style="font-size:5px;">Subject to Ernakulam Jurisdiction</p>
+
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

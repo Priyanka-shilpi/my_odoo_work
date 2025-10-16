@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_comission_form" model="ir.ui.view">
+        <field name="name">agent.form</field>
+        <field name="model">agent</field>
+        <field name="arch" type="xml">
+            <form string="Commission">
+
+<sheet>
+                    <group>
+                        <field name="comission"/>
+                        <field name="fixed" invisible="comission != 'fixed'"/>
+                        <field name="commm" invisible="comission != 'commm'"/>
+                         <footer>
+        <button string="Save" type="object" name="action_apply" class="btn-primary"/>
+        <button string="Cancel" special="cancel" class="btn-secondary"/>
+      </footer>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+
+    <record id="action_agent_comission" model="ir.actions.act_window">
+        <field name="name">Comission</field>
+        <field name="res_model">agent</field>
+        <field name="view_mode">form</field>
+<!--        <field name="view_id" ref="view__list"/>-->
+    </record>
+</odoo>

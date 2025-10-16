@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_ownership_type_tree" model="ir.ui.view">
+        <field name="name">ownership.type.tree</field>
+        <field name="model">ownership.type</field>
+        <field name="arch" type="xml">
+            <tree string="Ownership Types">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_ownership_type_form" model="ir.ui.view">
+        <field name="name">ownership.type.form</field>
+        <field name="model">ownership.type</field>
+        <field name="arch" type="xml">
+            <form string="Ownership Type">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action Window -->
+    <record id="action_ownership_type" model="ir.actions.act_window">
+        <field name="name">Ownership Types</field>
+        <field name="res_model">ownership.type</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a new Ownership Type
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu Item -->
+    <menuitem id="menu_ownership_type"
+              name="Ownership Types"
+              sequence="100"
+              parent="fleet.fleet_configuration"
+              action="action_ownership_type"/>
+</odoo>

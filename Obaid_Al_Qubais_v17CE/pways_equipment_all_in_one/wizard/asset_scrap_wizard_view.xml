@@ -1,0 +1,27 @@
+<odoo>
+    <record id="view_asset_scrap_wizard_form" model="ir.ui.view">
+        <field name="name">asset.scrap.wizard.form</field>
+        <field name="model">asset.scrap.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Scrap Asset">
+                <group>
+                    <field name="asset_id" readonly="1"/>
+                    <field name="reason"/>
+                    <field name="reason_note" placeholder="Add additional notes (optional)"/>
+                </group>
+                <footer>
+                    <button string="Scrap" type="object" name="action_scrap" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_asset_scrap_wizard" model="ir.actions.act_window">
+        <field name="name">Scrap Asset</field>
+        <field name="res_model">asset.scrap.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="view_asset_scrap_wizard_form"/>
+    </record>
+</odoo>

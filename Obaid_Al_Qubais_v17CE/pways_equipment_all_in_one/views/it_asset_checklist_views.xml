@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Action for IT Asset Checklist -->
+    <record id="action_it_asset_checklist" model="ir.actions.act_window">
+        <field name="name">IT Asset Checklists</field>
+        <field name="res_model">it.asset.checklist</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling">
+                Create and verify checklists for IT asset allocations.
+            </p>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_it_asset_checklist_tree" model="ir.ui.view">
+        <field name="name">it.asset.checklist.tree</field>
+        <field name="model">it.asset.checklist</field>
+        <field name="arch" type="xml">
+            <tree create="False">
+                <field name="employee_id"/>
+                <field name="project_id"/>
+                <field name="allocation_id"/>
+                <field name="verified_by"/>
+                <field name="verified_date"/>
+                <field name="status"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <!-- IT Asset Checklist Form View (for both Allocation and Return) -->
+    <record id="view_form_it_asset_checklist" model="ir.ui.view">
+        <field name="name">it.asset.checklist.form</field>
+        <field name="model">it.asset.checklist</field>
+        <field name="arch" type="xml">
+            <form string="IT Asset Checklist" create="False">
+                <header>
+                    <field name="status" widget="statusbar" statusbar_visible="draft,verified,escalated,reset"/>
+                    <button name="action_verify"
+                            type="object"
+                            string="Verify Checklist"
+                            class="btn-primary"
+                            invisible="status != 'pending'"/>
+                    <button name="action_reset"
+                            type="object"
+                            string="Reset"
+                            class="btn-secondary"
+                            invisible="status not in ['verified', 'escalated']"/>
+                    <button name="print_checklist"
+                            string="Print Checklist"
+                            type="object"
+                            class="btn-secondary"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="checklist_type" readonly="1"/>
+                        <field name="employee_id" readonly="1"/>
+                        <field name="project_id" readonly="1"/>
+                        <field name="signed_document" filename="signed_filename"/>
+                        <field name="remarks" invisible="checklist_type == 'allocation'"/>
+                        <field name="verified_by" readonly="1"/>
+                        <field name="verified_date" readonly="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Checklist Items">
+                            <field name="line_ids" readonly="status != 'draft'">
+                                <tree editable="bottom" create="False">
+                                    <field name="asset_id" domain="[('asset_lifecycle_status', '!=', 'scrap')]"/>
+                                    <field name="asset_tag_id"/>
+                                    <field name="serial_number"/>
+                                    <field name="description"/>
+                                    <field name="status"/>
+                                    <field name="remarks"/>
+                                    <field name="cost" readonly="1"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                        <page string="Acknowledgement">
+                            <group>
+                                <separator string="Employee Acknowledgement"/>
+                                <field name="employee_id"/>
+                                <field name="verified_date"/>
+                                <field name="signed_document" filename="signed_filename"/>
+                            </group>
+                            <group>
+                                <separator string="Manager / Supervisor"/>
+                                <field name="verified_by"/>
+                                <field name="verified_date"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Menu under IT Asset Allocation -->
+    <menuitem id="menu_it_asset_checklist"
+              name="IT Asset Checklists"
+              parent="menu_it_assets_root"
+              action="action_it_asset_checklist"
+              sequence="20"/>
+
+</odoo>

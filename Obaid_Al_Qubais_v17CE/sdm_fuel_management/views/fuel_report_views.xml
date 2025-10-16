@@ -1,0 +1,50 @@
+<odoo>
+        <record id="view_fuel_report_tree" model="ir.ui.view">
+        <field name="name">fuel.report.tree</field>
+        <field name="model">fuel.report</field>
+        <field name="arch" type="xml">
+            <tree string="Monthly Fuel Reports" create="false" delete="false" edit="false">
+                <field name="month"/>
+                <field name="vehicle_id"/>
+                <field name="department_id"/>
+                <field name="fuel_type"/>
+                <field name="total_fuel"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_fuel_report_search" model="ir.ui.view">
+    <field name="name">fuel.report.search</field>
+    <field name="model">fuel.report</field>
+    <field name="arch" type="xml">
+        <search string="Search Fuel Reports">
+            <field name="month"/>
+            <field name="vehicle_id"/>
+            <field name="department_id"/>
+            <field name="fuel_type"/>
+
+            <group expand="1" string="Group By">
+                <filter name="group_by_month" string="Month" context="{'group_by': 'month'}"/>
+                <filter name="group_by_vehicle" string="Vehicle" context="{'group_by': 'vehicle_id'}"/>
+                <filter name="group_by_department" string="Department" context="{'group_by': 'department_id'}"/>
+                <filter name="group_by_fuel_type" string="Fuel Type" context="{'group_by': 'fuel_type'}"/>
+            </group>
+        </search>
+    </field>
+</record>
+
+
+    <record id="action_fuel_reports" model="ir.actions.act_window">
+        <field name="name">Fuel Reports</field>
+        <field name="res_model">fuel.report</field>
+        <field name="view_mode">tree</field>
+        <field name="help" type="html">
+            <p>No fuel report available yet.</p>
+            <p>This report is automatically generated based on fuel entries.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_fuel_reports"
+              name="Fuel Reports"
+              parent="menu_fuel_management_root"
+              action="action_fuel_reports"/>
+</odoo>

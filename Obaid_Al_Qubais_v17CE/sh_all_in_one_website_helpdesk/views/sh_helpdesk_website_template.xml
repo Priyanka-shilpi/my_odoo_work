@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="helpdesk_form" name="Helpdesk Form">
+        <t t-call="website.layout">
+            <div class="container">
+               <!-- site key : 6LfJdAopAAAAAFrf2FK20lsBV-8KbLFppIryMc5- -->
+               <!-- secret key : 6LfJdAopAAAAAEf2xozYxyExJD6S5X5wdIm0JQ1y -->
+               
+                <div class="d-flex align-items-center mt-3">
+                    <div class="flex-shrink-0">
+                        <img data-oe-model="ir.ui.view" data-oe-id="513" data-oe-field="arch" data-oe-xpath="/t[1]/div[1]/a[1]/div[1]/img[1]" src="sh_helpdesk/static/src/img/helpdesk ticket.svg" loading="lazy" style="" />
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h5 class="mt-0 mb-1 d-flex gap-2">
+                            <span data-oe-model="ir.ui.view" data-oe-id="513" data-oe-field="arch" data-oe-xpath="/t[1]/div[1]/a[1]/div[2]/h5[1]/span[1]" class="d-none" data-placeholder_count="sh_ticket_count">
+                                0
+                            </span>
+                            <span>Submit Your Support Request</span>
+                        </h5>
+                        <p class="m-0 text-600">
+                            We are happy to help and support every step of the way.
+                        </p>
+                    </div>
+                </div>
+
+                <form action="/helpdesk/ticket/process" id="frm_id" method="POST" class="form-horizontal sh_helpdesk_ticket_process_form mt32" enctype="multipart/form-data">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div t-attf-class="form-group #{error and 'contact_name' in error and 'has-error' or ''}">
+                                <label class="control-label" for="contact_name">Name</label>
+                                <input type="text" class="form-control" id="contact_name" name="contact_name" required="True" />
+                                <p class="alert alert-danger" style="margin-top: 10px; display: none;" id="error_name"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div name="email_from_container" t-attf-class="form-group #{error and 'email' in error and 'has-error' or ''}">
+                                <label class="control-label" for="email">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" required="True" />
+                                <p class="alert alert-danger" style="margin-top: 10px; display: none;" id="error_email"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div name="mobile_from_container" t-attf-class="form-group #{error and 'mobile' in error and 'has-error' or ''}">
+                            <label class="control-label" for="mobile">Mobile</label>
+                            <input type="text" class="form-control" id="mobile" name="mobile" required="True" />
+                            <p class="alert alert-danger" style="margin-top: 10px; display: none;" id="error_mobile"></p>
+                        </div>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="control-label" for="category">Category</label>
+                            <select class="form-control form-field o_website_form_required_custom" id="category" name="category">
+                                <t t-foreach="request.env['helpdesk.category'].sudo().search([])" t-as="category">
+                                    <option t-att-value="category.id">
+                                        <t t-esc="category.name" />
+                                    </option>
+                                </t>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="control-label" for="subcategory">Sub Category</label>
+                            <select class="form-control form-field o_website_form_required_custom" id="subcategory" name="subcategory">
+                                <!-- <t t-foreach="request.env['helpdesk.subcategory'].sudo().search([])" t-as="subcategory">
+                                    <option t-att-value="subcategory.id">
+                                        <t t-esc="subcategory.name" />
+                                    </option>
+                                </t> -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="control-label" for="subject">Subject</label>
+                            <select class="form-control form-field o_website_form_required_custom" id="subject" name="subject">
+                                <t t-foreach="request.env['helpdesk.sub.type'].sudo().search([])" t-as="subject">
+                                    <option t-att-value="subject.id">
+                                        <t t-esc="subject.name" />
+                                    </option>
+                                </t>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="control-label" for="priority">Priority</label>
+                            <select class="form-control form-field o_website_form_required_custom" id="priority" name="priority">
+                                <t t-foreach="request.env['helpdesk.priority'].sudo().search([])" t-as="priority">
+                                    <option t-att-value="priority.id">
+                                        <t t-esc="priority.name" />
+                                    </option>
+                                </t>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row g-3">
+                        <div t-attf-class="col-md-6 o_wslides_js_slide_upload_local_file #{error and 'file' in error and 'has-error' or ''}">
+                            <label for="upload" class="col-form-label">Choose an Document</label>
+                            <input id="upload" name="file" class="form-control" type="file" required="required" t-attf-document_limit="#{request.website.attachment_size}"/>
+                        </div>
+                        <div class="col-md-6">
+                            <div t-attf-class="form-group #{error and 'description' in error and 'has-error' or ''}">
+                                <label class="control-label" for="description">Description</label>
+                                <textarea id="description" name="description" class="form-control form-field o_website_form_required_custom" placeholder="Description" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <button id="submit_ticket" name="submit_ticket" class="btn btn-primary btn-lg">Submit Ticket</button>
+                        </div>
+                        <div class="col-md-6"></div>
+                    </div>
+
+                </form>
+            </div>
+        </t>
+    </template>
+
+    <template id="helpdesk_thank_you" name="Helpdesk Ticket Thank You">
+        <t t-call="website.layout">
+            <div class="container">
+                <t t-if="success_msg">
+                    
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="alert alert-success" role="status">
+                                <h1>Thanks!</h1>
+                                Your message has been sent successfully.
+                            </div>
+                            <p>
+                                We will get back to you shortly.
+                            </p>
+                        </div>
+                        <!-- <div class="col-4">
+                            <t t-call="website.company_description" />
+                        </div> -->
+                    </div>
+                </t>
+                <t t-if="error_msg">
+                    <div class="col-12">
+                        <div class="alert alert-danger" role="status">
+                            <t t-esc="error_msg" />
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <a href="/helpdesk" string="Helpdes Ticket" role="button" class="btn btn-primary">Back To Helpdesk Ticket</a>
+                    </div>
+                </t>
+            </div>
+            <script>
+                if ( window.history.replaceState ) {
+                  window.history.replaceState( null, null, window.location.href );
+                }
+            </script>
+        </t>
+    </template>
+</odoo>

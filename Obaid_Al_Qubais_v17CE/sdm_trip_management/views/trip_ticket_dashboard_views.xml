@@ -1,0 +1,97 @@
+<odoo>
+    <data>
+        <record id="action_trip_ticket_dashboard" model="ir.actions.act_window">
+            <field name="name">Trip Ticket Report</field>
+            <field name="res_model">trip.ticket</field>
+            <field name="view_mode">graph,pivot</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p>Use this dashboard to monitor trip count, fuel usage, and distance coverage.</p>
+            </field>
+        </record>
+        <record id="view_trip_ticket_graph" model="ir.ui.view">
+            <field name="name">trip.ticket.graph</field>
+            <field name="model">trip.ticket</field>
+            <field name="arch" type="xml">
+                <graph string="Trip Fuel Usage" type="bar">
+                    <field name="date" type="row"/>
+                    <field name="fuel_used" type="measure"/>
+                    <field name="vehicle_id" type="col"/>
+                </graph>
+            </field>
+        </record>
+        <record id="view_trip_ticket_report_wizard" model="ir.ui.view">
+            <field name="name">trip.ticket.report.wizard.form</field>
+            <field name="model">trip.ticket.report.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Trip Ticket Excel Report">
+                    <group>
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                    </group>
+                    <footer>
+                        <button name="action_generate_excel" type="object" string="Generate Excel" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                    <group>
+                        <field name="file_name"/>
+                        <field name="file_data" filename="file_name"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_trip_ticket_report_wizard" model="ir.actions.act_window">
+            <field name="name">Trip Ticket Report Wizard</field>
+            <field name="res_model">trip.ticket.report.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <record id="view_trip_ticket_report_tree" model="ir.ui.view">
+            <field name="name">trip.ticket.report.tree</field>
+            <field name="model">trip.ticket.report</field>
+            <field name="arch" type="xml">
+                <tree string="Trip Ticket Summary">
+                    <field name="vehicle_id"/>
+                    <field name="month"/>
+                    <field name="trip_count"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_trip_ticket_report" model="ir.actions.act_window">
+            <field name="name">Trip Summary Report</field>
+            <field name="res_model">trip.ticket.report</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+
+        <record id="view_trip_ticket_pivot" model="ir.ui.view">
+            <field name="name">trip.ticket.pivot</field>
+            <field name="model">trip.ticket</field>
+            <field name="arch" type="xml">
+                <pivot string="Trip Summary">
+                    <field name="vehicle_id"/>
+                    <field name="fuel_used" type="measure"/>
+                    <field name="odometer_start" type="measure"/>
+                    <field name="odometer_end" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <menuitem id="menu_trip_ticket_reporting_root" name="Trip Ticket Reports"
+                  parent="menu_trip_management_root"/>
+
+        <menuitem id="menu_trip_ticket_dashboard" name="Dashboard"
+                  parent="menu_trip_ticket_reporting_root"
+                  action="action_trip_ticket_dashboard"/>
+
+        <menuitem id="menu_trip_ticket_report"
+                  name="Trip Ticket Report"
+                  parent="menu_trip_ticket_reporting_root"
+                  action="action_trip_ticket_report"/>
+        <menuitem id="menu_trip_ticket_report_wizard" name="Generate excel" parent="menu_trip_ticket_reporting_root"
+                  action="action_trip_ticket_report_wizard"/>
+    </data>
+</odoo>

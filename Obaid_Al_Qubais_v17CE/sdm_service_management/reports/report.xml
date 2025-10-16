@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <record id="report_gatch_supply" model="ir.actions.report">
+            <field name="name">Gatch Supply</field>
+            <field name="model">fleet.gatch.supply</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">sdm_service_management.report_gatch_supply_template</field> <!-- TEMPLATE ID -->
+            <field name="report_file">sdm_service_management.report_gatch_supply_template</field> <!-- SAME TEMPLATE ID -->
+            <field name="print_report_name">'Gatch Supply - %s' % (object.trip_ticket_no or '')</field>
+            <field name="binding_model_id" ref="model_fleet_gatch_supply"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>

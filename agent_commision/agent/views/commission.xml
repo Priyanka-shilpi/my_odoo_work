@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_commission_form" model="ir.ui.view">
+        <field name="name">agent.commission.form</field>
+        <field name="model">agent.commission</field>
+        <field name="arch" type="xml">
+            <form string="Commission">
+
+<sheet>
+                    <group>
+                        <field name="invoice_id" />
+                        <field name="agent" />
+                                                <field name="commission_amount" />
+
+
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_agent_commission" model="ir.actions.act_window">
+        <field name="name">Commission</field>
+        <field name="res_model">agent.commission</field>
+        <field name="view_mode">form</field>
+<!--        <field name="view_id" ref="view__list"/>-->
+    </record>
+</odoo>

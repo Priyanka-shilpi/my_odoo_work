@@ -1,0 +1,48 @@
+<odoo>
+    <record id="view_garage_vehicle_service_form" model="ir.ui.view">
+        <field name="name">garage.vehicle.service.form</field>
+        <field name="model">garage.vehicle.service</field>
+        <field name="arch" type="xml">
+            <form string="Vehicle Service">
+                <header>
+                    <field name="status" widget="statusbar" statusbar_visible="in_service,completed,external_repair"/>
+                     <button name="action_set_complete" string="Complete" type="object"
+                            class="btn-primary"
+                            invisible="status != 'in_service'"/>
+                     <button name="action_set_repair" string="External Repair" type="object"
+                            class="btn-primary"
+                            invisible="status != 'completed'"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="vehicle_id"/>
+                        <field name="in_timestamp"/>
+                        <field name="out_timestamp"/>
+                        <field name="service_description"/>
+                        <field name="status"/>
+                        <field name="wrench_time" readonly="1"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_garage_vehicle_service_tree" model="ir.ui.view">
+        <field name="name">garage.vehicle.service.tree</field>
+        <field name="model">garage.vehicle.service</field>
+        <field name="arch" type="xml">
+            <tree string="Vehicle Services">
+                <field name="name"/>
+                <field name="vehicle_id"/>
+                <field name="in_timestamp"/>
+                <field name="out_timestamp"/>
+                <field name="status"/>
+                <field name="wrench_time"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

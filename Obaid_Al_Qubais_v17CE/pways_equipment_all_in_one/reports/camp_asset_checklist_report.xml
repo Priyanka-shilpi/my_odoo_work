@@ -1,0 +1,647 @@
+<odoo>
+    <template id="camp_asset_checklist_template">
+        <t t-call="web.external_layout">
+            <t t-foreach="docs" t-as="doc">
+                <t t-set="doc" t-value="doc"/>
+                <t t-if="doc.checklist_type == 'checkin'">
+                    <main class="page">
+                        <h1 class="text-center">Consent Form for Acknowledgement of Received Items</h1>
+                        <h2>Employee Consent Form</h2>
+                        <div name="received_items">
+                            <h4>Details of Received Items</h4>
+                            <table class="table table-sm table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Asset Name</th>
+                                        <th>Asset Tag</th>
+                                        <th>Serial No.</th>
+                                        <th>Asset Description</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="doc.line_ids" t-as="line">
+                                        <tr>
+                                            <td t-esc="line.asset_id.name"/>
+                                            <td t-esc="line.asset_tag_id.name"/>
+                                            <td t-esc="line.serial_no"/>
+                                            <td t-esc="line.description or ''"/>
+                                            <td t-esc="line.remarks or ''"/>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div name="employee_acknowledgement">
+                            <h4>Employee Acknowledgement</h4>
+                            <p>I,<span t-esc="doc.employee_id.name"/>, confirm that I have received the items listed
+                                above.
+                                Each item has been checked and verified to be in good working condition at the time of
+                                receipt. I acknowledge my responsibility to notify my manager or relevant department
+                                immediately if any issues arise with the items listed.
+                            </p>
+                        </div>
+                        <div name="employee_details">
+                            <h4>Employee</h4>
+                            <ul>
+                                <li>Employee Name:
+                                    <span t-esc="doc.employee_id.name or ''"/>
+                                </li>
+                                <li>Employee ID:
+                                    <span t-esc="doc.employee_id.barcode or ''"/>
+                                </li>
+                                <li>Room No.:
+                                    <span t-esc="doc.room_id.name or ''"/>
+                                </li>
+                                <li>Location:
+                                    <span t-esc="doc.room_id.location or ''"/>
+                                </li>
+                                <li>Employee Contact Number:
+                                    <span t-esc="doc.employee_id.work_phone or ''"/>
+                                </li>
+                                <li>Employee Signature:
+                                    <span>___________________________________</span>
+                                </li>
+                                <li t-if="doc.verified_date">Check in Date:
+                                    <span t-esc="doc.verified_date"/>
+                                </li>
+                            </ul>
+                        </div>
+                        <div name="camp_house_team_lead">
+                            <h4>Camp house/Team Lead</h4>
+                            <ul>
+                                <li>Manager/Supervisor Name:
+                                    <span t-esc="doc.employee_id.parent_id.name"/>
+                                </li>
+                                <li>Department:
+                                    <span t-esc="doc.employee_id.parent_id.department_id.name"/>
+                                </li>
+                                <li>Manager/Supervisor Signature:
+                                    <span>___________________________________</span>
+                                </li>
+                                <li t-if="doc.assignment_id and doc.assignment_id.allocation_date">Date:
+                                    <span t-esc="doc.assignment_id.allocation_date"/>
+                                </li>
+                            </ul>
+                        </div>
+                        <div name="additional_notes">
+                            <h4>Additional Notes</h4>
+                            <ul>
+                                <li>Ensure this form is completed and returned to the concerned department for
+                                    record-keeping.
+                                </li>
+                                <li>Retain a copy of this document for your own records.</li>
+                            </ul>
+                        </div>
+                    </main>
+                </t>
+                <t t-else="">
+                    <main class="page">
+                        <h1 class="text-center">Asset Return - Room Transfer Form</h1>
+                        <h4>Employee Room Transfer Form</h4>
+                        <div name="employee_acknowledgement">
+                            <p>I,<span t-esc="doc.employee_id.name"/>, confirm that I have returned the items listed
+                                above in the condition specified below. The items have been inspected by the store in
+                                charge, and any discrepancies in their condition have been noted against each asset. I
+                                understand that if the returned items are found to be not in good condition, the cost of
+                                the corresponding asset will be forwarded to the department concerned for further
+                                actions.
+                            </p>
+                        </div>
+                        <div name="employee_details">
+                            <h4>Employee Details</h4>
+                            <ul>
+                                <li>Employee Name:
+                                    <span t-esc="doc.employee_id.name or ''"/>
+                                </li>
+                                <li>Employee ID:
+                                    <span t-esc="doc.employee_id.barcode or ''"/>
+                                </li>
+                                <li>Room No.:
+                                    <span t-esc="doc.room_id.name or ''"/>
+                                </li>
+                                <li>Location:
+                                    <span t-esc="doc.room_id.location or ''"/>
+                                </li>
+                                <li>Employee Contact Number:
+                                    <span t-esc="doc.employee_id.work_phone or ''"/>
+                                </li>
+                                <li>Employee Signature:
+                                    <span>___________________________________</span>
+                                </li>
+                                <li t-if="doc.assignment_id and doc.assignment_id.allocation_date">Date:
+                                    <span t-esc="doc.assignment_id.allocation_date"/>
+                                </li>
+                            </ul>
+                        </div>
+                        <div name="received_items">
+                            <h4>Returned Asset Details</h4>
+                            <table class="table table-sm table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Asset Name</th>
+                                        <th>Asset Tag</th>
+                                        <th>Serial No.</th>
+                                        <th>Condition</th>
+                                        <th>Asset Cost</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="doc.line_ids" t-as="line">
+                                        <tr>
+                                            <td t-esc="line.asset_id.name"/>
+                                            <td t-esc="line.asset_tag_id.name"/>
+                                            <td t-esc="line.serial_no"/>
+                                            <td t-esc="line.status or ''"/>
+                                            <td class="text-end" t-esc="line.cost"/>
+                                            <td t-esc="line.remarks or ''"/>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div name="camp_incharge_use_only">
+                            <h4>Camp Incharge Use Only</h4>
+                            <div>
+                                Checked and received by:
+                                <span t-esc="doc.verified_by.name"/>
+                            </div>
+                            <div>
+                                Camp Incharge Name:
+                                <span t-esc="user.name"/>
+                            </div>
+                            <div>
+                                Signature:
+                                <span>___________________</span>
+                            </div>
+                            <div>
+                                Date Received:
+                                <span t-esc="datetime.date.today()"/>
+                            </div>
+                            <div>
+                                Remarks:
+                                <span t-esc="doc.remarks"/>
+                            </div>
+                        </div>
+                        <br/>
+                        <div name="additional_notes">
+                            <h4>Additional Notes</h4>
+                            <p>Complete and return this form to the department for record-keeping and processing. Retain
+                                a copy of this document for your own records.
+                            </p>
+                        </div>
+                    </main>
+                </t>
+            </t>
+            <div class="footer float-end">
+                <div>Time and Date:
+                    <span t-esc="datetime.datetime.today()"/>
+                </div>
+                <div>Location:
+                    <span>Store/Warehouse</span>
+                </div>
+                <div>Printed by:
+                    <span t-esc="user.name"/>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- IT Asset Checklist Template -->
+    <template id="it_asset_checklist_template">
+        <t t-call="web.external_layout">
+            <t t-foreach="docs" t-as="doc">
+                <t t-set="doc" t-value="doc"/>
+                <t t-if="doc.checklist_type == 'allocation'">
+                    <main class="page">
+                        <h1 class="text-center">Consent Form for Acknowledgement of Received Items</h1>
+                        <h2>Employee Consent Form</h2>
+                        <div name="received_items">
+                            <h4>Details of Received Items</h4>
+                            <table class="table table-sm table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Asset Name</th>
+                                        <th>Asset Tag</th>
+                                        <th>Serial No.</th>
+                                        <th>Asset Description</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="doc.line_ids" t-as="line">
+                                        <tr>
+                                            <td t-esc="line.asset_id.name"/>
+                                            <td t-esc="line.asset_tag_id.name"/>
+                                            <td t-esc="line.serial_number"/>
+                                            <td t-esc="line.description or ''"/>
+                                            <td t-esc="line.remarks or ''"/>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div name="employee_acknowledgement">
+                            <h4>Employee Acknowledgement</h4>
+                            <p>I,<span t-esc="doc.employee_id.name"/>, confirm that I have received the items listed
+                                above.
+                                Each item has been checked and verified to be in good working condition at the time of
+                                receipt. I acknowledge my responsibility to notify my manager or relevant department
+                                immediately if any issues arise with the items listed.
+                            </p>
+                        </div>
+                        <div name="employee_details">
+                            <h4>Employee</h4>
+                            <ul>
+                                <li>Employee Name:
+                                    <span t-esc="doc.employee_id.name or ''"/>
+                                </li>
+                                <li>Employee ID:
+                                    <span t-esc="doc.employee_id.barcode or ''"/>
+                                </li>
+                                <li>Employee Contact Number:
+                                    <span t-esc="doc.employee_id.work_phone or ''"/>
+                                </li>
+                                <li>Employee Signature:
+                                    <span>___________________________________</span>
+                                </li>
+                                <li t-if="doc.allocation_id and doc.allocation_id.allocation_date">Date:
+                                    <span t-esc="doc.allocation_id.allocation_date"/>
+                                </li>
+                            </ul>
+                        </div>
+                        <div name="manager_team_lead">
+                            <h4>IT Manager/Team Lead</h4>
+                            <ul>
+                                <li>Manager/Supervisor Name:
+                                    <span t-esc="doc.employee_id.parent_id.name"/>
+                                </li>
+                                <li>Department:
+                                    <span t-esc="doc.employee_id.parent_id.department_id.name"/>
+                                </li>
+                                <li>Manager/Supervisor Signature:
+                                    <span>___________________________________</span>
+                                </li>
+                                <li t-if="doc.allocation_id and doc.allocation_id.allocation_date">Date:
+                                    <span t-esc="doc.allocation_id.allocation_date"/>
+                                </li>
+                            </ul>
+                        </div>
+                        <div name="additional_notes">
+                            <h4>Additional Notes</h4>
+                            <ul>
+                                <li>Ensure this form is completed and returned to the concerned department for
+                                    record-keeping.
+                                </li>
+                                <li>Retain a copy of this document for your own records.</li>
+                            </ul>
+                        </div>
+                    </main>
+                </t>
+                <t t-else="">
+                    <main class="page">
+                        <h1 class="text-center">Asset Return Confirmation Form</h1>
+                        <h4>Employee Return Form</h4>
+                        <div name="employee_acknowledgement">
+                            <p>I,<span t-esc="doc.employee_id.name"/>, confirm that I have returned the items listed
+                                above in the condition specified below. The items have been inspected by the store in
+                                charge, and any discrepancies in their condition have been noted against each asset. I
+                                understand that if the returned items are found to be not in good condition, the cost of
+                                the corresponding asset will be forwarded to the department concerned for further
+                                actions.
+                            </p>
+                        </div>
+                        <div name="employee_details">
+                            <h4>Employee Details</h4>
+                            <ul>
+                                <li>Employee Name:
+                                    <span t-esc="doc.employee_id.name or ''"/>
+                                </li>
+                                <li>Employee ID:
+                                    <span t-esc="doc.employee_id.barcode or ''"/>
+                                </li>
+                                <li>Employee Contact Number:
+                                    <span t-esc="doc.employee_id.work_phone or ''"/>
+                                </li>
+                                <li>Employee Signature:
+                                    <span>___________________________________</span>
+                                </li>
+                                <li t-if="doc.allocation_id and doc.allocation_id.allocation_date">Date:
+                                    <span t-esc="doc.allocation_id.allocation_date"/>
+                                </li>
+                            </ul>
+                        </div>
+                        <div name="received_items">
+                            <h4>Returned Asset Details</h4>
+                            <table class="table table-sm table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Asset Name</th>
+                                        <th>Asset Tag</th>
+                                        <th>Serial No.</th>
+                                        <th>Condition</th>
+                                        <th>Asset Cost</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="doc.line_ids" t-as="line">
+                                        <tr>
+                                            <td t-esc="line.asset_id.name"/>
+                                            <td t-esc="line.asset_tag_id.name"/>
+                                            <td t-esc="line.serial_number"/>
+                                            <td t-esc="line.status or ''"/>
+                                            <td class="text-end" t-esc="line.cost"/>
+                                            <td t-esc="line.remarks or ''"/>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div name="department_use_only">
+                            <h4>IT Department Use Only</h4>
+                            <div>
+                                Checked and received by:
+                                <span t-esc="doc.verified_by.name"/>
+                            </div>
+                            <div>
+                                IT Personnel Name:
+                                <span t-esc="user.name"/>
+                            </div>
+                            <div>
+                                Signature:
+                                <span>___________________</span>
+                            </div>
+                            <div>
+                                Date Received:
+                                <span t-esc="datetime.date.today()"/>
+                            </div>
+                            <div>
+                                Remarks:
+                                <span t-esc="doc.remarks"/>
+                            </div>
+                        </div>
+                        <br/>
+                        <div name="additional_notes">
+                            <h4>Additional Notes</h4>
+                            <p>Complete and return this form to the department for record-keeping and processing. Retain
+                                a copy of this document for your own records.
+                            </p>
+                        </div>
+                    </main>
+                </t>
+            </t>
+            <div class="footer float-end">
+                <div>Time and Date:
+                    <span t-esc="datetime.datetime.today()"/>
+                </div>
+                <div>Location:
+                    <span>Store/Warehouse</span>
+                </div>
+                <div>Printed by:
+                    <span t-esc="user.name"/>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Tools/Equipment Asset Checklist Template -->
+    <template id="tools_equipment_asset_checklist_template">
+        <t t-call="web.external_layout">
+            <t t-foreach="docs" t-as="doc">
+                <t t-set="doc" t-value="doc"/>
+                <t t-if="doc.checklist_type == 'allocation'">
+                    <main class="page">
+                        <h1 class="text-center">Consent Form for Acknowledgement of Received Items</h1>
+                        <h2>Employee Consent Form</h2>
+                        <div name="received_items">
+                            <h4>Details of Received Items</h4>
+                            <table class="table table-sm table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Asset Name</th>
+                                        <th>Asset Tag</th>
+                                        <th>Serial No.</th>
+                                        <th>Asset Description</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="doc.line_ids" t-as="line">
+                                        <tr>
+                                            <td t-esc="line.asset_id.name"/>
+                                            <td t-esc="line.asset_tag_id.name"/>
+                                            <td t-esc="line.serial_number"/>
+                                            <td t-esc="line.description or ''"/>
+                                            <td t-esc="line.remarks or ''"/>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div name="employee_acknowledgement">
+                            <h4>Employee Acknowledgement</h4>
+                            <p>I,<span t-esc="doc.employee_id.name"/>, confirm that I have received the items listed
+                                above.
+                                Each item has been checked and verified to be in good working condition at the time of
+                                receipt. I acknowledge my responsibility to notify my manager or relevant department
+                                immediately if any issues arise with the items listed.
+                            </p>
+                        </div>
+                        <div name="employee_details">
+                            <h4>Employee</h4>
+                            <ul>
+                                <li>Employee Name:
+                                    <span t-esc="doc.employee_id.name or ''"/>
+                                </li>
+                                <li>Employee ID:
+                                    <span t-esc="doc.employee_id.barcode or ''"/>
+                                </li>
+                                <li>Project/Location:
+                                    <span t-esc="doc.project_id.name or ''"/>
+                                </li>
+                                <li>Employee Contact Number:
+                                    <span t-esc="doc.employee_id.work_phone or ''"/>
+                                </li>
+                                <li>Employee Signature:
+                                    <span>___________________________________</span>
+                                </li>
+                                <li t-if="doc.allocation_id and doc.allocation_id.allocation_date">Date:
+                                    <span t-esc="doc.allocation_id.allocation_date"/>
+                                </li>
+                            </ul>
+                        </div>
+                        <div name="manager_team_lead">
+                            <h4>Storekeeper/Team Lead</h4>
+                            <ul>
+                                <li>Manager/Supervisor Name:
+                                    <span t-esc="doc.employee_id.parent_id.name"/>
+                                </li>
+                                <li>Department:
+                                    <span t-esc="doc.employee_id.parent_id.department_id.name"/>
+                                </li>
+                                <li>Manager/Supervisor Signature:
+                                    <span>___________________________________</span>
+                                </li>
+                                <li t-if="doc.allocation_id and doc.allocation_id.allocation_date">Date:
+                                    <span t-esc="doc.allocation_id.allocation_date"/>
+                                </li>
+                            </ul>
+                        </div>
+                    </main>
+                </t>
+                <t t-else="">
+                    <main class="page">
+                        <h1 class="text-center">Asset Return Confirmation Form</h1>
+                        <h4>Employee Return Form</h4>
+                        <div name="employee_acknowledgement">
+                            <p>I,<span t-esc="doc.employee_id.name"/>, confirm that I have returned the items listed
+                                above in the condition specified below. The items have been inspected by the store in
+                                charge, and any discrepancies in their condition have been noted against each asset. I
+                                understand that if the returned items are found to be not in good condition, the cost of
+                                the corresponding asset will be forwarded to the department concerned for further
+                                actions.
+                            </p>
+                        </div>
+                        <div name="employee_details">
+                            <h4>Employee Details</h4>
+                            <ul>
+                                <li>Employee Name:
+                                    <span t-esc="doc.employee_id.name or ''"/>
+                                </li>
+                                <li>Employee ID:
+                                    <span t-esc="doc.employee_id.barcode or ''"/>
+                                </li>
+                                <li>Project/Location:
+                                    <span t-esc="doc.project_id.name or ''"/>
+                                </li>
+                                <li>Employee Contact No.:
+                                    <span t-esc="doc.employee_id.work_phone or ''"/>
+                                </li>
+                                <li>Employee Signature:
+                                    <span>___________________________________</span>
+                                </li>
+                                <li t-if="doc.allocation_id and doc.allocation_id.allocation_date">Date:
+                                    <span t-esc="doc.allocation_id.allocation_date"/>
+                                </li>
+                            </ul>
+                        </div>
+                        <div name="received_items">
+                            <h4>Returned Asset Details</h4>
+                            <table class="table table-sm table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Asset Name</th>
+                                        <th>Asset Tag</th>
+                                        <th>Serial No.</th>
+                                        <th>Condition</th>
+                                        <th>Asset Cost</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="doc.line_ids" t-as="line">
+                                        <tr>
+                                            <td t-esc="line.asset_id.name"/>
+                                            <td t-esc="line.asset_tag_id.name"/>
+                                            <td t-esc="line.serial_number"/>
+                                            <td t-esc="line.status or ''"/>
+                                            <td class="text-end" t-esc="line.cost"/>
+                                            <td t-esc="line.remarks or ''"/>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div name="department_use_only">
+                            <h4>Store in charge Use Only</h4>
+                            <div>
+                                Checked and received by:
+                                <span t-esc="doc.verified_by.name"/>
+                            </div>
+                            <div>
+                                Store Incharge Name:
+                                <span t-esc="user.name"/>
+                            </div>
+                            <div>
+                                Signature:
+                                <span>___________________</span>
+                            </div>
+                            <div>
+                                Date Received:
+                                <span t-esc="datetime.date.today()"/>
+                            </div>
+                            <div>
+                                Remarks:
+                                <span t-esc="doc.remarks"/>
+                            </div>
+                        </div>
+                    </main>
+                </t>
+            </t>
+            <div class="footer float-end">
+                <div>Time and Date:
+                    <span t-esc="datetime.datetime.today()"/>
+                </div>
+                <div>Location:
+                    <span>Store/Warehouse</span>
+                </div>
+                <div>Printed by:
+                    <span t-esc="user.name"/>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <record id="paperformat_asset_checklist" model="report.paperformat">
+        <field name="name">Asset Checklist</field>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">20</field>
+        <field name="margin_bottom">20</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">15</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="report_it_asset_checklist_action" model="ir.actions.report">
+        <field name="name">IT Asset Checklist</field>
+        <field name="model">it.asset.checklist</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">pways_equipment_all_in_one.it_asset_checklist_template</field>
+        <field name="report_file">pways_equipment_all_in_one.it_asset_checklist_template</field>
+        <field name="print_report_name">'IT Asset Checklist - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_it_asset_checklist"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="pways_equipment_all_in_one.paperformat_asset_checklist"/>
+    </record>
+
+    <record id="report_tools_equipment_asset_checklist_action" model="ir.actions.report">
+        <field name="name">Tools/Equipment Asset Checklist</field>
+        <field name="model">tools.asset.checklist</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">pways_equipment_all_in_one.tools_equipment_asset_checklist_template</field>
+        <field name="report_file">pways_equipment_all_in_one.tools_equipment_asset_checklist_template</field>
+        <field name="print_report_name">'Tools Asset Checklist - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_tools_asset_checklist"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="pways_equipment_all_in_one.paperformat_asset_checklist"/>
+    </record>
+
+    <record id="report_camp_asset_checklist_action" model="ir.actions.report">
+        <field name="name">Camp Assets Checklist</field>
+        <field name="model">camp.asset.checklist</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">pways_equipment_all_in_one.camp_asset_checklist_template</field>
+        <field name="report_file">pways_equipment_all_in_one.camp_asset_checklist_template</field>
+        <field name="print_report_name">'Room Checklist - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_camp_asset_checklist"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="pways_equipment_all_in_one.paperformat_asset_checklist"/>
+    </record>
+</odoo>

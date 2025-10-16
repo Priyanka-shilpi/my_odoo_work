@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_form_camp_asset_checklist" model="ir.ui.view">
+        <field name="name">camp.asset.checklist.form</field>
+        <field name="model">camp.asset.checklist</field>
+        <field name="arch" type="xml">
+            <form string="Room Asset Checklist">
+                <header>
+                    <button name="action_verify"
+                            type="object"
+                            string="Verify Checklist"
+                            class="btn-primary"
+                            invisible="status != 'pending'"/>
+                    <button name="action_reset"
+                            type="object"
+                            string="Reset"
+                            class="btn-secondary"
+                            invisible="status not in ['verified', 'escalated']"/>
+                    <button name="print_checklist" string="Print Checklist" type="object" class="btn-secondary"/>
+                    <field name="status" widget="statusbar" statusbar_visible="pending,verified,escalated,reset"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="True"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="assignment_id" invisible="1"/>
+                        <field name="checklist_type" readonly="assignment_id"/>
+                        <field name="room_id" readonly="assignment_id"/>
+                        <field name="employee_id" readonly="assignment_id"/>
+                        <field name="signed_document" filename="signed_filename" readonly="status != 'pending'"/>
+                        <field name="remarks" readonly="status != 'pending'" invisible="checklist_type == 'checkin'"/>
+                        <field name="verified_by" readonly="1"/>
+                        <field name="verified_date" readonly="1"/>
+                    </group>
+
+                    <notebook>
+                        <page string="Checklist Items">
+                            <field name="line_ids">
+                                <tree editable="bottom" create="not assignment_id">
+                                    <field name="asset_id" domain="[('asset_lifecycle_status', '!=', 'scrap')]" readonly="True"/>
+                                    <field name="asset_tag_id" string="Asset Tag"/>
+                                    <field name="serial_no" string="Serial No"/>
+                                    <field name="description" string="Description"/>
+                                    <field name="status"/>
+                                    <field name="remarks"/>
+                                    <field name="cost"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                        <page string="Acknowledgement">
+                            <group>
+                                <separator string="Employee Acknowledgement"/>
+                                <field name="employee_id"/>
+                                <!--                                <field name="employee_barcode" readonly="1"/>-->
+                                <field name="room_id"/>
+                                <field name="verified_date"/>
+                                <field name="signed_document" filename="signed_filename"/>
+                            </group>
+                            <group>
+                                <separator string="Manager / Supervisor"/>
+                                <field name="verified_by"/>
+                                <field name="verified_date"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_tree_camp_asset_checklist" model="ir.ui.view">
+        <field name="name">camp.asset.checklist.tree</field>
+        <field name="model">camp.asset.checklist</field>
+        <field name="arch" type="xml">
+            <tree create="False">
+                <field name="room_id"/>
+                <field name="employee_id"/>
+                <field name="status"/>
+                <field name="verified_by"/>
+                <field name="verified_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_camp_asset_checklist_line_tree" model="ir.ui.view">
+        <field name="name">camp.asset.checklist.line.tree</field>
+        <field name="model">camp.asset.checklist.line</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="checklist_id"/>
+                <field name="asset_id"/>
+                <field name="status"/>
+                <field name="remarks"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_camp_asset_checklist" model="ir.actions.act_window">
+        <field name="name">Room Asset Checklists</field>
+        <field name="res_model">camp.asset.checklist</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>
+                Room asset checklists for inspections and approvals prior to room assignments.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_camp_asset_checklist_root"
+              name="Camp Checklist"
+              parent="maintenance.menu_m_request"/>
+
+    <menuitem id="menu_camp_asset_checklist"
+              name="Room Asset Checklists"
+              parent="menu_camp_asset_checklist_root"
+              action="action_camp_asset_checklist"/>
+
+    <record id="view_room_asset_allocation_tree" model="ir.ui.view">
+        <field name="name">camp.asset.assignment.tree</field>
+        <field name="model">camp.asset.assignment</field>
+        <field name="arch" type="xml">
+            <tree string="Room Asset Allocation">
+                <field name="employee_id"/>
+                <field name="external_contact_id" string="Company"/>
+                <field name="external_employee_id" string="Guest"/>
+                <field name="room_id"/>
+                <field name="allocation_date"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_room_asset_allocation_form" model="ir.ui.view">
+        <field name="name">camp.asset.assignment.form</field>
+        <field name="model">camp.asset.assignment</field>
+        <field name="arch" type="xml">
+            <form string="Room Asset Allocation">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,assigned,return"/>
+                    <button name="action_assign" string="Check In" type="object" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_return" string="Check Out" type="object" class="btn-primary"
+                            invisible="state != 'assigned'"/>
+                    <button name="action_draft" string="Reset" type="object" class="btn-secondary"
+                            invisible="state != 'return'"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="True"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="allocation_type" widget="radio" readonly="state != 'draft'"/>
+                            <field name="employee_id" readonly="state != 'draft'" invisible="allocation_type != 'internal'"
+                                   required="allocation_type == 'internal'" domain="[('barcode', '!=', False)]"/>
+                            <field name="employee_barcode" invisible="allocation_type != 'internal'" readonly="1"/>
+                            <field name="project_id" readonly="state != 'draft'" invisible="allocation_type != 'internal'"/>
+                            <field name="company_id" readonly="state != 'draft'" invisible="allocation_type != 'internal'"/>
+                            <field name="external_contact_id" invisible="allocation_type != 'external'" string="Company"
+                                   required="allocation_type == 'external'" readonly="state != 'draft'"/>
+                            <field name="external_employee_id" readonly="state != 'draft'" string="Guest"
+                                   invisible="allocation_type != 'external'" required="allocation_type == 'external'"/>
+                            <field name="room_id" readonly="state != 'draft'"/>
+                        </group>
+                        <group>
+                            <field name="allocation_date" readonly="state != 'draft'"/>
+                            <field name="checkin_checklist_id" readonly="1"/>
+                            <field name="checkout_checklist_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Assets Assigned in Room">
+                            <field name="assigned_assets_in_room" nolabel="1">
+                                <tree string="Asset Assignments">
+                                    <field name="name"/>
+                                    <field name="asset_tag_id"/>
+                                    <field name="product_cost"/>
+                                </tree>
+                            </field>
+                            <group class="float-end">
+                                <field name="total_room_asset_cost"/>
+                            </group>
+                        </page>
+                        <page string="Consumables">
+                            <field name="consumable_ids" nolabel="1" readonly="state != 'draft'">
+                                <tree string="Consumables">
+                                    <field name="name"/>
+                                    <field name="barcode"/>
+                                    <field name="standard_price"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Room Asset Checklist" invisible="state == 'return'">
+                            <div name="checklist_buttons">
+                                <button name="action_open_checkin_checklist"
+                                        type="object"
+                                        class="btn btn-primary"
+                                        icon="fa-file"
+                                        string="Room Check-In Checklist"
+                                        invisible="state != 'draft'"/>
+                                <button name="action_open_checkout_checklist"
+                                        type="object"
+                                        class="btn btn-primary"
+                                        icon="fa-file"
+                                        string="Room Check-Out Checklist"
+                                        invisible="state != 'assigned'"/>
+                            </div>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_room_asset_allocation_search" model="ir.ui.view">
+        <field name="name">camp.asset.assignment.search</field>
+        <field name="model">camp.asset.assignment</field>
+        <field name="arch" type="xml">
+            <search string="Camp Asset Assignment">
+                <field name="allocation_type" string="Allocation Type"/>
+                <filter string="Internal Allocations" name="internal_allocation" domain="[('allocation_type', '=', 'internal')]" help="Show only Internal Allocations"/>
+                <filter string="External Allocations" name="external_allocation" domain="[('allocation_type', '=', 'external')]" help="Show only External Allocations"/>
+                <group expand="1" string="Group By">
+                    <filter string="Allocation Type" name="group_by_allocation_type" context="{'group_by': 'allocation_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_room_asset_allocation" model="ir.actions.act_window">
+        <field name="name">Room Asset Allocation</field>
+        <field name="res_model">camp.asset.assignment</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="pways_equipment_all_in_one.view_room_asset_allocation_search"/>
+    </record>
+
+    <menuitem id="menu_room_asset_allocation_root"
+              name="Room Asset Allocation"
+              parent="menu_camp_room_root"/>
+
+
+    <menuitem id="menu_room_asset_allocation"
+              name="Assign Room Assets"
+              parent="menu_room_asset_allocation_root"
+              action="action_room_asset_allocation"/>
+
+</odoo>

@@ -1,0 +1,26 @@
+<odoo>
+    <record id="action_assets_dashboard" model="ir.actions.client">
+        <field name="name">Dashboard</field>
+        <field name="tag">assets_dashboard_tag</field>
+    </record>
+
+
+        <menuitem id="maintenance.menu_m_dashboard"
+                  action="action_assets_dashboard"
+                  parent="maintenance.menu_maintenance_title"/>
+<!--    <menuitem id="menu_manager_dashboard"-->
+<!--              name="Manager Dashboard"-->
+<!--              parent="maintenance.menu_maintenance_title"-->
+<!--              action="sdm_assets_dashboard.action_assets_dashboard"-->
+<!--              groups="sdm_assets_dashboard.group_manager_access"-->
+<!--              sequence="1"/>-->
+
+<!--    &lt;!&ndash; Department Dashboard Menu &ndash;&gt;-->
+<!--    <menuitem id="menu_department_dashboard"-->
+<!--              name="Department Dashboard"-->
+<!--              parent="maintenance.menu_maintenance_title"-->
+<!--              action="sdm_assets_dashboard.action_assets_dashboard"-->
+<!--              groups="sdm_assets_dashboard.group_department_access"-->
+<!--              sequence="2"/>-->
+
+</odoo>

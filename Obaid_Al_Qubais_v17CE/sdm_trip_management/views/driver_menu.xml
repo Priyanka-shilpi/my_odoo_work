@@ -1,0 +1,22 @@
+<odoo>
+  <record id="action_driver_profiles" model="ir.actions.act_window">
+    <field name="name">Drivers</field>
+    <field name="res_model">hr.employee</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <record id="action_driver_assignments" model="ir.actions.act_window">
+    <field name="name">Driver Assignments</field>
+    <field name="res_model">driver.assignment</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <menuitem id="driver_main_menu" name="Driver Management" parent="fleet.menu_root"/>
+  <menuitem id="driver_profile_menu" name="Drivers" parent="driver_main_menu" action="action_driver_profiles"/>
+  <menuitem id="driver_assignment_menu" name="Assignments" parent="driver_main_menu" action="action_driver_assignments"/>
+
+  <menuitem id="menu_driver_allocation_report"
+              name="Driver Allocation Report"
+              parent="sdm_trip_management.driver_main_menu"
+              action="action_driver_allocation_report"/>
+</odoo>

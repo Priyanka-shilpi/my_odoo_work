@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_sale_order" model="ir.ui.view">
+        <field name="name">Sale form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='journal_id']" position="after">
+                <group string="COMMISION">
+
+                <field name="any_agent"/>
+                    <field name="agent" invisible="any_agent == False"/>
+
+                    <field name="commission" widget="radio"/>
+
+                      <field name="fix" invisible="commission != 'fix'"/>
+                        <field name="per" invisible="commission != 'per'"/>
+                      <field name="commission_amount" readonly="1"/>
+
+                </group>
+
+
+            </xpath>
+        </field>
+
+
+
+    </record>
+    <record id="action_res_partner" model="ir.actions.act_window">
+    <field name="name">agent</field>
+    <field name="res_model">sale.order</field>
+    <field name="view_mode">list,form</field>
+    <field name="domain">[]</field>
+</record>
+
+</odoo>

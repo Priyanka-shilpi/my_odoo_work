@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_garage_vehicle_service,access_garage_vehicle_service,model_garage_vehicle_service,base.group_user,1,1,1,1
+access_garage_consumable_usage,access_garage_consumable_usage,model_garage_consumable_usage,base.group_user,1,1,1,1
+access_garage_consumable_report,access_garage_consumable_report,model_garage_consumable_report,base.group_user,1,0,0,0
+access_garage_job_card,garage.job.card,model_garage_job_card,base.group_user,1,1,1,1
+access_garage_job_card_wrench,garage.job.card.wrench,model_garage_job_card_wrench,base.group_user,1,1,1,1
+access_garage_job_card_part,garage.job.card.part,model_garage_job_card_part,base.group_user,1,1,1,1
+access_garage_job_card_sublet,garage.job.card.sublet,model_garage_job_card_sublet,base.group_user,1,1,1,1
+access_garage_job_type,garage.job.type,model_garage_job_type,base.group_user,1,1,1,1
+access_fleet_vehicle_service_part_line,fleet.vehicle.service.part.line,model_fleet_vehicle_service_part_line,base.group_user,1,1,1,1
+access_fleet_vehicle_log_services,fleet.vehicle.log.services,model_fleet_vehicle_log_services,base.group_user,1,1,1,1
+access_garage_job_card_checklist_line,garage.job.card.checklist.line,model_garage_job_card_checklist_line,base.group_user,1,1,1,1
+access_spare_part_category,spare.part.category,model_spare_part_category,base.group_user,1,1,1,1

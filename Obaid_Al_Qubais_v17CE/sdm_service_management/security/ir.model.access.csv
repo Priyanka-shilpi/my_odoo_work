@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_gatch_service_type,access_gatch_service_type,model_gatch_service_type,base.group_user,1,1,1,1
+access_fleet_gatch_supply,access_fleet_gatch_supply,model_fleet_gatch_supply,base.group_user,1,1,1,1
+access_fleet_gatch_supply_line,access_fleet_gatch_supply_line,model_fleet_gatch_supply_line,base.group_user,1,1,1,1
+

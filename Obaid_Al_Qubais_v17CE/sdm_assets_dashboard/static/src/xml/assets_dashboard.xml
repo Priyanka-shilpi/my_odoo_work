@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <t t-name="sdm_assets_dashboard.assets_dashboard_template">
+        <div class="container-fluid ps-3" style="max-height: 90vh; overflow-y: auto;">
+            <div class="text-center my-4">
+                <h1>📦 Assets Dashboard</h1>
+            </div>
+
+            <!-- Top horizontal tiles row -->
+            <div class="row text-center mb-4">
+                <div class="col-md-4">
+                    <div class="card text-white bg-primary shadow">
+                        <div class="asset-card">
+                            🏠
+                            <strong>Camp Room Vacancies</strong>
+                            <div id="total_vacant_slots" class="mt-2 fs-4">
+                                <t t-esc="state.total_vacant_slots"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card text-white bg-warning shadow">
+                        <div class="asset-card">
+                            💻
+                            <strong>IT Assets Allocations</strong>
+                            <div id="today_allocations" class="mt-2 fs-4">
+                                <t t-esc="state.today_allocations"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card text-white bg-danger shadow">
+                        <div class="asset-card">
+                            🔧
+                            <strong>Tools Allocations</strong>
+                            <div id="today_tools_allocations" class="mt-2 fs-4">
+                                <t t-esc="state.today_tools_allocations"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid p-0">
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5>IT Asset Allocation</h5>
+                                <canvas t-ref="chartRef" width="400" height="200" style="max-height: 300px;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5>IT Asset CheckLists</h5>
+                                <canvas t-ref="chartRefer" width="400" height="200" style="max-height: 300px;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Tools/Equipment Checklists</h5>
+                                <canvas t-ref="statusPieChart" width="400" height="200"
+                                        style="max-height: 300px;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5>Room Asset Checklists</h5>
+                                <canvas t-ref="campChart" width="400" height="200" style="max-height: 300px;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <t t-if="state.groupInfo.is_manager">
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5>Camp Rooms</h5>
+                                    <canvas t-ref="campvacancies" width="400" height="200"
+                                            style="max-height: 300px;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+
+                    <t t-if="state.groupInfo.is_manager">
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5>Total Rooms Vs Vacant</h5>
+                                    <canvas t-ref="totalrooms" width="400" height="200"
+                                            style="max-height: 300px;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5>📈 30-Day IT Asset Allocations</h5>
+                                <canvas t-ref="assetLineChart" width="400" height="200"
+                                        style="max-height: 300px;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5>📈 30-Day IT Asset CheckLists</h5>
+                                <canvas t-ref="checklistLine" width="400" height="200"
+                                        style="max-height: 300px;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <t t-if="state.groupInfo.is_department">
+                        <div class="row">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5>Assets Allocation Requests</h5>
+                                    <canvas t-ref="DepartmentRef" width="400" height="200"
+                                            style="max-height: 300px;"></canvas>
+                                </div>
+                            </div>
+
+                        </div>
+                    </t>
+
+
+                </div>
+
+            </div>
+        </div>
+    </t>
+</odoo>
+
+

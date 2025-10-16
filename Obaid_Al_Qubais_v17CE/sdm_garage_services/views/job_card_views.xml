@@ -1,0 +1,345 @@
+<odoo>
+    <record id="view_garage_job_card_form" model="ir.ui.view">
+        <field name="name">garage.job.card.form</field>
+        <field name="model">garage.job.card</field>
+        <field name="arch" type="xml">
+            <form string="Job Card">
+                <header>
+                    <button name="action_sync_to_service" type="object" string="Sync to Service Log"
+                            class="btn-primary" icon="fa-refresh"/>
+                    <button name="action_reopen_job_card" type="object" string="Run"
+                            class="btn-primary" invisible="state != 'new'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="new,running,closed"/>
+                    <button name="print_job_cards" string="Print" type="object" class="btn-primary" invisible="state != 'running'"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" readonly="1"/>
+                            <field name="date"/>
+                            <field name="job_type_id"/>
+                            <field name="asset_id"/>
+                        </group>
+                        <group>
+                            <field name="last_service_km" invisible="1"/>
+                            <field name="current_km" invisible="1"/>
+                            <field name="hours" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="time_in"/>
+                            <field name="time_out"/>
+                            <field name="actual_release_date"/>
+                            <field name="downtime"/>
+                            <field name="expected_release_date"/>
+                            <field name="type" invisible="1"/>
+                        </group>
+                    </group>
+
+                    <field name="work_description"/>
+
+                    <notebook>
+                        <page string="Wrench Time">
+                            <field name="wrench_time_ids">
+                                <tree editable="bottom">
+                                    <field name="item"/>
+                                    <field name="mechanic_id"/>
+                                    <field name="tech_id"/>
+                                    <field name="start_time"/>
+                                    <field name="finish_time"/>
+                                    <field name="time_spent"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Part Requests">
+                            <field name="part_request_ids">
+                                <tree editable="bottom">
+<!--                                    <field name="product_no" domain="[('vehicle_category', '=', vehicle_category_id)]" invisible="1"/>-->
+                                    <field name="spare_category_id"/>
+                                    <field name="description"/>
+<!--                                    <field name="vehicle_category_id" invisible="1"/>-->
+                                    <field name="quantity"/>
+                                    <field name="mechanic_id"/>
+<!--                                    <field name="foreman_id"/>-->
+<!--                                    <field name="storeman"/>-->
+<!--                                    <field name="state" readonly="1"/>-->
+<!--                                    <button name="action_submit_request" type="object" string="Request"-->
+
+<!--                                            invisible="state != 'draft'"/>-->
+<!--                                    <button name="action_foreman_approve" type="object" string="Foreman Approve"-->
+<!--                                            invisible="state != 'requested'"/>-->
+<!--                                    <button name="action_store_approve" type="object" string="Store Approve"-->
+<!--                                            invisible="state != 'foreman_approved'"/>-->
+<!--                                    <button name="action_issue_part" type="object" string="Issue" class="btn-primary"-->
+<!--                                            invisible="state != 'store_approved'"/>-->
+<!--                                    <button name="action_reject" type="object" string="Reject" class="btn-danger"-->
+<!--                                            invisible="state != 'rejected,issued'"/>-->
+                                </tree>
+                                <form string="Part Request Detail">
+                                    <sheet>
+                                        <group>
+                                            <field name="part_no"/>
+                                            <field name="description"/>
+                                            <field name="quantity"/>
+                                            <field name="mechanic_id"/>
+                                            <field name="foreman_id" readonly="1"/>
+                                            <field name="storeman" readonly="1"/>
+                                            <field name="state" readonly="1"/>
+                                        </group>
+                                        <footer>
+                                            <button name="action_submit_request" type="object" string="Request"
+                                                    invisible="state != 'draft'"/>
+                                            <button name="action_foreman_approve" type="object" string="Foreman Approve"
+                                                    invisible="state != 'requested'"/>
+                                            <button name="action_store_approve" type="object" string="Store Approve"
+                                                    invisible="state != 'foreman_approved'"/>
+                                            <button name="action_issue_part" type="object" string="Issue"
+                                                    class="btn-primary"
+                                                    invisible="state != 'store_approved'"/>
+                                            <button name="action_reject" type="object" string="Reject"
+                                                    class="btn-danger"
+                                                    invisible="state != 'rejected,issued'"/>
+                                            <button string="Close" special="cancel" class="btn-secondary"/>
+                                        </footer>
+                                    </sheet>
+                                </form>
+                            </field>
+                        </page>
+
+                        <page string="Sublet Work">
+                            <field name="sublet_work_ids">
+                                <tree editable="bottom">
+                                    <field name="date"/>
+                                    <field name="outlet"/>
+                                    <field name="component_description"/>
+                                    <field name="maintenance_done" invisible="1"/>
+                                    <field name="in_time"/>
+                                    <field name="out_time"/>
+                                    <field name="duration_hours" readonly="1"/>
+                                    <field name="cost"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Signatures">
+                            <group>
+                                <field name="driver_signature"/>
+                                <field name="road_test_done"/>
+                                <field name="foreman_id"/>
+                                <field name="foreman_sign_date"/>
+                                <field name="pmv_manager_id"/>
+                                <field name="pmv_sign_date"/>
+                            </group>
+                        </page>
+                        <page string="Checklist">
+                            <group string="Mechanical Checks / Inspection / Adjustments">
+                                <field name="mechanical_checklist_ids">
+                                    <tree editable="bottom" create="false" delete="false">
+                                        <!--                                        <field name="section"/>-->
+                                        <field name="name"/>
+                                        <field name="completed"/>
+                                    </tree>
+                                </field>
+                            </group>
+
+                            <group string="Lube / Fluids">
+                                <field name="lube_checklist_ids">
+                                    <tree editable="bottom" create="false" delete="false">
+                                        <!--                                        <field name="section"/>-->
+                                        <field name="name"/>
+                                        <field name="completed"/>
+                                    </tree>
+                                </field>
+                            </group>
+
+                            <group string="Mixer Unit Checks">
+                                <field name="mixer_checklist_ids">
+                                    <tree editable="bottom" create="false" delete="false">
+                                        <!--                                        <field name="section"/>-->
+                                        <field name="name"/>
+                                        <field name="completed"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_garage_job_card_part_tree" model="ir.ui.view">
+        <field name="name">garage.job.card.part.tree</field>
+        <field name="model">garage.job.card.part</field>
+        <field name="arch" type="xml">
+            <tree string="Job Card Part Requests" editable="bottom" create="false">
+                <field name="job_card_id"/>
+                <field name="product_no"/>
+                <field name="description"/>
+                <field name="quantity"/>
+                <field name="mechanic_id"/>
+                <field name="foreman_id"/>
+                <field name="storeman"/>
+                <field name="state"/>
+                <button name="action_foreman_approve" type="object" string="Foreman Approve"
+                        invisible="state != 'requested'"/>
+                <button name="action_store_approve" type="object" string="Store Approve"
+                        invisible="state != 'foreman_approved'"/>
+                <button name="action_issue_part" type="object" string="Issue"
+                        class="btn-primary"
+                        invisible="state != 'store_approved'"/>
+                <button name="action_reject" type="object" string="Reject"
+                        class="btn-danger"
+                        invisible="state != 'rejected,issued'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_garage_job_card_tree" model="ir.ui.view">
+        <field name="name">garage.job.card.tree</field>
+        <field name="model">garage.job.card</field>
+        <field name="arch" type="xml">
+            <tree string="Job Cards">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="asset_id"/>
+                <field name="job_type_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_sublet_work_report" model="ir.actions.act_window">
+        <field name="name">Sublet Work Report</field>
+        <field name="res_model">garage.job.card.sublet</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+    </record>
+    <record id="view_garage_job_card_sublet_tree" model="ir.ui.view">
+        <field name="name">garage.job.card.sublet.tree</field>
+        <field name="model">garage.job.card.sublet</field>
+        <field name="arch" type="xml">
+            <tree string="Sublet Work List">
+                <field name="date"/>
+                <field name="outlet"/>
+                <field name="component_description"/>
+                <field name="maintenance_done"/>
+                <field name="out_time"/>
+                <field name="in_time"/>
+                <field name="duration_hours"/>
+                <field name="cost"/>
+                <field name="job_card_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_job_card" model="ir.actions.act_window">
+        <field name="name">Job Cards</field>
+        <field name="res_model">garage.job.card</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="action_garage_job_type" model="ir.actions.act_window">
+        <field name="name">Job Types</field>
+        <field name="res_model">garage.job.type</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Define and manage job types used in garage job cards.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_garage_job_type"
+              name="Job Types"
+              parent="fleet.fleet_configuration"
+              action="action_garage_job_type"
+              sequence="40"/>
+
+    <record id="view_garage_job_type_tree" model="ir.ui.view">
+        <field name="name">garage.job.type.tree</field>
+        <field name="model">garage.job.type</field>
+        <field name="arch" type="xml">
+            <tree string="Job Types">
+                <field name="name"/>
+                <field name="description"/>
+                <field name="fleet_service_type_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_garage_job_type_form" model="ir.ui.view">
+        <field name="name">garage.job.type.form</field>
+        <field name="model">garage.job.type</field>
+        <field name="arch" type="xml">
+            <form string="Job Type">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="description"/>
+                        <field name="fleet_service_type_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="fleet_vehicle_log_services_view_form_inherit_job" model="ir.ui.view">
+        <field name="name">fleet.vehicle.log.contract.form.inherit.job</field>
+        <field name="model">fleet.vehicle.log.services</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_log_services_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vendor_id']" position="after">
+                <field name="job_card" string="Job Card" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_garage_job_card_part_form" model="ir.ui.view">
+        <field name="name">garage.job.card.part.form</field>
+        <field name="model">garage.job.card.part</field>
+        <field name="arch" type="xml">
+            <form string="Part Request">
+                <sheet>
+                    <group>
+                        <field name="job_card_id"/>
+                        <field name="part_no"/>
+                        <field name="description"/>
+                        <field name="quantity"/>
+                        <field name="mechanic_id"/>
+                        <field name="foreman_id" readonly="1"/>
+                        <field name="storeman" readonly="1"/>
+                        <field name="state" readonly="1"/>
+                    </group>
+                    <group>
+                        <button name="action_submit_request" string="Submit" type="object" class="btn-primary"
+                                invisible="state != 'draft'"/>
+                        <button name="action_foreman_approve" string="Approve (Foreman)" type="object"
+                                invisible="state != 'requested'"/>
+                        <button name="action_store_approve" string="Approve (Store)" type="object" class="btn-secondary"
+                                invisible="state != 'foreman_approved'"/>
+                        <button name="action_issue_part" string="Issue Part" type="object" class="btn-success"
+                                invisible="state != 'store_approved'"/>
+                        <button name="action_reject" string="Reject" type="object" class="btn-danger"
+                                invisible="state not in ('issued','rejected')"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="product_template_form" model="ir.ui.view">
+        <field name="name">product.template.form.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='categ_id']" position="after">
+                <field name="vehicle_category"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

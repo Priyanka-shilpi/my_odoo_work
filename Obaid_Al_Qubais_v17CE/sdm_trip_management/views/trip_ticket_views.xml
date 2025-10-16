@@ -1,0 +1,61 @@
+<odoo>
+    <record id="view_trip_ticket_form" model="ir.ui.view">
+        <field name="name">trip.ticket.form</field>
+        <field name="model">trip.ticket</field>
+        <field name="arch" type="xml">
+            <form string="Trip Ticket">
+                <header>
+                    <field name="state" widget="statusbar" tatusbar_visible="draft,done" options="{'clickable': '1'}"/>
+                    <button name="print_trip_ticket" string="Print Ticket" type="object" class="btn-primary"/>
+                    <button name="action_done" string="Done" type="object" class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_generate_invoice" string="Generate Invoice"
+                            type="object" class="btn-primary" invisible="state != 'done'"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name" readonly="1"/>
+                        <field name="vehicle_id"/>
+                        <field name="driver_id"/>
+<!--                        <field name="date"/>-->
+                        <field name="route"/>
+                        <field name="start_time"/>
+                        <field name="end_time"/>
+                        <field name="odometer_start"/>
+                        <field name="odometer_end"/>
+                        <field name="fuel_used"/>
+                        <field name="remarks"/>
+                        <field name="invoice_id" readonly="1" widget="many2one" options="{'no_create': True}"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_trip_ticket_tree" model="ir.ui.view">
+        <field name="name">trip.ticket.tree</field>
+        <field name="model">trip.ticket</field>
+        <field name="arch" type="xml">
+            <tree string="Trip Tickets">
+                <field name="name"/>
+                <field name="vehicle_id"/>
+                <field name="driver_id"/>
+                <field name="date"/>
+                <field name="route"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_trip_ticket" model="ir.actions.act_window">
+        <field name="name">Trip Tickets</field>
+        <field name="res_model">trip.ticket</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first Trip Ticket</p>
+        </field>
+    </record>
+</odoo>

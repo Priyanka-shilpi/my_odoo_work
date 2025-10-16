@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_trip_management,access_trip_management,model_trip_management,base.group_user,1,1,1,1
+access_driver_list,access_driver_list,model_driver_list,base.group_user,1,1,1,1
+access_driver_assignment_user,access.driver.assignment.user,model_driver_assignment,base.group_user,1,1,1,1
+access_hr_employee,hr.employee,model_hr_employee,base.group_user,1,1,1,1
+access_fleet_vehicle_user,fleet.vehicle,model_fleet_vehicle,base.group_user,1,1,1,1
+access_daily_charge_user,daily.charge,model_daily_charge,"base.group_user",1,1,1,1
+access_trip_ticket,trip.ticket,model_trip_ticket,"base.group_user",1,1,1,1
+access_trip_ticket_report,trip.ticket.report,model_trip_ticket_report,"base.group_user",1,1,1,1
+access_trip_ticket_report_wizard,trip.ticket.report.wizard,model_trip_ticket_report_wizard,"base.group_user",1,1,1,1
+access_fleet_vehicle_service_part_line,fleet.vehicle.service.part.line,model_fleet_vehicle_service_part_line,"base.group_user",1,1,1,1

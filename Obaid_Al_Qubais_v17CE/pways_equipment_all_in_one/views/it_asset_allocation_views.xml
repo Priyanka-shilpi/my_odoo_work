@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="action_it_asset_allocation" model="ir.actions.act_window">
+        <field name="name">IT Asset Allocations</field>
+        <field name="res_model">it.asset.allocation</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling">
+                Assign and return IT equipment here.
+            </p>
+        </field>
+    </record>
+
+    <record id="view_it_asset_allocation_tree" model="ir.ui.view">
+        <field name="name">it.asset.allocation.tree</field>
+        <field name="model">it.asset.allocation</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="project_id"/>
+                <field name="allocation_date"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_it_asset_allocation_form" model="ir.ui.view">
+        <field name="name">it.asset.allocation.form</field>
+        <field name="model">it.asset.allocation</field>
+        <field name="arch" type="xml">
+            <form string="IT Asset Allocation">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,allocated,returned"/>
+                    <button name="action_allocate" string="Allocate" type="object" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_return" string="Return" type="object" class="btn-primary"
+                            invisible="state != 'allocated'"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="True"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="employee_id" readonly="state != 'draft'" domain="[('barcode', '!=', False)]"/>
+                            <field name="employee_barcode" readonly="state != 'draft'"/>
+                            <field name="project_id" readonly="state != 'draft'"/>
+                            <field name="allocation_date" readonly="state != 'draft'"/>
+                        </group>
+                        <group>
+                            <field name="checkin_checklist_id" readonly="1"/>
+                            <field name="checkout_checklist_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="IT Assets" name="it_assets">
+                            <field name="line_ids" readonly="state != 'draft'">
+                                <tree editable="bottom">
+                                    <field name="asset_id" options="{'no_create': True}"/>
+                                    <field name="asset_tag_id"/>
+                                    <field name="serial_number"/>
+                                    <field name="cost"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Checklist" invisible="state == 'returned'">
+                            <div name="checklist_buttons">
+                                <button name="action_open_checkin_checklist"
+                                        type="object"
+                                        class="btn btn-primary"
+                                        icon="fa-file"
+                                        string="IT Allocation Checklist"
+                                        invisible="state != 'draft'"/>
+                                <button name="action_open_checkout_checklist"
+                                        type="object"
+                                        class="btn btn-primary"
+                                        icon="fa-file"
+                                        string="IT Return Checklist" invisible="state != 'allocated'"/>
+                            </div>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_tools_equipment_allocation" model="ir.actions.act_window">
+        <field name="name">Tools/Equipment Allocations</field>
+        <field name="res_model">tools.equipment.allocation</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling">
+                Assign and return tools and equipment here.
+            </p>
+        </field>
+    </record>
+    <record id="view_tools_equipment_allocation_tree" model="ir.ui.view">
+        <field name="name">tools.equipment.allocation.tree</field>
+        <field name="model">tools.equipment.allocation</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="project_id"/>
+                <field name="allocation_date"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_tools_equipment_allocation_form" model="ir.ui.view">
+        <field name="name">tools.equipment.allocation.form</field>
+        <field name="model">tools.equipment.allocation</field>
+        <field name="arch" type="xml">
+            <form string="Tool/Equipment Allocation">
+                <header>
+                    <button name="action_allocate" type="object" string="Allocate" class="btn-primary"
+                            invisible="state != 'draft' or is_expensive or not id"/>
+                    <button name="action_allocate" type="object" string="Allocate" class="btn-primary"
+                            invisible="state != 'approved'"/>
+                    <button name="action_return" type="object" string="Return" class="btn-primary"
+                            invisible="state != 'allocated'"/>
+                    <button name="action_approve" type="object" string="Approve" class="btn-success"
+                            invisible="state != 'draft' or not is_expensive"
+                            groups="maintenance.group_equipment_manager"/>
+                    <button name="action_cancelled" type="object" string="Cancel" class="btn-secondary"
+                            invisible="state != 'draft' or not is_expensive"
+                            groups="maintenance.group_equipment_manager"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,approved,allocated,returned,cancelled"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="True"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="is_expensive" invisible="1"/>
+                            <field name="employee_id" readonly="state != 'draft'" domain="[('barcode', '!=', False)]"/>
+                            <field name="employee_barcode" readonly="1"/>
+                            <field name="project_id" readonly="state != 'draft'"/>
+                            <field name="allocation_date" readonly="state != 'draft'"/>
+                        </group>
+                        <group>
+                            <field name="checkin_checklist_id" readonly="True"/>
+                            <field name="checkout_checklist_id" readonly="True"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Tools/Equipment Assets" name="it_assets">
+                            <field name="line_ids" readonly="state != 'draft'">
+                                <tree editable="bottom">
+                                    <field name="asset_id" options="{'no_create': True}"/>
+                                    <field name="asset_tag_id"/>
+                                    <field name="serial_number"/>
+                                    <field name="cost"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Checklist" invisible="state == 'returned'">
+                            <div name="checklist_buttons">
+                                <button name="action_open_checkin_checklist"
+                                        type="object"
+                                        class="btn btn-primary"
+                                        icon="fa-file"
+                                        string="Tools/Equipment Allocation Checklist" invisible="state != 'draft'"/>
+                                <span class="ps-2"/>
+                                <button name="action_open_checkout_checklist"
+                                        type="object"
+                                        class="btn btn-primary"
+                                        icon="fa-file"
+                                        string="Tools/Equipment Return Checklist" invisible="state != 'allocated'"/>
+                            </div>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <menuitem id="menu_tools_equipments_menu"
+              name="Tools/Equipments"
+              parent="maintenance.menu_maintenance_title"
+              sequence="11"/>
+    <menuitem id="menu_tools_asset_checklist_root"
+              name="Tool/Equipment Checklists"
+              parent="menu_tools_equipments_menu"
+              action="action_tools_asset_checklist" sequence="2"/>
+
+    <menuitem id="menu_tools_equipment_allocation"
+              name="Tools/Equipment Allocation"
+              parent="menu_tools_equipments_menu"
+              action="action_tools_equipment_allocation" sequence="1"/>
+
+    <menuitem id="menu_it_assets_root" name="IT Assets" parent="maintenance.menu_maintenance_title"/>
+    <menuitem id="menu_it_asset_allocation" name="IT Asset Allocation" parent="menu_it_assets_root"
+              action="action_it_asset_allocation"/>
+
+</odoo>

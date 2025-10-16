@@ -1,0 +1,152 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="email_template_maintaince_allcoation_request" model="mail.template">
+            <field name="name">Maintenance Approval Email</field>
+            <field name="email_from">{{ (object.user_id.email or user.email or '') }}</field>
+            <field name="subject">{{ object.name }} Allocation Approval Email</field>
+            <field name="email_to">{{ user.email }}</field>
+            <field name="model_id" ref="model_maintenance_request"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); ">
+                    <p>Dear</p>
+                    <t t-out="object.user_id.name or ''"></t>
+                    <p>Your maintaince request for <t t-out="object.equipment_id.name or ''"></t> has been approved .
+                        Repair or maintance work will start soon and once it done, hr depatment will inform you to
+                        collect it.
+                    </p>
+                    <br/>
+                    Best Regards,
+                    <br/>
+                    <br/>
+                    <!-- <t t-out="user.name or ''"></t> -->
+                    <br/>
+                    <br/>
+                    <br/>
+                </div>
+            </field>
+        </record>
+
+        <record id="email_template_maintaince_request" model="mail.template">
+            <field name="name">Maintenance Request Email</field>
+            <field name="email_from">{{ (object.user_id.email or user.email or '') }}</field>
+            <field name="subject">{{ object.name }} Allocation Approval Email</field>
+            <field name="email_to">{{user.email }}</field>
+            <field name="model_id" ref="model_maintenance_request"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); ">
+                    <p>Dear</p>
+                    <p>I am writing to maintaince request to repairs the <t t-out="object.equipment_id.name or ''"></t> .
+                        as it was due for repair. This could include things that would necessitate replacement.
+                    </p>
+                    <br/>
+                    Best Regards,
+                    <br/>
+                    <br/>
+                    <t t-out="object.user_id.name or ''"></t>
+                    <br/>
+                    <br/>
+                    <br/>
+                </div>
+            </field>
+        </record>
+
+        <record id="email_template_allocation_request" model="mail.template">
+            <field name="name">Allocation Email</field>
+            <field name="email_from">{{ (object.create_by.email or user.email or '') }}</field>
+            <field name="subject">{{ object.name }} Allocation Email</field>
+            <field name="email_to">{{ object.assing_to.work_email }}</field>
+            <field name="model_id" ref="model_allcation_request"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); ">
+                    <p>Dear
+                        <t t-out="object.approve_by.name or ''"></t>
+                    </p>
+                    <p>Equipment request
+                        <t t-out="object.name or ''"></t>
+                    </p>
+                    <p>for <t t-out="object.equipment_id.name or ''"></t> is create by <t
+                            t-out="object.assing_to.name or ''"></t>.
+                    </p>
+                    <p>Please confirm this allocation request</p>
+                    <br/>
+                    Best Regards,
+                    <br/>
+                    <br/>
+                    <t t-out="object.create_by.name or ''"></t>
+                    <br/>
+                    <br/>
+                    <br/>
+                </div>
+            </field>
+        </record>
+
+        <record id="email_template_allocation_approval" model="mail.template">
+            <field name="name">Allocation Approval Email</field>
+            <field name="email_from">{{ (object.create_by.email or user.email or '') }}</field>
+            <field name="subject">{{ object.name }} Allocation Approval Email</field>
+            <field name="email_to">{{ user.email }}</field>
+            <field name="model_id" ref="model_allcation_request"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); ">
+                    <p>Dear
+                        <t t-out="object.assing_to.name or ''"></t>
+                    </p>
+                    <p>your request for equipment <t t-out="object.equipment_id.name or ''"></t> has been approved.
+                        Please collect it from hr department
+                    </p>
+                    <br/>
+                    Best Regards,
+                    <br/>
+                    <br/>
+                    <t t-out="object.approve_by.name or ''"></t>
+                    <br/>
+                    <br/>
+                    <br/>
+                </div>
+            </field>
+        </record>
+        <record id="email_template_equipment_approval" model="mail.template">
+            <field name="name">Equipment Approval Request</field>
+            <field name="model_id" ref="pways_equipment_all_in_one.model_asset_allocation_request"/>
+            <field name="email_from">{{ object.create_uid.email or user.email or '' }}</field>
+            <field name="subject">Approval Request: {{ object.asset_id.name or 'Unnamed Asset' }}</field>
+            <field name="email_to">{{ user.email }}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255);">
+                    <p>Dear
+                    </p>
+                    <p>The asset
+                        <strong>
+                            <t t-out="object.asset_id.name or 'N/A'"/>
+                        </strong>
+                        has been marked as <em>Expensive</em> and requires your approval for allocation
+                    </p>
+                    <ul>
+                        <li>
+                            <strong>Asset Code:</strong>
+                            <t t-out="object.asset_id.asset_tag or 'N/A'"/>
+                        </li>
+                        <li>
+                            <strong>Asset Value:</strong>
+                            <t t-out="object.asset_id.product_cost or 'N/A'"/>
+                        </li>
+                        <li>
+                            <strong>Requestor Email:</strong>
+                            <t t-out="object.create_uid.email or 'N/A'"/>
+                        </li>
+                    </ul>
+                    <p>Please log into Odoo to approve or reject the request.</p>
+                    <p>Thank you.</p>
+                </div>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

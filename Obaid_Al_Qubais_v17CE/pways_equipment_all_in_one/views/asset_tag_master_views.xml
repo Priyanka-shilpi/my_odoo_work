@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_stock_picking_form_asset_tag" model="ir.ui.view">
+        <field name="name">stock.move.line.asset.tag</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_stock_move_line_operation_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='lot_name']" position="after">
+                <field name="asset_tag_id"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <!-- Asset Tag Master Form View -->
+    <record id="view_asset_tag_master_form" model="ir.ui.view">
+        <field name="name">asset.tag.master.form</field>
+        <field name="model">asset.tag.master</field>
+        <field name="arch" type="xml">
+            <form string="Asset Tag Master">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="lot_ref_id" domain="[('product_qty', '>', 0)]"/>
+                        <field name="product_id"/>
+                        <!--                        <field name="part_number"/>-->
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Asset Tag Master Tree View -->
+    <record id="view_asset_tag_master_tree" model="ir.ui.view">
+        <field name="name">asset.tag.master.tree</field>
+        <field name="model">asset.tag.master</field>
+        <field name="arch" type="xml">
+            <tree string="Asset Tag Master">
+                <field name="name"/>
+                <field name="lot_ref_id"/>
+                <field name="product_id"/>
+<!--                <field name="part_number"/>-->
+            </tree>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_asset_tag_master" model="ir.actions.act_window">
+        <field name="name">Asset Tag Master</field>
+        <field name="res_model">asset.tag.master</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create and manage Asset Tags here.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu item under Maintenance → Configuration -->
+    <menuitem id="menu_asset_tag_master"
+              name="Asset Tag Master"
+              parent="maintenance.menu_maintenance_configuration"
+              action="action_asset_tag_master"/>
+</odoo>

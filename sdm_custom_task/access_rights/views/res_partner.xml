@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_partner_form_inherit_gst" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit.gst</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='image_1920']" position="replace">
+                    <div class="o_row" style="align-items: center;">
+                        <div class="o_col o_col_6" style="padding-top: 40px; padding-left:880px">
+                            <label for="access"/>
+                            <field name="access"/>
+                        </div>
+                        <div class="o_col o_col_6" style="text-align: right; ">
+                            <field name="image_1920" widget="image" class="oe_avatar"
+                                   options="{'preview_image': 'image_1920'}"/>
+                        </div>
+                    </div>
+                </xpath>
+
+
+            </field>
+        </record>
+
+    </data>
+</odoo>
