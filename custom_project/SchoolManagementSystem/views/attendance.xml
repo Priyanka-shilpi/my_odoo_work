@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_attendance_form" model="ir.ui.view">
+        <field name="name">academic.attendance.form</field>
+        <field name="model">academic.attendance</field>
+        <field name="arch" type="xml">
+            <form string="Attendance">
+                <header>
+                    <button name="take_attendance" string="Take Attendance" type="object" class="oe_highlight"/>
+
+                </header>
+                <sheet>
+                    <group>
+                        <field name="month"/>
+                        <field name="year"></field>
+                        <field name="class2"></field>
+                        <field name="section"></field>
+                    </group>
+                    <xpath expr="//field[@name='section']" position="after">
+                        <button name="filter_attendance" string="Filter" type="object" class="oe_highlight"/>
+                    </xpath>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="view_attendance_list" model="ir.ui.view">
+        <field name="name">academic.attendance.list</field>
+        <field name="model">academic.attendance</field>
+        <field name="arch" type="xml">
+            <list string="Attendance">
+                <field name="month"/>
+                <field name="year"></field>
+                <field name="class2"></field>
+                <field name="section"></field>
+            </list>
+        </field>
+    </record>
+
+
+    <record id="action_academic_attendance" model="ir.actions.act_window">
+        <field name="name">Attendance</field>
+        <field name="res_model">academic.attendance</field>
+        <field name="view_mode">form</field>
+    </record>
+</odoo>

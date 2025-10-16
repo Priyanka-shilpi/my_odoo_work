@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+
+<record id="view_gallery_batch_form" model="ir.ui.view">
+    <field name="name">gallery.batch.form</field>
+    <field name="model">alumini.gallery.batch</field>
+    <field name="arch" type="xml">
+        <form>
+            <sheet>
+                <group>
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="file" filename="filename" widget="image"/>
+
+                </group>
+            </sheet>
+        </form>
+    </field>
+</record>
+    <record id="view_gallery_batch_kanban" model="ir.ui.view">
+    <field name="name">gallery.batch.kanban</field>
+    <field name="model">alumini.gallery.batch</field>
+    <field name="arch" type="xml">
+        <kanban class="o_kanban_small_column">
+            <field name="name"/>
+            <field name="description"/>
+            <templates>
+                <t t-name="kanban-box">
+                    <div class="oe_kanban_card oe_kanban_global_click">
+                        <div>
+                            <strong><field name="name"/></strong>
+                        </div>
+                        <div>
+
+                            <field name="description"/>
+                        </div>
+
+                    </div>
+                </t>
+            </templates>
+        </kanban>
+    </field>
+</record>
+
+<record id="action_gallery_batches" model="ir.actions.act_window">
+    <field name="name">Gallery Batches</field>
+    <field name="res_model">alumini.gallery.batch</field>
+    <field name="view_mode">kanban,form</field>
+</record>
+
+
+</odoo>

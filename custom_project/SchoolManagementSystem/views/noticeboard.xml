@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_notice_form" model="ir.ui.view">
+        <field name="name">NoticeBoard</field>
+        <field name="model">back.notice</field>
+        <field name="arch" type="xml">
+            <form string="Notice">
+                <field name="photo" widget="image" class="oe_avatar"/>
+                <sheet>
+                    <group>
+                        <field name="notice_name"/>
+                        <field name="date"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_notice_list" model="ir.ui.view">
+        <field name="name">NoticeBoard</field>
+        <field name="model">back.notice</field>
+        <field name="arch" type="xml">
+            <list string="events">
+                <field name="photo" widget="image" options="{'size': [64, 64]}" class="oe_avatar"/>
+
+                      <field name="notice_name"/>
+                        <field name="date"/>
+
+            </list>
+        </field>
+    </record>
+    <record id="view_notice_calendar" model="ir.ui.view">
+        <field name="name">NoticeBoard</field>
+        <field name="model">back.notice</field>
+        <field name="arch" type="xml">
+            <calendar string="NoticeBoard Calendar" date_start="date">
+                <field name="notice_name"/>
+            </calendar>
+        </field>
+    </record>
+
+
+
+
+    <record id="action_back_office_notice" model="ir.actions.act_window">
+        <field name="name">NoticeBoard</field>
+        <field name="res_model">back.notice</field>
+        <field name="view_mode">calendar,list,form</field>
+<!--        <field name="view_id" ref="view_teacher_list"/>-->
+    </record>
+
+</odoo>

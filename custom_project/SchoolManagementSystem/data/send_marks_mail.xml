@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="mail_template_receiver" model="mail.template">
+        <field name="name">Send Marks</field>
+        <field name="model_id" ref="model_send_marks"/>
+        <field name="email_to" type="char">
+            <![CDATA[
+            {% if object.receiver == 'Parent' %}
+                {{ object.parent.email or '' }}
+            {% elif object.receiver == 'Student' %}
+                {{ object.student.email or '' }}
+            {% else %}
+                {{ '' }}
+            {% endif %}
+            ]]>
+        </field>
+        <field name="email_from">{{ (object.company_id.email) }}</field>
+        <field name="body_html" type="html">
+            <table border="0" cellpadding="0" cellspacing="0"
+                   style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+                <tr>
+                    <td align="center">
+                        <table border="0" cellpadding="0" cellspacing="0" width="590"
+                               style="padding: 24px; background-color: white; color: #454748; border-collapse:separate;">
+                            <tbody>
+                                <tr>
+                                    <td align="center" style="min-width: 590px;">
+                                        <h2>Exam Marks Record</h2>
+                                        <hr style="margin: 16px 0;"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="min-width: 590px;">
+<!--                                        <p>Dear Recipient,</p>-->
+<!--                                        <p>The following marks have been recorded:</p>-->
+<!--                                        <table border="1" cellpadding="5" cellspacing="0"><thead>-->
+<!--                                            <tr>-->
+<!--                                                <th>Student Name</th>-->
+<!--                                                <th>Class</th>-->
+<!--                                                <th>Section</th>-->
+<!--                                                <th>Marks</th>-->
+<!--                                                <th>Grade</th>-->
+<!--                                                <th>Grade Point</th>-->
+<!--                                                <th>Comment</th>-->
+<!--                                            </tr>-->
+<!--                                        </thead>-->
+<!--                                            <tbody>-->
+<!--                                                <t t-foreach="object.marks_line_ids" t-as="line">-->
+<!--                                                    <tr>-->
+<!--                                                        <td><span t-field="line.name.name"/></td>-->
+<!--                                                        <td><span t-field="line.student_class_number1.name"/></td>-->
+<!--                                                        <td><span t-esc="line.sections"/></td>-->
+<!--                                                        <td><span t-field="line.marks"/></td>-->
+<!--                                                        <td><span t-field="line.grade"/></td>-->
+<!--                                                        <td><span t-field="line.grade_point"/></td>-->
+<!--                                                        <td><span t-field="line.comment"/></td>-->
+<!--                                                    </tr>-->
+<!--                                                </t>-->
+<!--                                            </tbody>-->
+<!--                                        </table>-->
+
+
+                                        <p>Dear <span t-field="object.student"></span>,</p>
+                                        <p>Your marks for the exam <strong><span t-field="object.exam"></span></strong> have been recorded.</p>
+                                        <p>Marks: <span t-field="object.marks"></span></p>
+                                        <p>Class: <span t-field="object.select_class"></span></p>
+                                        <p>Section: <span t-field="object.section_1"></span></p>
+                                        <p>Thank you,<br/><span t-field="object.company_id.name"/></p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center"
+                                        style="min-width: 590px; padding: 0 8px 0 8px; font-size:11px;">
+                                        <hr width="100%"
+                                            style="background-color:rgb(204,204,204); border:none; margin: 16px 0 4px 0;"/>
+                                        <b><span t-field="object.company_id.name"/></b><br/>
+                                        <span style="color: #999999;">
+                                            <span t-field="object.company_id.phone"/> |
+                                            <a t-att-href="'mailto:' + (object.company_id.email or '')" style="color: #999999;">
+                                                <span t-field="object.company_id.email"/>
+                                            </a> |
+                                            <a t-att-href="object.company_id.website" style="color: #999999;">
+                                                <span t-field="object.company_id.website"/>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" style="min-width: 590px;">
+                                        Powered by <a href="https://www.odoo.com" style="color: #875A7B;">Odoo</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+</odoo>

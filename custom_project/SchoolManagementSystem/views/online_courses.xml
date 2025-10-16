@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_online_courses_form" model="ir.ui.view">
+        <field name="name">online.course.form</field>
+        <field name="model">online.course</field>
+        <field name="arch" type="xml">
+            <form string="Online Courses">
+                <header>
+                    <button name="create_new_course" string="Create New Course" type="object" class="oe_highlight"/>
+
+                </header>
+                <sheet>
+                    <group>
+                        <field name="class_names"/>
+                        <field name="teacher_name"></field>
+                        <field name="status"></field>
+                    </group>
+                    <xpath expr="//field[@name='status']" position="after">
+                        <button name="filter_courses" string="Filter" type="object" class="oe_highlight"/>
+
+                    </xpath>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+    <record id="view_online_courses_list" model="ir.ui.view">
+        <field name="name">online.course.list</field>
+        <field name="model">online.course</field>
+        <field name="arch" type="xml">
+            <list string="Online Courses">
+                <field name="class_names"/>
+                <field name="teacher_name"/>
+                <field name="status"/>
+
+            </list>
+        </field>
+
+
+    </record>
+
+
+    <record id="action_online_courses" model="ir.actions.act_window">
+        <field name="name">Online Course</field>
+        <field name="res_model">online.course</field>
+        <field name="view_mode">form</field>
+    </record>
+</odoo>

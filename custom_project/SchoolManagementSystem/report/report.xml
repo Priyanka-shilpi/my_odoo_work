@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="report_student_invoice_pdf" model="ir.actions.report">
+        <field name="name">student invoice pdf report</field>
+        <field name="model">accounting.feemanager</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">SchoolManagementSystem.report_fee_invoice_report_document</field>
+        <field name="report_file">SchoolManagementSystem.report_fee_invoice_report_document</field>
+        <field name="print_report_name">(object.id)</field>
+        <field name="binding_model_id" ref="model_accounting_feemanager"/>
+        <field name="binding_type">report</field>
+
+    </record>
+
+    <record id="report_student_marks_pdf" model="ir.actions.report">
+        <field name="name">student marks pdf report</field>
+        <field name="model">send.marks</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">SchoolManagementSystem.report_student_marks_report_document</field>
+        <field name="report_file">SchoolManagementSystem.report_student_marks_report_document</field>
+        <field name="print_report_name">(object.id)</field>
+        <field name="binding_model_id" ref="model_send_marks"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

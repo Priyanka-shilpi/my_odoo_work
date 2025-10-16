@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_marks_form" model="ir.ui.view">
+        <field name="name">exam.marks.form</field>
+        <field name="model">exam.marks</field>
+        <field name="arch" type="xml">
+            <form string="Marks">
+                <header>
+                    <button name="allot_marks" string="Allot Marks" type="object" class="oe_highlight"/>
+
+                </header>
+                <sheet>
+                    <group>
+<!--                        <field name="student_class_number"/>-->
+                        <field name="student_class_number1"/>
+                        <field name="sections"></field>
+<!--                        <field name="section"></field>-->
+<!--                        <field name="subject"></field>-->
+
+                    </group>
+                    <xpath expr="//field[@name='subject']" position="after">
+                        <button name="filter_marks" string="Filter" type="object" class="oe_highlight"/>
+
+                    </xpath>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+    <record id="view_marks_list" model="ir.ui.view">
+        <field name="name">exam.marks.list</field>
+        <field name="model">exam.marks</field>
+        <field name="arch" type="xml">
+            <list string="Marks">
+                <field name="student_class_number1"/>
+                        <field name="sections"></field>
+<!--                        <field name="section"></field>-->
+<!--                        <field name="subject"></field>-->
+
+            </list>
+        </field>
+
+
+    </record>
+
+
+    <record id="action_exam_marks" model="ir.actions.act_window">
+        <field name="name">Marks</field>
+        <field name="res_model">exam.marks</field>
+        <field name="view_mode">form</field>
+    </record>
+</odoo>

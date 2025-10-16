@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <menuitem id="menu_school" name="School Management System"/>
+    <menuitem id="menu_school_dashboard"
+              name="Dashboard"
+              parent="menu_school"
+              action="SchoolManagementSystem.school_dashboard"
+              sequence="10"
+             />
+
+    <!-- Transport Menu -->
+    <menuitem id="menu_school_transport" name="Transport" parent="menu_school" sequence="20"/>
+    <menuitem id="menu_school_transport_drivers" name="Drivers" action="action_school_driver" parent="menu_school_transport" sequence="1" />
+    <menuitem id="menu_transport_vehicle" name="vehicle" action="action_transport_vehicle" parent="menu_school_transport" sequence="2"/>
+    <menuitem id="menu_transport_assign" name="Assign Students" action="action_transport_assign" parent="menu_school_transport" sequence="3"/>
+
+    <!-- Users Menu -->
+    <menuitem id="menu_school_Users" name="Users" parent="menu_school" sequence="30"/>
+    <menuitem id="menu_school_admission" name="Admission" action="action_admission_form" parent="menu_school_Users"/>
+    <menuitem id="menu_users_teachers" name="Teachers" action="action_hr_employee" parent="menu_school_Users"/>
+    <menuitem id="menu_users_parents" name="Parents" action="action_users_parent" parent="menu_school_Users"/>
+    <menuitem id="menu_users_accountant" name="Accountants" action="action_users_accountant" parent="menu_school_Users"/>
+    <menuitem id="menu_users_student" name="Student" action="action_student" parent="menu_school_Users"/>
+    <menuitem id="menu_users_librarian" name="Librarian" action="action_hr_employee_librarian" parent="menu_school_Users"/>
+
+    <!-- Alumni Menu -->
+    <menuitem id="menu_school_Alumini" name="Alumini" parent="menu_school" sequence="40"/>
+    <menuitem id="menu_alumini_manage" name="Manage Alumini" action="action_alumini_manage" parent="menu_school_Alumini"/>
+    <menuitem id="menu_users_events" name="Events" action="action_users_event" parent="menu_school_Alumini"/>
+    <menuitem id="menu_alumini_gallery_batch" name="Gallery" action="action_gallery_batches" parent="menu_school_Alumini"/>
+
+    <!-- Academics Menu -->
+    <menuitem id="menu_school_Academic" name="Academics" parent="menu_school" sequence="50"/>
+    <menuitem id="menu_academic_class" name="Class" action="action_academic_classes" parent="menu_school_Academic"/>
+    <menuitem id="menu_biometric_attendance" name="Biometric Attendance" action="action_biometric_attendance" parent="menu_school_Academic"/>
+    <menuitem id="menu_academic_room" name="ClassRoom" action="action_academic_class_room" parent="menu_school_Academic"/>
+    <menuitem id="menu_academic_department" name="Department" action="action_academic_department" parent="menu_school_Academic"/>
+    <menuitem id="menu_subjects" name="Subjects" action="action_academic_subject" parent="menu_school_Academic"/>
+    <menuitem id="menu_syllabus" name="Syllabus" action="action_academic_syllabus" parent="menu_school_Academic"/>
+    <menuitem id="menu_routine" name="Class Routine" action="action_academic_routine" parent="menu_school_Academic"/>
+    <menuitem id="menu_academic_attendance" name="Daily Attendance" action="action_academic_attendance" parent="menu_school_Academic"/>
+
+    <!-- Back Office Menu -->
+    <menuitem id="menu_school_backoffice" name="Back Office" parent="menu_school" sequence="60"/>
+    <menuitem id="menu_library" name="Library" parent="menu_school_backoffice"/>
+    <menuitem id="menu_booklist" name="Book List Manager" action="action_book_form" parent="menu_library"/>
+    <menuitem id="menu_bookissue" name="Book Issue Report" action="action_back_book" parent="menu_library"/>
+    <menuitem id="menu_back_notice" name="Notice Board" action="action_back_office_notice" parent="menu_school_backoffice"/>
+
+    <!-- Examination Menu -->
+    <menuitem id="menu_school_Exam" name="Examination" parent="menu_school" sequence="70"/>
+    <menuitem id="menu_academic_exam" name="Exam" action="action_examination_exam" parent="menu_school_Exam"/>
+    <menuitem id="menu_academic_marks" name="Marks" action="action_exam_marks" parent="menu_school_Exam"/>
+    <menuitem id="menu_academic_grades" name="Grades" action="action_exam_grades" parent="menu_school_Exam"/>
+    <menuitem id="menu_academic_send_exam_marks" name="Send Exam Marks" action="action_send_exam_marks" parent="menu_school_Exam"/>
+
+    <!-- Accounting Menu -->
+    <menuitem id="menu_school_Accounting" name="Accounting" parent="menu_school" sequence="80"/>
+    <menuitem id="menu_accounting_expense" name="Expense Category" action="action_accounting_expense" parent="menu_school_Accounting"/>
+    <menuitem id="menu_accounting_expense_manager" name="Expense Manager" action="action_accounting_expense_manager" parent="menu_school_Accounting"/>
+    <menuitem id="menu_accounting_invoice" name="Student Fee Manager" action="action_accounting_fee" parent="menu_school_Accounting"/>
+
+    <!-- Online Course & Settings -->
+    <menuitem id="menu_school_Online_Course" name="Online Course" action="action_online_courses" parent="menu_school" sequence="90"/>
+    <menuitem id="menu_school_Settings" name="School Settings" action="action_school_settings" parent="menu_school" sequence="100"/>
+</odoo>

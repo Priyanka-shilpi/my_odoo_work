@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_delivery_assigned_form" model="ir.ui.view">
+        <field name="name">delivery.management.form.assigned</field>
+        <field name="model">delivery.management</field>
+        <field name="arch" type="xml">
+            <form string="Customer Invoice" create="False">
+                <header>
+                    <div class="oe_title header-flex">
+                        <div>
+                            <p>Customer Invoice</p>
+                            <field name="number" readonly="1" class="delivery-number"/>
+                        </div>
+                    </div>
+                </header>
+                <group>
+                    <group>
+                        <button name="action_cancel_delivery"
+                                type="object"
+                                string="Delivery Canceled"
+                                class="btn btn-danger"/>
+                        <button name="action_onway_delivery"
+                                type="object"
+                                string="Delivery Onway"
+                                class="btn btn-success"/>
+                    </group>
+
+                    <group>
+                        <field name="delivery_state" widget="badge"
+                               decoration-info="delivery_state in ('draft', 'transit')"
+                               decoration-primary="delivery_state in ('arrived', 'onway', 'collection')"
+                               decoration-danger="delivery_state == 'cancel_delivery'"/>
+                    </group>
+                </group>
+
+
+                <sheet>
+                    <group>
+
+                        <group>
+                            <group>
+                                <field name="customer_name" readonly="1"/>
+                                <field name="customer_mobile" readonly="1"/>
+
+                            </group>
+                            <group>
+                                <field name="customer_address" readonly="1"/>
+                                <field name="customer_address1" readonly="1"/>
+                                <field name="customer_address2" readonly="1"/>
+                                <field name="customer_address3" readonly="1"/>
+                                <field name="customer_address4" readonly="1"/>
+                                <field name="customer_address5" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="delivery_boy" readonly="1"/>
+                                <field name="due_date" readonly="1"/>
+                                <field name="payment_state" widget="badge" readonly="1"/>
+                            </group>
+                        </group>
+                        <!--                        <group>-->
+                        <!--                            &lt;!&ndash;                            <field name="next_activity"/>&ndash;&gt;-->
+                        <!--                            <field name="tax_excluded" widget="monetary"-->
+                        <!--                                   options="{'currency_field': 'currency_id'}"-->
+                        <!--                                   readonly="1"/>-->
+                        <!--                            <field name="total" widget="monetary"-->
+                        <!--                                   options="{'currency_field': 'currency_id'}"-->
+                        <!--                                   readonly="1"/>-->
+                        <!--                            <field name="total_in_currency_display" readonly="1"/>-->
+                        <!--                            <field name="delivery_boy"/>-->
+                        <!--                            <field name="order_amount_due" readonly="1"/>-->
+                        <!--                            <field name="status" readonly="1"/>-->
+                        <!--                        </group>-->
+
+                    </group>
+
+                    <notebook>
+                        <page string="Order Lines" create="False" readonly="1">
+                            <field name="order_line_ids" create="false" readonly="1"
+                                   options="{'no_create': True, 'no_create_edit': True}">
+                                <list editable="bottom">
+                                    <field name="description"/>
+                                    <field name="quantity"/>
+                                    <field name="price_unit"/>
+                                    <field name="taxes" widget="many2many_tags"/>
+                                    <field name="price_subtotal"/>
+                                </list>
+                            </field>
+
+
+                            <div class="oe_clearfix" style="margin-top: 15px;">
+                                <div class="float-end pe-2" style="width: 300px;">
+                                    <group string="Payment Info" class="o_form_label_right">
+                                        <field name="currency_id" invisible="1"/>
+                                        <field name="total"
+                                               widget="monetary"
+                                               options="{'currency_field': 'currency_id'}"
+                                               readonly="1"
+                                               string="Total"/>
+                                        <field name="amount_residual"
+                                               widget="monetary"
+                                               options="{'currency_field': 'currency_id'}"
+                                               readonly="1"
+                                               string="Due Amount"
+                                               modifiers='{"class": [["amount_residual", "!=", 0, "text-danger"]]}'/>
+                                        <button name="action_collect_delivery"
+                                                string="Collect"
+                                                type="object"
+                                                class="btn btn-danger"
+                                        />
+                                    </group>
+                                </div>
+                            </div>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

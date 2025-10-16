@@ -1,0 +1,40 @@
+/* Make the button sky blue with soft edges */
+.custom-delivery-button {
+    background-color: #87ceeb !important; /* Sky blue */
+    color: white !important;
+    border-radius: 8px !important;       /* Soft edges */
+    border: 1px solid #87ceeb !important;
+}
+
+
+.o_list_view tr.o_data_row.bg-primary {
+  background-color: #0d6efd !important; /* force blue */
+  color: white; /* white text for contrast */
+}
+
+.header-flex {
+    display: flex;
+    justify-content: space-between;  /* Push content to edges */
+    align-items: flex-start;         /* Align top edges */
+}
+
+.header-flex .delivery-number {
+    font-size: 2em !important;       /* Large text for invoice number */
+    font-weight: bold !important;
+    margin: 0 !important;
+}
+
+.header-flex p {
+    margin: 0 0 0.2em 0 !important;  /* Small bottom margin for title */
+}
+
+
+
+
+
+
+
+
+
+
+

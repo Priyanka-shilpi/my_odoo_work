@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_delivery_management,access_delivery_management,model_delivery_management,,1,1,1,1
+access_delivery_boy,access_delivery_boy,model_delivery_boy,,1,1,1,1
+access_assign_delivery_wizard,access_assign_delivery_wizard,model_assign_delivery_wizard,,1,1,1,1
+access_delivery_management_line,access_delivery_management_line,model_delivery_management_line,,1,1,1,1
+access_delivery_collection,access_delivery_collection,model_delivery_collection,,1,1,1,1

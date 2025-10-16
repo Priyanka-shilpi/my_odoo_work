@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="employee_birthday_notification_template" model="mail.template">
+            <field name="name">Employee: Birthday Notification</field>
+            <field name="email_from">{{ (object.company_id.email) }}</field>
+            <field name="subject">Birthday Wishes from Sidmec</field>
+            <field name="email_to">{{ (object.work_email) }}</field>
+            <field name="model_id" ref="model_hr_employee"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0"
+                       style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;">
+                    <tr>
+                        <td align="center">
+                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                   style="padding: 24px; background-color: white; color: #454748; border-collapse:separate;">
+                                <tbody>
+                                    <!-- HEADER -->
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="100%"
+                                                   style="background-color: white; padding: 0; border-collapse:separate;">
+                                                <tr>
+                                                    <td valign="middle">
+                                                        <span style="font-size: 10px;">Happy Birthday!!</span>
+                                                        <br/>
+                                                        <span style="font-size: 20px; font-weight: bold;"
+                                                              t-out="object.name or ''">Happy Birthday
+                                                        </span>
+                                                    </td>
+                                                    <td valign="middle" align="right">
+                                                        <img t-attf-src="/logo.png?company={{ object.company_id.id }}"
+                                                             style="padding: 0px; margin: 0px; height: 48px;"
+                                                             t-att-alt="object.company_id.name"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" style="text-align:center;">
+                                                        <hr width="100%"
+                                                            style="background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin:4px 0px 32px 0px;"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <!-- CONTENT -->
+                                    <tr>
+                                        <td style="min-width: 590px;">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                                   style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                            <tr>
+                                                <td valign="top" style="font-size: 13px;">
+                                                    <div>
+                                                        Hi <t
+                                                            t-out="object.name or ''">
+                                                        Deco Addict</t>,
+                                                        <br/>
+                                                        <br/>
+                                                        Whishing you a very happy Birthday.
+                                                        Hope you have a great year ahead .God bless you!
+                                                        <t t-out="object.company_id.name">
+                                                        </t>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <!-- FOOTER -->
+
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+                    <!-- POWERED BY -->
+                    <!--                <tr>-->
+                    <!--                    <td align="center" style="min-width: 590px;">-->
+                    <!--                        Powered by-->
+                    <!--                        <a target="_blank" href="https://www.odoo.com?utm_source=db&amp;utm_medium=email"-->
+                    <!--                           style="color: #875A7B;">Odoo-->
+                    <!--                        </a>-->
+                    <!--                    </td>-->
+                    <!--                </tr>-->
+
+            </field>
+            <field name="lang">{{ object.user_id.lang }}</field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+    </data>
+</odoo>
+
+

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_driver_form" model="ir.ui.view">
+        <field name="name">Drivers</field>
+        <field name="model">school.drivers</field>
+        <field name="arch" type="xml">
+            <form string="Drivers">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="driver_s_no"/>
+                            <field name="driver_name" />
+                            <field name="driver_email"/>
+                            <field name="driver_number"/>
+                            <field name="driver_vehicle_number"/>
+                        </group>
+
+                        <group>
+                            <field name="driver_image" widget="image" class="oe_avatar"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_driver_list" model="ir.ui.view">
+        <field name="name">Drivers</field>
+        <field name="model">school.drivers</field>
+        <field name="arch" type="xml">
+            <list string="Drivers">
+                <field name="driver_s_no"/>
+                <field name="driver_image" widget="image" options="{'size': [64, 64]}" class="oe_avatar"/>
+
+                <field name="driver_name"/>
+                <field name="driver_email"/>
+                <field name="driver_number"/>
+                <field name="driver_vehicle_number"/>
+            </list>
+        </field>
+    </record>
+     <record id="view_driver_graph" model="ir.ui.view">
+        <field name="name">Drivers</field>
+        <field name="model">school.drivers</field>
+        <field name="arch" type="xml">
+            <graph string="Drivers">
+                <field name="driver_s_no"/>
+                <field name="driver_image" widget="image" options="{'size': [64, 64]}" class="oe_avatar"/>
+
+                <field name="driver_name"/>
+                <field name="driver_email"/>
+                <field name="driver_number"/>
+                <field name="driver_vehicle_number"/>
+            </graph>
+        </field>
+    </record>
+
+
+    <record id="action_school_driver" model="ir.actions.act_window">
+        <field name="name">Drivers</field>
+        <field name="res_model">school.drivers</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_driver_list"/>
+    </record>
+
+</odoo>

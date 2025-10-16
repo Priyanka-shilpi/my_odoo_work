@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_academic_subject_form" model="ir.ui.view">
+        <field name="name">academic.routine.form</field>
+        <field name="model">academic.routine</field>
+        <field name="arch" type="xml">
+            <form string="Academic Routine">
+                <header>
+                    <button name="add_routine" string="Add Routine" type="object" class="oe_highlight"/>
+
+                </header>
+                <sheet>
+                    <group>
+                        <field name="class_number1"/>
+                        <field name="section"></field>
+                    </group>
+                    <xpath expr="//field[@name='section']" position="after">
+                        <button name="filter_routine" string="Filter" type="object" class="oe_highlight"/>
+
+                    </xpath>
+                </sheet>
+                 <footer>
+            <button name="filter_routine" string="Filter" type="object" class="btn-primary"/>
+            <button name="add_routine" string="Add Routine" type="object" class="btn-secondary"/>
+        </footer>
+            </form>
+        </field>
+    </record>
+    <record id="view_academic_subject_list" model="ir.ui.view">
+        <field name="name">academic.routine.list</field>
+        <field name="model">academic.routine</field>
+        <field name="arch" type="xml">
+            <list string="Academic Routine">
+                <field name="class_number1"/>
+                <field name="section"/>
+            </list>
+        </field>
+
+
+    </record>
+
+
+    <record id="action_academic_routine" model="ir.actions.act_window">
+        <field name="name">Routine</field>
+        <field name="res_model">academic.routine</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

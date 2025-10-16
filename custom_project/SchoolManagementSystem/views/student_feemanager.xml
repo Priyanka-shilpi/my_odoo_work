@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_accounting_fee_form" model="ir.ui.view">
+        <field name="name">accounting.fee.form</field>
+        <field name="model">accounting.fee</field>
+        <field name="arch" type="xml">
+            <form string="Student Fee Manager" create="False">
+                <header>
+                    <button name="add_single_invoice" string="Add Single Invoice" type="object" class="oe_highlight"/>
+                    <button name="add_mass_invoice" string="Add Mass Invoice" type="object" class="oe_highlight"/>
+                </header>
+                <sheet>
+                    <group>
+                        <!--                        <field name="class_names"/>-->
+                        <!--                        <field name="date"></field>-->
+                        <!--                        <field name="status"></field>-->
+                    </group>
+                    <xpath expr="//field[@name='status']" position="after">
+                        <button name="filter_invoice" string="View Records" type="object" class="oe_highlight"/>
+                    </xpath>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_accounting_fee_list" model="ir.ui.view">
+        <field name="name">accounting.fee.list</field>
+        <field name="model">accounting.fee</field>
+        <field name="arch" type="xml">
+            <list string="Student Fee Manager">
+                <field name="students"/>
+                <field name="class_names"/>
+                <field name="date"/>
+                <field name="invoice_title"/>
+                <field name="total_amount"/>
+                <field name="paid_amount"/>
+                <field name="status"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_custom_menu_search" model="ir.ui.view">
+        <field name="name">search</field>
+        <field name="model">accounting.fee</field>
+        <field name="arch" type="xml">
+            <search string="Search">
+                <field name="students"/>
+                <field name="class_names"/>
+                <field name="date"/>
+                <field name="invoice_title"/>
+                <field name="total_amount"/>
+                <field name="paid_amount"/>
+                <field name="status"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_accounting_fee" model="ir.actions.act_window">
+        <field name="name">Student Fee Manager</field>
+        <field name="res_model">accounting.fee</field>
+        <field name="view_mode">form</field>
+    </record>
+</odoo>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+   <record id="view_book_list_form" model="ir.ui.view">
+       <field name="name">Book List</field>
+       <field name="model">library.book</field>
+       <field name="arch" type="xml">
+           <form string="Book List Manager">
+
+               <sheet>
+                   <group>
+                       <field name="book_name"/>
+                       <field name="author"/>
+                       <field name="copy"/>
+
+                   </group>
+               </sheet>
+           </form>
+       </field>
+   </record>
+
+
+
+
+   <record id="view_book_list_list" model="ir.ui.view">
+       <field name="name">book.manager.list</field>
+       <field name="model">library.book</field>
+       <field name="arch" type="xml">
+           <list string="Book List Manager">
+              <field name="book_name"/>
+                       <field name="author"/>
+                       <field name="copy"/>
+
+           </list>
+       </field>
+   </record>
+
+
+
+
+
+
+   <record id="action_book_form" model="ir.actions.act_window">
+       <field name="name">Book List</field>
+       <field name="res_model">library.book</field>
+       <field name="view_mode">list,form</field>
+   </record>
+
+
+</odoo>

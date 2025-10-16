@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <menuitem id="delivery_management" name="Delivery Management"/>
+    <menuitem id="delivery_management_invoices" name="Delivery Invoices" parent="delivery_management" action="action_delivery_management" />
+    <menuitem id="delivery_invoices" name="Delivery Invoices" parent="delivery_management_invoices" action="action_delivery_management" groups="delivery_management.group_delivery_boy" />
+    <menuitem id="delivery_assigned" name="Delivery Assigned" parent="delivery_management_invoices" action="action_delivery_assigned"/>
+    <menuitem id="delivery_onway" name="Delivery Onway" parent="delivery_management_invoices" action="action_delivery_onway" groups="delivery_management.group_delivery_boy"/>
+    <menuitem id="delivery_arrived" name="Delivery Arrived" parent="delivery_management_invoices" action="action_delivery_management" groups="delivery_management.group_delivery_boy"/>
+    <menuitem id="delivery_collection" name="Delivery Collection" parent="delivery_management_invoices" action="action_delivery_collection" groups="delivery_management.group_delivery_boy"/>
+    <menuitem id="delivery_paid" name="Delivery Paid" parent="delivery_management_invoices" action="action_delivery_paid" groups="delivery_management.group_delivery_boy"/>
+    <menuitem id="delivery_commission_orders" name="Commission Orders" parent="delivery_management_invoices" action="action_delivery_management" groups="delivery_management.group_delivery_boy"/>
+    <menuitem id="delivery_customer_payments" name="Delivery Customer Payments" parent="delivery_management_invoices" action="action_delivery_management" groups="delivery_management.group_delivery_boy"/>
+    <menuitem id="delivery_cancled" name="Delivery Canceled" parent="delivery_management_invoices" action="action_delivery_cancelled" groups="delivery_management.group_delivery_boy"/>
+    <menuitem id="delivery_management_boy" name="Delivery Boy" parent="delivery_management" action="action_delivery_boy"/>
+</odoo>
+
+
+<!--<?xml version="1.0" encoding="UTF-8" ?>-->
+<!--<odoo>-->
+<!--    <menuitem id="delivery_management" name="Delivery Management"/>-->
+
+<!--    <menuitem id="delivery_management_invoices" name="Delivery Invoices" parent="delivery_management" action="action_delivery_management"/>-->
+<!--    <menuitem id="delivery_invoices" name="Delivery Invoices" parent="delivery_management_invoices" action="action_delivery_management" groups="delivery_management.group_delivery_admin"/>-->
+<!--    <menuitem id="delivery_assigned" name="Delivery Assigned" parent="delivery_management_invoices" action="action_delivery_management"/>-->
+<!--    <menuitem id="delivery_onway" name="Delivery Onway" parent="delivery_management_invoices" action="action_delivery_management" groups="delivery_management.group_delivery_admin"/>-->
+<!--    <menuitem id="delivery_arrived" name="Delivery Arrived" parent="delivery_management_invoices" action="action_delivery_management" groups="delivery_management.group_delivery_admin"/>-->
+<!--    <menuitem id="delivery_collection" name="Delivery Collection" parent="delivery_management_invoices" action="action_delivery_management" groups="delivery_management.group_delivery_admin"/>-->
+<!--    <menuitem id="delivery_paid" name="Delivery Paid" parent="delivery_management_invoices" action="action_delivery_management" groups="delivery_management.group_delivery_admin"/>-->
+<!--    <menuitem id="delivery_commission_oders" name="Commission Oders" parent="delivery_management_invoices" action="action_delivery_management" groups="delivery_management.group_delivery_admin"/>-->
+<!--    <menuitem id="delivery_customer_payments" name="Delivery Customer Payments" parent="delivery_management_invoices" action="action_delivery_management" groups="delivery_management.group_delivery_admin"/>-->
+<!--    <menuitem id="delivery_cancled" name="Delivery Canceled" parent="delivery_management_invoices" action="action_delivery_management" groups="delivery_management.group_delivery_admin"/>-->
+
+
+<!--    <menuitem id="delivery_management_boy" name="Delivery Boy" parent="delivery_management" action="action_delivery_boy"/>-->
+
+
+
+<!--</odoo>-->

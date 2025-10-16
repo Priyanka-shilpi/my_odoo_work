@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="act_school_teachers" model="ir.actions.act_window">
+        <field name="name">School Teachers</field>
+        <field name="res_model">hr.employee</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="act_school_students" model="ir.actions.act_window">
+        <field name="name">Students</field>
+        <field name="res_model">school.student</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="SchoolManagementSystem.view_student_graph"/>
+    </record>
+    <record id="act_school_drivers" model="ir.actions.act_window">
+            <field name="name">Drivers</field>
+            <field name="res_model">school.drivers</field>
+            <field name="view_mode">graph</field>
+            <field name="search_view_id" ref="view_attendance_search"/>
+                    <field name="view_id" ref="SchoolManagementSystem.view_driver_graph"/>
+
+        </record>
+    <record id="action_attendance_pie_graph" model="ir.actions.act_window">
+    <field name="name">Attendance Overview</field>
+    <field name="res_model">academic.takeattendance</field>
+    <field name="view_mode">graph</field>
+    <field name="view_id" ref="SchoolManagementSystem.view_attendance_pie_graph"/>
+</record>
+
+
+        <record id="act_users_parents" model="ir.actions.act_window">
+            <field name="name">Parents</field>
+            <field name="res_model">users.parents</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <record id="act_users_events" model="ir.actions.act_window">
+            <field name="name">Events</field>
+            <field name="res_model">users.events</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+    <record id="school_dashboard_view" model="ir.ui.view">
+        <field name="name">Dashboard Form</field>
+        <field name="model">board.board</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Dashboard">
+                <board style="2-2">
+                    <column>
+                        <action
+                                string="Teachers"
+                                name="%(SchoolManagementSystem.act_school_teachers)d"/>
+                        <action
+                                string="Students"
+                                name="%(SchoolManagementSystem.act_school_students)d"/>
+                        <action string="Attendance" name="%(SchoolManagementSystem.action_attendance_pie_graph)d"/>
+
+                         <action
+                                string="Drivers"
+                                name="%(SchoolManagementSystem.act_school_drivers)d"/>
+                          <action string="Parents" name="%(SchoolManagementSystem.act_users_parents)d"/>
+                            <action string="Events" name="%(SchoolManagementSystem.act_users_events)d"/>
+
+                    </column>
+                </board>
+            </form>
+        </field>
+    </record>
+
+    <record id="school_dashboard" model="ir.actions.act_window">
+        <field name="name">Dashboard</field>
+        <field name="res_model">board.board</field>
+        <field name="view_mode">form</field>
+        <field name="usage">menu</field>
+        <field name="view_id" ref="school_dashboard_view"/>
+    </record>
+
+</odoo>
+<!--    &lt;!&ndash; List View &ndash;&gt;-->
+<!--    <record id="view_school_dashboard_list" model="ir.ui.view">-->
+<!--        <field name="name">school.dashboard.list</field>-->
+<!--        <field name="model">school.dashboard</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <list>-->
+<!--                <field name="name"/>-->
+<!--                <field name="count"/>-->
+<!--            </list>-->
+<!--        </field>-->
+<!--    </record>-->
+
+<!--    &lt;!&ndash; Kanban View: each record is one group box &ndash;&gt;-->
+<!--    <record id="view_school_dashboard_kanban" model="ir.ui.view">-->
+<!--        <field name="name">school.dashboard.kanban</field>-->
+<!--        <field name="model">school.dashboard</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <kanban create="false">-->
+<!--                <field name="count"/>-->
+<!--                <field name="group_type"/>-->
+<!--                <templates>-->
+<!--                    <t t-name="kanban-box">-->
+<!--                        <div class="oe_kanban_global_click o_kanban_record">-->
+
+<!--                            <div class="o_kanban_card_header">-->
+<!--                                <strong>-->
+<!--                                    <t t-esc="record.group_type.raw_value"/>-->
+<!--                                </strong>-->
+<!--                            </div>-->
+
+<!--                            <div class="o_kanban_card_body">-->
+
+<!--                                <t t-if="record.group_type.raw_value == 'student'">🎓 Students:</t>-->
+<!--                                <t t-if="record.group_type.raw_value == 'teacher'">👩‍🏫 Teachers:</t>-->
+<!--                                <t t-if="record.group_type.raw_value == 'parent'">👨‍👩‍👧‍👦 Parents:</t>-->
+<!--                                <t t-if="record.group_type.raw_value == 'driver'">🚍 Drivers:</t>-->
+<!--                                <strong>-->
+<!--                                    <t t-esc="record.count.value"/>-->
+<!--                                </strong>-->
+<!--                            </div>-->
+
+<!--                        </div>-->
+
+<!--                    </t>-->
+<!--                </templates>-->
+<!--            </kanban>-->
+
+<!--        </field>-->
+<!--    </record>-->
+
+<!--    &lt;!&ndash; Graph View &ndash;&gt;-->
+<!--    <record id="view_school_dashboard_graph" model="ir.ui.view">-->
+<!--        <field name="name">school.dashboard.graph</field>-->
+<!--        <field name="model">school.dashboard</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <graph string="School Statistics" type="bar">-->
+<!--                <field name="group_type" type="row"/>-->
+<!--                <field name="count" type="measure" sum="True"/>-->
+<!--            </graph>-->
+<!--        </field>-->
+<!--    </record>-->
+
+<!--    &lt;!&ndash; Pie Chart View &ndash;&gt;-->
+<!--    <record id="view_school_dashboard_pie" model="ir.ui.view">-->
+<!--        <field name="name">school.dashboard.pie</field>-->
+<!--        <field name="model">school.dashboard</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <graph string="School Distribution" type="pie">-->
+<!--                <field name="group_type" type="row"/>-->
+<!--                <field name="count" type="measure" sum="True"/>-->
+<!--            </graph>-->
+<!--        </field>-->
+<!--    </record>-->
+
+<!--    &lt;!&ndash; Action &ndash;&gt;-->
+<!--    <record id="action_school_dashboard" model="ir.actions.act_window">-->
+<!--        <field name="name">School Dashboard</field>-->
+<!--        <field name="res_model">school.dashboard</field>-->
+<!--        <field name="view_mode">kanban,list,graph</field>-->
+<!--        <field name="help" type="html">-->
+<!--            <p>This dashboard shows the total number of students, teachers, parents, and drivers in separate boxes.</p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--&lt;!&ndash;    <record id="action_school_student" model="ir.actions.act_window">&ndash;&gt;-->
+<!--&lt;!&ndash;    <field name="name">Students</field>&ndash;&gt;-->
+<!--&lt;!&ndash;    <field name="res_model">school.student</field>&ndash;&gt;-->
+<!--&lt;!&ndash;    <field name="view_mode">list,form</field>&ndash;&gt;-->
+<!--&lt;!&ndash;    <field name="target">current</field>&ndash;&gt;-->
+<!--&lt;!&ndash;</record>&ndash;&gt;-->
+
+<!--    &lt;!&ndash; Data: Create 4 records, one per group &ndash;&gt;-->
+<!--    <record id="school_dashboard_students" model="school.dashboard">-->
+<!--        <field name="group_type">student</field>-->
+<!--        <field name="name">Students</field>-->
+<!--    </record>-->
+
+<!--    <record id="school_dashboard_teachers" model="school.dashboard">-->
+<!--        <field name="group_type">teacher</field>-->
+<!--        <field name="name">Teachers</field>-->
+<!--    </record>-->
+
+<!--    <record id="school_dashboard_parents" model="school.dashboard">-->
+<!--        <field name="group_type">parent</field>-->
+<!--        <field name="name">Parents</field>-->
+<!--    </record>-->
+
+<!--    <record id="school_dashboard_drivers" model="school.dashboard">-->
+<!--        <field name="group_type">driver</field>-->
+<!--        <field name="name">Drivers</field>-->
+<!--    </record>-->
+<!--   </data>-->
+<!--</odoo>-->

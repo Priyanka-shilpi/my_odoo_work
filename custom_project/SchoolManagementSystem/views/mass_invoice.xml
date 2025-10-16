@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_mass_invoice_form" model="ir.ui.view">
+        <field name="name">Mass Invoice</field>
+        <field name="model">accounting.massinvoice</field>
+        <field name="arch" type="xml">
+            <form string="Mass Invoice">
+                <sheet>
+                    <group>
+                        <field name="class_names"/>
+                        <field name="section"/>
+                        <field name="date"/>
+                        <field name="invoice_title"/>
+                        <field name="total_amount"/>
+                        <field name="paid_amount"/>
+                        <field name="status"/>
+
+
+
+                    </group>
+                </sheet>
+                 <footer>
+            <button name="action_save_invoice" string="Save" type="object" class="btn-primary"/>
+            <button string="Cancel" class="btn-secondary" special="cancel"/>
+        </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_mass_invoice_list" model="ir.ui.view">
+        <field name="name">Mass Invoice</field>
+        <field name="model">accounting.massinvoice</field>
+        <field name="arch" type="xml">
+            <list string="Mass Invoice">
+                  <field name="class_names"/>
+                        <field name="section"/>
+                                        <field name="date"/>
+
+                        <field name="invoice_title"/>
+                        <field name="total_amount"/>
+                        <field name="paid_amount"/>
+                <field name="status"/>
+
+
+            </list>
+        </field>
+
+    </record>
+
+
+
+
+    <record id="action_accounting_massinvoice" model="ir.actions.act_window">
+        <field name="name">Mass Invoice</field>
+        <field name="res_model">accounting.massinvoice</field>
+        <field name="view_mode">list,form</field>
+        <!--        <field name="view_id" ref="view_teacher_list"/>-->
+    </record>
+
+</odoo>

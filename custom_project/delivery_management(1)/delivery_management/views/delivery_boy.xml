@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_delivery_boy_form" model="ir.ui.view">
+        <field name="name">delivery.boy.form</field>
+        <field name="model">delivery.boy</field>
+        <field name="arch" type="xml">
+            <form string="Delivery Boy">
+                <header>
+                    <!--                    <button name="send_email" string="Send Email" type="object" class="btn-primary"/>-->
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button type="object" name="dummy_method_groups" class="oe_stat_button" icon="fa-users">
+                            <field name="group_count" widget="statinfo" string="Groups"/>
+                        </button>
+
+                        <button type="object" name="dummy_method_access" class="oe_stat_button" icon="fa-list">
+                            <field name="access_count" widget="statinfo" string="Access Rights"/>
+                        </button>
+
+                        <button type="object" name="dummy_method_rules" class="oe_stat_button" icon="fa-list-ul">
+                            <field name="rule_count" widget="statinfo" string="Record Rules"/>
+                        </button>
+                    </div>
+                    <field name="image" widget="image" class="oe_avatar"/>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="email"/>
+                            <field name="partner_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Access Rights">
+                            <group>
+                                <field name="is_delivery_boy"/>
+                                <field name="multi_companies" readonly="1"/>
+                                <field name="allowed_companies"/>
+                                <field name="default_companies"/>
+                            </group>
+                            <group>
+                                <field name="usertype" readonly="1"/>
+                                <field name="user_type" widget="radio"/>
+                            </group>
+                        </page>
+                        <page string="Preference">
+                        </page>
+
+                        <page string="Account Security">
+                        </page>
+
+                        <page string="Delivery Boy Info">
+                            <group>
+                                <group>
+                                    <field name="national_id"/>
+                                    <field name="mobile"/>
+                                </group>
+                                <group>
+                                    <field name="transportation"/>
+                                    <field name="commission_fee" widget="percentage"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_delivery_boy_list" model="ir.ui.view">
+        <field name="name">delivery.boy.list</field>
+        <field name="model">delivery.boy</field>
+        <field name="arch" type="xml">
+            <list string="Delivery Boy">
+                <field name="name"/>
+                <field name="email"/>
+                <field name="mobile"/>
+                <field name="partner_id"/>
+                <field name="allowed_companies"/>
+                <field name="default_companies"/>
+                <field name="user_type"/>
+                <field name="national_id"/>
+                <field name="transportation"/>
+                <field name="commission_fee" widget="percentage"/>
+            </list>
+        </field>
+    </record>
+    <record id="action_delivery_boy" model="ir.actions.act_window">
+        <field name="name">Delivery Boy</field>
+        <field name="res_model">delivery.boy</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

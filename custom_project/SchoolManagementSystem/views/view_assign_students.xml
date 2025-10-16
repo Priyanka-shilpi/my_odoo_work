@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_assign_form" model="ir.ui.view">
+        <field name="name">transport.assign.form</field>
+        <field name="model">transport.assign</field>
+        <field name="arch" type="xml">
+            <form string="students">
+                <header>
+                    <button name="assign_student" string="+ Assign Students" type="object" class="oe_highlight"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="category"/>
+                        <field name="vehicle_model" invisible="category != 'vehicle'"/>
+                        <field name="student_class_number" invisible="category != 'class'"/>
+                        <field name="driver_names_id" invisible="category != 'driver'"/>
+                        <button name="filter" string="filter" type="object" class="oe_highlight"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_assign_list" model="ir.ui.view">
+        <field name="name">students</field>
+        <field name="model">transport.assign</field>
+        <field name="arch" type="xml">
+            <list string="students">
+                <field name="category"/>
+            </list>
+        </field>
+    </record>
+
+
+    <record id="action_transport_assign" model="ir.actions.act_window">
+        <field name="name">students</field>
+        <field name="res_model">transport.assign</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_assign_list"/>
+    </record>
+</odoo>

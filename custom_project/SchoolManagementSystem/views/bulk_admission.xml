@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+
+   <record id="view_bulk_student_admission_form" model="ir.ui.view">
+       <field name="name">bulk.student.admission.form</field>
+       <field name="model">bulk.student.admission</field>
+       <field name="arch" type="xml">
+           <form string="Bulk Student Admission">
+               <header>
+                   <button name="action_confirm_bulk_admission" string="Confirm Admission" type="object" class="btn-primary"/>
+                   <button string="Cancel" class="btn-secondary" special="cancel"/>
+               </header>
+               <sheet>
+                   <group>
+                       <field name="name" invisible="1"/>
+                       <field name="admission_line_ids">
+                           <list editable="bottom">
+                               <field name="student_class_number1"/>
+                               <field name="section"/>
+                               <field name="names"/>
+                               <field name="email"/>
+                               <field name="password" widget="password" password="True"/>
+                               <field name="gender"/>
+                               <field name="parent_ids"/>
+                           </list>
+                       </field>
+                   </group>
+               </sheet>
+           </form>
+       </field>
+   </record>
+
+
+   <record id="action_bulk_student_admission" model="ir.actions.act_window">
+       <field name="name">Bulk Student Admission</field>
+       <field name="res_model">bulk.student.admission</field>
+       <field name="view_mode">form</field>
+   </record>
+
+
+</odoo>

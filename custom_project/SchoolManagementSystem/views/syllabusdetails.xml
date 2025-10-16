@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_syllabusdetails_form" model="ir.ui.view">
+        <field name="name">Syllabus Details</field>
+        <field name="model">academic.syllabusdetails</field>
+        <field name="arch" type="xml">
+            <form string="Syllabus Details">
+                <sheet>
+                    <group>
+                        <field name="class_namess"/>
+                        <field name="section"/>
+                        <field name="title"/>
+                        <field name="subjects"/>
+                        <field name="upload_syllabus" filename="filename" widget="binary"/>
+
+
+
+
+                    </group>
+                </sheet>
+                 <footer>
+            <button name="action_save_syllabus" string="Save" type="object" class="btn-primary"/>
+            <button string="Cancel" class="btn-secondary" special="cancel"/>
+        </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_syllabus_details_list" model="ir.ui.view">
+        <field name="name">Syllabus Details</field>
+        <field name="model">academic.syllabusdetails</field>
+        <field name="arch" type="xml">
+            <list string="Syllabus Details">
+                  <field name="class_namess"/>
+                        <field name="section"/>
+                         <field name="title"/>
+                        <field name="subjects"/>
+                        <field name="upload_syllabus" filename="filename" widget="binary"/>
+
+
+
+            </list>
+        </field>
+
+    </record>
+
+
+
+
+    <record id="action_academic_syllabus_details" model="ir.actions.act_window">
+        <field name="name">Syllabus Details</field>
+        <field name="res_model">academic.syllabusdetails</field>
+        <field name="view_mode">list,form</field>
+        <!--        <field name="view_id" ref="view_teacher_list"/>-->
+    </record>
+
+</odoo>

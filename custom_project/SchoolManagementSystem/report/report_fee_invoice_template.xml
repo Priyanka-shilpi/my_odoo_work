@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_fee_invoice_report_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="student">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 style="text-align:center; margin-bottom:20px;">Fee Payment Receipt</h2>
+
+                        <table style="width:100%; border-collapse: collapse; font-size:12px; margin-bottom: 20px;">
+                            <thead>
+                                <tr style="background-color:#f2f2f2; color:#2a8ccc; text-align: center;">
+                                    <th style="border:1px solid #ccc; padding:8px;">
+                                        <b>CLASS</b>
+                                    </th>
+                                    <th style="border:1px solid #ccc; padding:8px;">
+                                        <b>STUDENT</b>
+                                    </th>
+                                    <th style="border:1px solid #ccc; padding:8px;">
+                                        <b>DATE</b>
+                                    </th>
+                                    <th style="border:1px solid #ccc; padding:8px;">
+                                        <b>INVOICE TITLE</b>
+                                    </th>
+                                    <th style="border:1px solid #ccc; padding:8px;">
+                                        <b>TOTAL</b>
+                                    </th>
+                                    <th style="border:1px solid #ccc; padding:8px;">
+                                        <b>PAID AMOUNT</b>
+                                    </th>
+                                    <th style="border:1px solid #ccc; padding:8px;">
+                                        <b>STATUS</b>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="text-align: center;">
+                                    <td style="border:1px solid #ccc; padding:8px;">
+                                        <span t-field="student.class_name1"/>
+                                    </td>
+                                    <td style="border:1px solid #ccc; padding:8px;">
+                                        <span t-field="student.students"/>
+                                    </td>
+                                    <td style="border:1px solid #ccc; padding:8px;">
+                                        <span t-field="student.date"/>
+                                    </td>
+                                    <td style="border:1px solid #ccc; padding:8px;">
+                                        <span t-field="student.invoice_title"/>
+                                    </td>
+                                    <td style="border:1px solid #ccc; padding:8px;">
+                                        <span t-field="student.total_amount"/>
+                                    </td>
+                                    <td style="border:1px solid #ccc; padding:8px;">
+                                        <span t-field="student.paid_amount"/>
+                                    </td>
+                                    <td style="border:1px solid #ccc; padding:8px;">
+                                        <span t-field="student.status"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <p style="text-align:right; font-size:10px; color:#888;">
+                            Generated on
+                            <t t-esc="(datetime.datetime.now()).strftime('%d-%m-%Y')"/>
+                        </p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

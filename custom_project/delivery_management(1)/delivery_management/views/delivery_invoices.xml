@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!--    <record id="view_delivery_management_form" model="ir.ui.view">-->
+    <!--        <field name="name">delivery</field>-->
+    <!--        <field name="model">delivery.management</field>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <form string="Delivery">-->
+    <!--                <sheet>-->
+    <!--                    <group>-->
+    <!--                        <field name="number"/>-->
+    <!--                        <field name="due_date"/>-->
+    <!--                        <field name="next_activity"/>-->
+    <!--                        &lt;!&ndash;                    <field name="tax_excluded"/>&ndash;&gt;-->
+    <!--                        &lt;!&ndash;                    <field name="total"/>&ndash;&gt;-->
+    <!--                        <field name="tax_excluded" sum="Total Tax Excluded"/>-->
+    <!--                        <field name="total" sum="Total Amount"/>-->
+    <!--                        <field name="total_in_currency"/>-->
+    <!--                        <field name="delivery_boy"/>-->
+    <!--                        <field name="order_amount_due"/>-->
+    <!--                        <field name="delivery_state" widget="badge"/>-->
+    <!--                        <field name="payment_state" widget="badge"/>-->
+    <!--                        <field name="status"/>-->
+    <!--                    </group>-->
+    <!--                </sheet>-->
+    <!--            </form>-->
+    <!--        </field>-->
+    <!--    </record>-->
+
+
+    <record id="view_delivery_management_list" model="ir.ui.view">
+        <field name="name">Delivery invoices</field>
+        <field name="model">delivery.management</field>
+        <field name="arch" type="xml">
+            <list string="Delivery invoices" create="0">
+                <field name="number" readonly="1"/>
+                <field name="due_date"/>
+                <field name="next_activity"/>
+                <field name="tax_excluded" widget="monetary" sum="Total Tax Excluded"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="total" widget="monetary" sum="Total Amount" options="{'currency_field': 'currency_id'}"/>
+                <field name="currency_id" optional="hide"/>
+                <field name="total_in_currency" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                <field name="delivery_boy"/>
+                <button name="%(action_assign_delivery_wizard)d"
+                        string="+"
+                        type="action"
+                        class="btn-primary"/>
+                <!--                to add color to the button add "class="btn-primary custom-delivery-button"-->
+                <field name="order_amount_due" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                <field name="delivery_state" widget="badge"
+                       decoration-info="delivery_state in ('draft', 'transit')"
+                       decoration-primary="delivery_state in ('arrived', 'onway','collection')"
+                       decoration-danger="delivery_state == 'cancel_delivery'"/>
+
+                <button name="action_cancel_delivery"
+                        type="object"
+                        string="Cancel Delivery" class="text-danger"
+                ></button>
+                <field name="payment_state" widget="badge"
+                       decoration-success="payment_state == 'paid'"
+                       decoration-warning="payment_state == 'partial'"
+                       decoration-danger="payment_state == 'not_paid'"/>
+                <field name="status" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+
+    <record id="action_delivery_management" model="ir.actions.act_window">
+        <field name="name">Delivery Invoices</field>
+        <field name="res_model">delivery.management</field>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="delivery_management.view_delivery_management_list"/>
+        <!--        <field name="domain">[('status','=','posted')]</field>-->
+    </record>
+
+    <record id="action_delivery_paid" model="ir.actions.act_window">
+        <field name="name">Delivery Paid</field>
+        <field name="res_model">delivery.management</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="delivery_management.view_delivery_management_list"/>
+        <field name="domain">[('payment_state', '=', 'paid')]</field>
+    </record>
+
+    <record id="action_delivery_cancelled" model="ir.actions.act_window">
+        <field name="name">Delivery Cancelled</field>
+        <field name="res_model">delivery.management</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="delivery_management.view_delivery_management_list"/>
+        <field name="domain">[('delivery_state', '=', 'cancel_delivery')]</field>
+    </record>
+
+    <record id="action_delivery_assigned" model="ir.actions.act_window">
+        <field name="name">Delivery Assigned</field>
+        <field name="res_model">delivery.management</field>
+        <field name="view_mode">list,form</field>
+        <field name="views" eval="[
+        (ref('delivery_management.view_delivery_management_list'), 'list'),
+        (ref('delivery_management.view_delivery_assigned_form'), 'form')]"/>
+        <field name="domain">[('delivery_state', '=', 'transit')]</field>
+    </record>
+
+    <record id="action_delivery_onway" model="ir.actions.act_window">
+        <field name="name">Delivery Onway</field>
+        <field name="res_model">delivery.management</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="delivery_management.view_delivery_management_list"/>
+        <field name="domain">[('delivery_state', '=', 'onway')]</field>
+    </record>
+
+    <record id="action_delivery_collection" model="ir.actions.act_window">
+        <field name="name">Delivery Collection</field>
+        <field name="res_model">delivery.management</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="delivery_management.view_delivery_management_list"/>
+        <field name="domain">[('delivery_state', '=', 'collection')]</field>
+    </record>
+
+
+    <record id="view_delivery_menu_search" model="ir.ui.view">
+        <field name="name">delivery search</field>
+        <field name="model">delivery.management</field>
+        <field name="arch" type="xml">
+            <search string="Search Delivery Management">
+                <field name="number"/>
+            </search>
+        </field>
+    </record>
+</odoo>

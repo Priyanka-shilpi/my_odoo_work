@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_event_form" model="ir.ui.view">
+        <field name="name">Events</field>
+        <field name="model">users.events</field>
+        <field name="arch" type="xml">
+            <form string="Events">
+                <field name="event_image" widget="image" class="oe_avatar"/>
+                <sheet>
+                    <group>
+                        <field name="event_name"/>
+                        <field name="from_date"/>
+                        <field name="end_date"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_event_list" model="ir.ui.view">
+        <field name="name">Events</field>
+        <field name="model">users.events</field>
+        <field name="arch" type="xml">
+            <list string="events">
+                <field name="event_image" widget="image" options="{'size': [64, 64]}" class="oe_avatar"/>
+
+                      <field name="event_name"/>
+                        <field name="from_date"/>
+                        <field name="end_date"/>
+
+            </list>
+        </field>
+    </record>
+    <record id="view_event_calendar" model="ir.ui.view">
+        <field name="name">Events</field>
+        <field name="model">users.events</field>
+        <field name="arch" type="xml">
+            <calendar string="Event Calendar" date_start="from_date" date_stop="end_date">
+                <field name="event_name"/>
+            </calendar>
+        </field>
+    </record>
+
+
+
+
+    <record id="action_users_event" model="ir.actions.act_window">
+        <field name="name">Events</field>
+        <field name="res_model">users.events</field>
+        <field name="view_mode">calendar,list,form</field>
+    </record>
+
+</odoo>

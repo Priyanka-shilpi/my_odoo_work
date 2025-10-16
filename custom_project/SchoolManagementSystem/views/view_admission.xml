@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+  <record id="view_admission_form" model="ir.ui.view">
+      <field name="name">Admission</field>
+      <field name="model">school.admission</field>
+      <field name="arch" type="xml">
+          <form string="Student Admission Form">
+              <header>
+                   <button name="single_student_admission" string="Single Student Admission" type="object" class="oe_highlight"/>
+                   <button name="bulk_student_admission" string="Bulk Student Admission" type="object" class="oe_highlight"/>
+              </header>
+              <sheet>
+                  <group>
+                      <field name="student"/>
+                      <field name="student_email"/>
+                      <field name="student_password" widget="password" password="True"/>
+                      <field name="parent"/>
+<!--                      <field name="parents"/>&ndash;&gt;-->
+                      <field name="student_class_number1"/>
+<!--                      <field name="student_class_number"/>-->
+                      <field name="student_section_ABC"/>
+                      <field name="student_dob"/>
+                                            <field name="student_age"/>
+
+                      <field name="student_gender"/>
+                      <field name="student_blood_group"/>
+                      <field name="student_address"/>
+                      <field name="student_number"/>
+                      <field name="student_image" widget="image" class="oe_avatar"/>
+                  </group>
+              </sheet>
+          </form>
+      </field>
+  </record>
+
+
+  <record id="view_admission_list_bulk" model="ir.ui.view">
+      <field name="name">admission.bulk.list</field>
+      <field name="model">school.admission</field>
+      <field name="arch" type="xml">
+          <list string="Bulk Student Admission">
+              <field name="student"/>
+              <field name="student_email"/>
+              <field name="student_password"/>
+              <field name="student_class_number1"/>
+<!--              <field name="student_class_number"/>-->
+              <field name="student_section_ABC"/>
+              <field name="student_gender"/>
+              <field name="parent"/>
+<!--               <field name="parents"/>&ndash;&gt;-->
+          </list>
+      </field>
+  </record>
+
+
+  <record id="action_admission_form" model="ir.actions.act_window">
+      <field name="name">Admission</field>
+      <field name="res_model">school.admission</field>
+      <field name="view_mode">form</field>
+  </record>
+
+
+
+
+</odoo>
+

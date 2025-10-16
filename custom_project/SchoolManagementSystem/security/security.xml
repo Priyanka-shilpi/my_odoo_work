@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <data>
+        <record id="module_school_category" model="ir.module.category">
+            <field name="name">School</field>
+            <field name="sequence">1</field>
+            <field name="description">School Management Category</field>
+        </record>
+
+        <record id="group_school_admin" model="res.groups">
+            <field name="name">School_Admin</field>
+            <field name="category_id" ref="SchoolManagementSystem.module_school_category"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <record id="group_school_super_admin" model="res.groups">
+            <field name="name">Super_Admin</field>
+            <field name="category_id" ref="SchoolManagementSystem.module_school_category"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <record id="group_school_student" model="res.groups">
+            <field name="name">Student</field>
+            <field name="category_id" ref="SchoolManagementSystem.module_school_category"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+<!--        <record model="ir.rule" id="student_read_own_record">-->
+<!--            <field name="name">Student: Read only own record</field>-->
+<!--            <field name="model_id" ref="SchoolManagementSystem.model_school_student"/>-->
+<!--            <field name="domain_force">[('name', '=', user.name)]</field>-->
+<!--            <field name="groups" eval="[(4, ref('SchoolManagementSystem.group_school_student'))]"/>-->
+<!--        </record>-->
+
+<!--<record id="rule_academic_department_hide_for_students" model="ir.rule">-->
+<!--    <field name="name">Hide Academic Department for Students</field>-->
+<!--    <field name="model_id" ref="model_academic_department"/> &lt;!&ndash; ✅ Fixed &ndash;&gt;-->
+<!--    <field name="domain_force"><![CDATA[[(1, '=', 0)]]></field>    <field name="groups" eval="[(4, ref('SchoolManagementSystem.group_school_student'))]"/>-->
+<!--</record>-->
+
+
+        <!--        <record model="ir.rule" id="tenant_read_own_record">-->
+<!--            <field name="name">Tenant: Read only own record</field>-->
+<!--            <field name="model_id" ref="society_management.model_society_tenant"/>-->
+<!--            <field name="domain_force">[('tenant_id.id', '=', user.partner_id.id)]</field>-->
+<!--            <field name="groups" eval="[(4, ref('society_management.group_society_tenant'))]"/>-->
+<!--        </record>-->
+
+<!--        <record model="ir.rule" id="rent_tenant_only_own_apartment">-->
+<!--            <field name="name">Tenant: Access only their own rent records</field>-->
+<!--            <field name="model_id" ref="society_management.model_society_rent"/>-->
+<!--            <field name="domain_force">[('r_tenant_id.tenant_id.id', '=', user.partner_id.id)]</field>-->
+<!--            <field name="groups" eval="[(4, ref('society_management.group_society_tenant'))]"/>-->
+<!--        </record>-->
+
+<!--        <record id="apartment_tenant_rule" model="ir.rule">-->
+<!--            <field name="name">Tenant Apartment Restriction</field>-->
+<!--            <field name="model_id" ref="society_management.model_society_apartment"/>-->
+<!--            <field name="groups" eval="[(4, ref('society_management.group_society_tenant'))]"/>-->
+<!--            <field name="domain_force">[('tenant_id.tenant_id.id', '=', user.partner_id.id)]</field>-->
+<!--        </record>-->
+
+<!--        <record id="parking_tenant_rule" model="ir.rule">-->
+<!--            <field name="name">Tenant Parking Restriction</field>-->
+<!--            <field name="model_id" ref="society_management.model_society_parking"/>-->
+<!--            <field name="groups" eval="[(4, ref('society_management.group_society_tenant'))]"/>-->
+<!--            <field name="domain_force">[('tenant_id.tenant_id.id', '=', user.partner_id.id)]</field>-->
+<!--        </record>-->
+
+<!--        <record id="parking_owner_rule" model="ir.rule">-->
+<!--            <field name="name">Tenant Owner Restriction</field>-->
+<!--            <field name="model_id" ref="society_management.model_society_owner"/>-->
+<!--            <field name="groups" eval="[(4, ref('society_management.group_society_tenant'))]"/>-->
+<!--            <field name="domain_force">[-->
+<!--                ('owner_apart_ids.tenant_id.tenant_id.id', '=', user.partner_id.id)-->
+<!--                ]-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--        <record id="visitor_rule" model="ir.rule">-->
+<!--            <field name="name">Visitor Restriction</field>-->
+<!--            <field name="model_id" ref="society_management.model_society_visitors"/>-->
+<!--            <field name="groups" eval="[(4, ref('society_management.group_society_tenant'))]"/>-->
+<!--            <field name="domain_force">[('tenant_id.tenant_id.id', '=', user.partner_id.id)]</field>-->
+<!--        </record>-->
+
+<!--        <record id="common_area_tenant_rule" model="ir.rule">-->
+<!--            <field name="name">Tenant: View only their Common Area Bills</field>-->
+<!--            <field name="model_id" ref="society_management.model_society_common_area"/>-->
+<!--            <field name="groups" eval="[(4, ref('society_management.group_society_tenant'))]"/>-->
+<!--            <field name="domain_force">[-->
+<!--                ('c_apart_id.tenant_id.tenant_id.id', '=', user.partner_id.id)-->
+<!--                ]-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--        <record id="utility_tenant_rule" model="ir.rule">-->
+<!--            <field name="name">Tenant: View only their Utility Bills</field>-->
+<!--            <field name="model_id" ref="society_management.model_society_utility"/>-->
+<!--            <field name="groups" eval="[(4, ref('society_management.group_society_tenant'))]"/>-->
+<!--            <field name="domain_force">[-->
+<!--                ('u_apart_id.tenant_id.tenant_id.id', '=', user.partner_id.id)-->
+<!--                ]-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--        <record id="asset_tenant_rule" model="ir.rule">-->
+<!--            <field name="name">Tenant: View only their Assets</field>-->
+<!--            <field name="model_id" ref="society_management.model_society_assets"/>-->
+<!--            <field name="groups" eval="[(4, ref('society_management.group_society_tenant'))]"/>-->
+<!--            <field name="domain_force">[-->
+<!--                ('aprt_num_id.tenant_id.tenant_id.id', '=', user.partner_id.id)-->
+<!--                ]-->
+<!--            </field>-->
+<!--        </record>-->
+
+
+    </data>
+</odoo>

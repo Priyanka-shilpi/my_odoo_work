@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_send_exam_marks" model="ir.ui.view">
+       <field name="name">Send Exam Marks</field>
+       <field name="model">send.marks</field>
+       <field name="arch" type="xml">
+           <list string="Send Exam Marks">
+               <field name="exam"/>
+               <field name="select_class"/>
+               <field name="section_1"/>
+               <field name="subject_ids"/>
+               <field name="receiver"/>
+
+           </list>
+       </field>
+   </record>
+
+    <record id="view_send_exam_marks_form" model="ir.ui.view">
+       <field name="name">Send Exam Marks</field>
+       <field name="model">send.marks</field>
+       <field name="arch" type="xml">
+           <form string="Send Exam Marks">
+               <sheet>
+                   <group>
+                       <field name="exam"/>
+                       <field name="select_class"/>
+                       <field name="section_1"/>
+                       <field name="receiver"/>
+                                      <field name="subject_ids"/>
+
+<!--                       <field name="parent" invisible="receiver != 'Parent'"/>-->
+                       <field name="student" invisible="receiver != 'Student'"/>
+                       <field name="marks"/>
+                       <button name="send_marks" string="Send Marks" type="object" class="oe_highlight"/>
+                       <button name="preview_marks" string="Preview" type="object" class="oe_highlight"/>
+                   </group>
+               </sheet>
+               <chatter/>
+           </form>
+       </field>
+   </record>
+
+
+
+    <record id="action_send_exam_marks" model="ir.actions.act_window">
+       <field name="name">Send Exam Marks</field>
+       <field name="type">ir.actions.act_window</field>
+       <field name="res_model">send.marks</field>
+       <field name="view_mode">form</field>
+   </record>
+
+</odoo>
+
+

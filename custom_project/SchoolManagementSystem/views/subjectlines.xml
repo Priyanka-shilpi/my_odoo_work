@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_academic_subjectlines_form" model="ir.ui.view">
+        <field name="name">Subjectlines</field>
+        <field name="model">academic.subjectlines</field>
+        <field name="arch" type="xml">
+            <form string="Subjectlines">
+                <sheet>
+                    <group>
+                        <field name="class_names"/>
+                        <field name="subject_ids" widget="many2many_tags" placeholder="Choose subjects"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_save_subject" string="Save" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_academic_subjectlines_list" model="ir.ui.view">
+        <field name="name">Subjectlines</field>
+        <field name="model">academic.subjectlines</field>
+        <field name="arch" type="xml">
+            <list string="subjectlines">
+                <field name="class_names"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_academic_subjectlines" model="ir.actions.act_window">
+        <field name="name">Subject lines</field>
+        <field name="res_model">academic.subjectlines</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

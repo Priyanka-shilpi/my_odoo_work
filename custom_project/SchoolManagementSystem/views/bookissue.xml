@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_back_book_form" model="ir.ui.view">
+        <field name="name">back.book.form</field>
+        <field name="model">back.book</field>
+        <field name="arch" type="xml">
+            <form string="Book Issue">
+                <header>
+                    <button name="issue_book" string="Issue Book" type="object" class="oe_highlight"/>
+
+                </header>
+                <sheet>
+                    <group>
+                        <field name="date"/>
+                    </group>
+                    <xpath expr="//field[@name='date']" position="after">
+                        <button name="filter_books" string="Filter" type="object" class="oe_highlight"/>
+
+                    </xpath>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+    <record id="view_back_book_list" model="ir.ui.view">
+        <field name="name">back.book.list</field>
+        <field name="model">back.book</field>
+        <field name="arch" type="xml">
+            <list string="Book Issue">
+                <field name="date"/>
+
+            </list>
+        </field>
+
+
+    </record>
+
+
+    <record id="action_back_book" model="ir.actions.act_window">
+        <field name="name">Book Issue</field>
+        <field name="res_model">back.book</field>
+        <field name="view_mode">form</field>
+    </record>
+</odoo>

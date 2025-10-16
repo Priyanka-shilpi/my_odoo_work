@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_issue_form" model="ir.ui.view">
+        <field name="name">Issue</field>
+        <field name="model">back.issue</field>
+        <field name="arch" type="xml">
+            <form string="Issue">
+                <sheet>
+                    <group>
+                        <field name="date"/>
+                        <field name="student_name"/>
+                        <field name="class_number"/>
+                        <field name="book_name"/>
+                    </group>
+                </sheet>
+                 <footer>
+            <button name="action_save_book_issue" string="Save" type="object" class="btn-primary"/>
+            <button string="Cancel" class="btn-secondary" special="cancel"/>
+        </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_issue_list" model="ir.ui.view">
+        <field name="name">Issue</field>
+        <field name="model">back.issue</field>
+        <field name="arch" type="xml">
+            <list string="Issues">
+                  <field name="date"/>
+                        <field name="student_name"/>
+                        <field name="class_number"/>
+                  <field name="book_name"/>
+
+
+            </list>
+        </field>
+
+    </record>
+
+
+
+
+    <record id="action_back_issue" model="ir.actions.act_window">
+        <field name="name">Issues</field>
+        <field name="res_model">back.issue</field>
+        <field name="view_mode">list,form</field>
+        <!--        <field name="view_id" ref="view_teacher_list"/>-->
+    </record>
+
+</odoo>

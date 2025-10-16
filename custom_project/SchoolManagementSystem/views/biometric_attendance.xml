@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <!-- Main Form View with Button (not for popup) -->
+  <record id="view_biometric_attendance_form" model="ir.ui.view">
+      <field name="name">Biometric Attendance Form</field>
+      <field name="model">biometric.attendance</field>
+      <field name="arch" type="xml">
+          <form string="Biometric Attendance">
+              <header>
+                  <button name="biometric_attendance"
+                          string="add Biometric Attendance"
+                          type="object"
+                          class="oe_highlight"/>
+              </header>
+              <sheet>
+                  <group>
+                      <field name="file" widget="binary" accept=".xls,.xlsx"/>
+                  </group>
+              </sheet>
+          </form>
+      </field>
+  </record>
+
+  <record id="view_biometric_attendance_form" model="ir.ui.view">
+      <field name="name">Biometric Attendance list</field>
+      <field name="model">biometric.attendance</field>
+      <field name="arch" type="xml">
+          <form string="Biometric Attendance">
+              <button name="biometric_attendance"
+                          string="add Biometric Attendance"
+                          type="object"
+                          class="oe_highlight"/>
+<!--              <field name="filename"/>-->
+<!--              <field name="create_date"/>-->
+          </form>
+      </field>
+  </record>
+
+  <!-- Popup Form View -->
+  <record id="view_biometric_attendance_popup_form" model="ir.ui.view">
+      <field name="name">Biometric Attendance Popup Form</field>
+      <field name="model">biometric.attendance</field>
+      <field name="arch" type="xml">
+          <form string="Upload Biometric Attendance">
+              <sheet>
+                  <group>
+                      <field name="file" widget="binary" accept=".xls,.xlsx"/>
+                  </group>
+                  <footer>
+
+<!--                      <button string="Upload" type="object" name="action_upload_attendance" class="btn-primary"/>-->
+<!--                      <button string="Cancel" special="cancel"/>-->
+                  </footer>
+              </sheet>
+          </form>
+      </field>
+  </record>
+
+  <!-- Main Action -->
+  <record id="action_biometric_attendance" model="ir.actions.act_window">
+      <field name="name">Biometric Attendance</field>
+      <field name="res_model">biometric.attendance</field>
+      <field name="view_mode">form</field>
+      <field name="target">current</field>
+  </record>
+
+</odoo>
